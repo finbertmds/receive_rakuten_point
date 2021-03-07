@@ -11,7 +11,7 @@ This is a step-by-step guide how to run the example:
 
   At the Rakuten card page, after logging in, use the auto save password feature of Google chrome to automatically fill in the username and password each time you enter this page.
 
-- [Rakuten websearch](https://websearch.rakuten.co.jp/Web?qt=test&col=OW)
+- [Rakuten websearch](https://websearch.rakuten.co.jp/login.html?tool_id=1)
 
 - [Rakuten Kuji](https://kuji.rakuten.co.jp/256356cd1a)
 
