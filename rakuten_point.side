@@ -7,10 +7,101 @@
     "id": "235573e1-f634-4b96-b392-31d94ced9628",
     "name": "get point",
     "commands": [{
+      "id": "04b0995b-cf97-4c22-b50e-74eb5a0e5148",
+      "comment": "",
+      "command": "run",
+      "target": "credentials",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4916c3a6-4672-4b5c-a45b-71db15b1f1c1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "875x875",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c11d0aaf-1c92-47dd-9729-a92558eec704",
+      "comment": "",
+      "command": "open",
+      "target": "https://websearch.rakuten.co.jp/Web?qt=test&col=OW",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a2aa814d-8203-4fb0-b23d-b40848762c90",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[contains(text(),'ログイン')]",
+      "targets": [],
+      "value": "needLogin"
+    }, {
+      "id": "f09b0119-2d57-4e6a-8de0-b11ace008848",
+      "comment": "",
+      "command": "if",
+      "target": "${needLogin} == 1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4b59500a-7e30-4e05-9a0a-8c08c46d2134",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=ログイン",
+      "targets": [
+        ["linkText=ログイン", "linkText"],
+        ["css=.btn > a", "css:finder"],
+        ["xpath=//a[contains(text(),'ログイン')]", "xpath:link"],
+        ["xpath=//div[@id='wrapper']/header/div/div/div/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://rd.rakuten.co.jp/s2/?R2=https%3A%2F%2Fwebsearch.rakuten.co.jp%2Flogin.html%3Ftool_id%3D1%26tp%3Dr_navi&D2=3.0.39945.909722.32261639&C3=59d9484bf051059a28973bf3af495e5b9af7587d')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'ログイン')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd5efc0b-fa5a-4bfc-bc9f-d24e04ac4532",
+      "comment": "",
+      "command": "type",
+      "target": "id=loginInner_u",
+      "targets": [],
+      "value": "${r_username}"
+    }, {
+      "id": "a6941459-6fa5-45bd-8789-4406758ebff7",
+      "comment": "",
+      "command": "type",
+      "target": "id=loginInner_p",
+      "targets": [],
+      "value": "${r_password}"
+    }, {
+      "id": "99243814-5036-4cb7-935a-af378ab6e934",
+      "comment": "",
+      "command": "click",
+      "target": "name=submit",
+      "targets": [
+        ["name=submit", "name"],
+        ["css=.loginButton", "css:finder"],
+        ["xpath=//input[@name='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8752f747-c8f2-40b7-becc-9ae4e3b11a46",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ec206bb-f746-47ad-830f-5ad79ab54072",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "c226bfa4-b61a-47fa-996a-259b238dac1b",
       "comment": "",
       "command": "executeScript",
-      "target": "return \"肉\"",
+      "target": "return \"魚\"",
       "targets": [],
       "value": "searchKeyWord"
     }, {
@@ -25,13 +116,6 @@
       "comment": "",
       "command": "open",
       "target": "https://websearch.rakuten.co.jp/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "04b0995b-cf97-4c22-b50e-74eb5a0e5148",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "875x875",
       "targets": [],
       "value": ""
     }, {
@@ -180,12 +264,12 @@
     "id": "1225d17b-8469-43b3-8f95-a2631865a882",
     "name": "kuji",
     "commands": [{
-      "id": "3d76b1ce-16ff-4369-a178-9d6291da3d9b",
+      "id": "9849c72c-051b-4528-acee-069d7a2ce62c",
       "comment": "",
-      "command": "executeScript",
-      "target": "return 1",
+      "command": "run",
+      "target": "credentials",
       "targets": [],
-      "value": "kujiCountCurrent"
+      "value": ""
     }, {
       "id": "aa0734c3-eb9f-431c-9a77-641fa4bd2615",
       "comment": "",
@@ -193,6 +277,13 @@
       "target": "875x875",
       "targets": [],
       "value": ""
+    }, {
+      "id": "3d76b1ce-16ff-4369-a178-9d6291da3d9b",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 1",
+      "targets": [],
+      "value": "kujiCountCurrent"
     }, {
       "id": "1c4c4b5f-268e-4b4b-871a-03acc6698265",
       "comment": "",
@@ -329,6 +420,13 @@
     "id": "70843983-738a-4d4f-aa48-59d832172cd2",
     "name": "rakuten-card",
     "commands": [{
+      "id": "7e67c217-8562-4147-99a2-8e3709901353",
+      "comment": "",
+      "command": "run",
+      "target": "credentials",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "6b64d570-321a-46dd-aebc-71c430a0154d",
       "comment": "",
       "command": "setWindowSize",
@@ -342,6 +440,48 @@
       "target": "https://www.rakuten-card.co.jp/e-navi/index.xhtml",
       "targets": [],
       "value": ""
+    }, {
+      "id": "098878a4-99c7-42a0-8e96-c9a56ec15500",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//input[@class='loginButton']",
+      "targets": [],
+      "value": "needLogin"
+    }, {
+      "id": "1febcd55-52fb-4ae1-987b-33d202071db4",
+      "comment": "",
+      "command": "if",
+      "target": "${needLogin} == 1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9612b131-d254-4e5c-adcc-cf561f131d3a",
+      "comment": "",
+      "command": "type",
+      "target": "id=u",
+      "targets": [
+        ["id=loginInner_u", "id"],
+        ["name=u", "name"],
+        ["css=#loginInner_u", "css:finder"],
+        ["xpath=//input[@id='loginInner_u']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "${r_username}"
+    }, {
+      "id": "0998f93b-f60a-4554-a6c5-b36d5effcfdd",
+      "comment": "",
+      "command": "type",
+      "target": "id=p",
+      "targets": [
+        ["id=loginInner_p", "id"],
+        ["name=p", "name"],
+        ["css=#loginInner_p", "css:finder"],
+        ["xpath=//input[@id='loginInner_p']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "${r_password}"
     }, {
       "id": "07c2683e-0246-4b33-b328-2085f41b2cca",
       "comment": "",
@@ -360,6 +500,13 @@
       "comment": "",
       "command": "pause",
       "target": "3000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "27adfd68-36a7-40f7-9337-9e9a0e0f74ad",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -506,6 +653,13 @@
     "id": "303dc923-353f-4116-a4f2-f6461de6795f",
     "name": "kuji-default",
     "commands": [{
+      "id": "6b168f56-680e-442d-a515-6ed7ef037136",
+      "comment": "",
+      "command": "run",
+      "target": "credentials",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "5138653f-cbc4-42ff-a98f-d31873bceabd",
       "comment": "",
       "command": "setWindowSize",
@@ -590,6 +744,114 @@
       "targets": [],
       "value": ""
     }]
+  }, {
+    "id": "8a5313b1-b696-4a1d-862e-ab161deb64e6",
+    "name": "credentials",
+    "commands": [{
+      "id": "5616bcfc-8dd2-48ef-a037-07d67d4161db",
+      "comment": "",
+      "command": "store",
+      "target": "",
+      "targets": [],
+      "value": "r_username"
+    }, {
+      "id": "45bc69f6-db65-443d-9079-ae5d3c664a02",
+      "comment": "",
+      "command": "store",
+      "target": "",
+      "targets": [],
+      "value": "r_password"
+    }, {
+      "id": "67f15a79-6c9f-4076-975f-589c332f3ca2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "875x875",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aa992a2f-a718-4523-8363-2b21e0c974b9",
+      "comment": "",
+      "command": "open",
+      "target": "https://kuji.rakuten.co.jp/256356cd1a",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "38612157-644d-44ab-bf4f-d5e1af7c8f95",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "14adbcdc-d061-4b5b-9ea1-4928f4ac7348",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//input[@class='loginButton']",
+      "targets": [],
+      "value": "needLogin"
+    }, {
+      "id": "70c7c49f-99ba-4e74-ae41-c965c7fda944",
+      "comment": "",
+      "command": "if",
+      "target": "${needLogin} == 1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cb5ac6fa-bb0b-4960-8b2a-db725267aaad",
+      "comment": "",
+      "command": "type",
+      "target": "id=loginInner_u",
+      "targets": [
+        ["id=loginInner_u", "id"],
+        ["name=u", "name"],
+        ["css=#loginInner_u", "css:finder"],
+        ["xpath=//input[@id='loginInner_u']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/table/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "${r_username}"
+    }, {
+      "id": "636a0876-87b6-4ec8-b564-0c4709fc122e",
+      "comment": "",
+      "command": "type",
+      "target": "id=loginInner_p",
+      "targets": [
+        ["id=loginInner_p", "id"],
+        ["name=p", "name"],
+        ["css=#loginInner_p", "css:finder"],
+        ["xpath=//input[@id='loginInner_p']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/table/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "${r_password}"
+    }, {
+      "id": "5b170262-cd6c-4953-b084-ed56a95564f7",
+      "comment": "",
+      "command": "click",
+      "target": "name=submit",
+      "targets": [
+        ["name=submit", "name"],
+        ["css=.loginButton", "css:finder"],
+        ["xpath=//input[@name='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='loginInner']/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ea62127f-da28-4902-a15a-d6e4509251eb",
+      "comment": "",
+      "command": "pause",
+      "target": "2000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18d5fa20-39ed-46d4-b9ba-b54c22230eb5",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "6611b2b5-dee1-4635-983b-03a018cbb7f0",
@@ -597,7 +859,7 @@
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["235573e1-f634-4b96-b392-31d94ced9628"]
+    "tests": ["235573e1-f634-4b96-b392-31d94ced9628", "1225d17b-8469-43b3-8f95-a2631865a882", "303dc923-353f-4116-a4f2-f6461de6795f", "70843983-738a-4d4f-aa48-59d832172cd2"]
   }],
   "urls": ["https://websearch.rakuten.co.jp/", "https://kuji.rakuten.co.jp/", "https://www.rakuten.co.jp/"],
   "plugins": []
