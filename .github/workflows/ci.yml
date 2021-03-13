@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - developer
+  schedule:
+    - cron:  '30 6 * * *'
 
 jobs:
   build:
@@ -21,9 +23,9 @@ jobs:
       run: |
         chmod +x ./scripts/InstallChrome.sh
         ./scripts/InstallChrome.sh
-    - run: |
-        yarn global add selenium-side-runner chromedriver geckodriver
-        echo "$(yarn global bin)" >> $GITHUB_PATH
+    # - run: |
+    #     yarn global add selenium-side-runner chromedriver geckodriver
+    #     echo "$(yarn global bin)" >> $GITHUB_PATH
     # - run: |
     #     testfiles="$(pwd)""/*.side"
     #     selenium-side-runner $testfiles -c "browserName=chrome goog:chromeOptions.args=[disable-infobars, headless]"
@@ -31,5 +33,5 @@ jobs:
       run: yarn --frozen-lockfile
     - run: yarn test
       env:
-        GH_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        GH_PASSWORD: ${{ secrets.RAKUTEN_USERNAME }}
+        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
