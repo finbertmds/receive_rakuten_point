@@ -1,0 +1,32 @@
+name: Daily
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  build:
+    if: (github.event_name == 'schedule')
+    env:
+      RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+      RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+    runs-on: ubuntu-latest # Using linux machine
+
+    steps:
+    - uses: actions/checkout@v2 # Checkout the code
+      with:
+        ref: 'developer'
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: ueokande/setup-firefox@latest
+    - run: firefox --version
+    - name: Install Google Chrome # Using shell script to install Google Chrome
+      run: |
+        chmod +x ./scripts/InstallChrome.sh
+        ./scripts/InstallChrome.sh
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+    - name: Test
+      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test)
