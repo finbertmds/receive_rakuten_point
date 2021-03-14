@@ -1,4 +1,4 @@
-name: Selenium JavaScript Mocha CI
+name: Mocha CI
 
 on:
   push:
@@ -9,6 +9,9 @@ on:
 
 jobs:
   build:
+    env:
+      RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+      RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
     runs-on: ubuntu-latest # Using linux machine
 
     steps:
@@ -25,7 +28,5 @@ jobs:
         ./scripts/InstallChrome.sh
     - name: Install dependencies
       run: yarn --frozen-lockfile
-    - run: yarn test
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+    - name: Test
+      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test)
