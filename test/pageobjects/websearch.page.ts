@@ -51,6 +51,9 @@ class WebSearchPage extends Page {
     }
 
     async search (): Promise<void> {
+        if (!await (await this.labelCurrentSearchCount).isExisting()) {
+            return;
+        }
         let currentSearchCount = await (await this.labelCurrentSearchCount).getText();
         while (parseInt(currentSearchCount) < config.WEBSEARCH_MAX_COUNT) {
             let myRandomKeySearch = webSearchHelpers.generateRandomKeySearch();

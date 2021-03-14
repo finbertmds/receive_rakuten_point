@@ -6,6 +6,7 @@ on:
       - developer
     paths:
     - "test/**"
+    - ".github/workflows/ci.yml"
 
 jobs:
   build:
