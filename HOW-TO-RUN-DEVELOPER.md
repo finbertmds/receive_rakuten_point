@@ -10,8 +10,8 @@ This is a step-by-step guide how to run the example:
 2. Run
 
 ```bash
-export RAKUTEN_USERNAME='xxx' // Your rakuten username
-export RAKUTEN_PASSWORD='xxx' // Your rakuten password
+export RAKUTEN_USERNAME='xxx'
+export RAKUTEN_PASSWORD='xxx'
 yarn
 yarn test // browser: firefox
 ```

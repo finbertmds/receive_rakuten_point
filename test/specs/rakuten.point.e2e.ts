@@ -41,11 +41,12 @@ describe('Rakuten', () => {
         }
         let labelclickPointCountTxt = await rakutencardPage.getLableClickPointCountTxt();
         await rakutencardPage.handleClickPointCountLink();
+        console.log("labelclickPointCountTxt: ", labelclickPointCountTxt);
         for (let index = labelclickPointCountTxt - 1; index >= 0; index--) {
             // let clickPointListCount = await rakutencardPage.getClickPointListCount();
             // console.log("getClickPointListCount: ", clickPointListCount);
             let canClickNew = await rakutencardPage.canClickPointNewIndex(index);
-            console.log("canClickNew--- "+index+" : ", canClickNew);
+            console.log("canClickNew--- "+index+": ", canClickNew);
             if (canClickNew) {
                 const currentWindows = await browser.getWindowHandle();
                 await rakutencardPage.handleClickPointNewIndex(index);
