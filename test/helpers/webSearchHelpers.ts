@@ -1,4 +1,4 @@
-import config from "../pageobjects/config"
+import config from "../../config"
 
 export default {
     generateRandomKeySearch: ():string => {

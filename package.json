@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "npx wdio run ./wdio.conf.js",
-    "test:chrome": "npx wdio run ./wdio.conf.chrome.js",
-    "test:firefox": "npx wdio run ./wdio.conf.firefox.js"
+    "test:chrome": "npx wdio run ./wdio.chrome.conf.js",
+    "test:firefox": "npx wdio run ./wdio.firefox.conf.js"
   },
   "dependencies": {
     "@wdio/cli": "^7.1.2"

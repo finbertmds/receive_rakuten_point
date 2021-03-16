@@ -50,40 +50,6 @@ exports.config = {
     //
     maxInstances: 10,
     //
-    // If you have trouble getting all important capabilities together, check out the
-    // Sauce Labs platform configurator - a great tool to configure your capabilities:
-    // https://docs.saucelabs.com/reference/platforms-configurator
-    //
-    capabilities: [{
-        maxInstances: 5,
-        // browserName: 'chrome',
-        // 'goog:chromeOptions': {
-        //     extensions: [(function () {
-        //         try {
-        //             const webExt = encode(path.resolve(__dirname, './cextension.crx'))
-        //             return webExt;
-        //         } catch (e) {
-        //             console.log(e, 'An error occurred while to parse extension file!');
-        //         }
-        //     })()],
-        //     // to run chrome headless the following flags are required
-        //     // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-        //     // args: ['--headless', '--disable-gpu'],
-        // },
-        browserName: 'firefox',
-        'moz:firefoxOptions': {
-            args: ['--headless'],
-        },
-        //
-        // Parameter to ignore some or all default flags
-        // - if value is true: ignore all DevTools 'default flags' and Puppeteer 'default arguments'
-        // - if value is an array: DevTools filters given default arguments
-        // 'wdio:devtoolsOptions': {
-        //    ignoreDefaultArgs: true,
-        //    ignoreDefaultArgs: ['--disable-sync', '--disable-extensions'],
-        // }
-    }],
-    //
     // ===================
     // Test Configurations
     // ===================
@@ -121,7 +87,7 @@ exports.config = {
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 120000,
+    connectionRetryTimeout: 300000,
     //
     // Default request retries count
     connectionRetryCount: 3,

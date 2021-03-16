@@ -1,4 +1,4 @@
-import config from '../pageobjects/config';
+import config from '../../config';
 import kujiPage from '../pageobjects/kuji.page';
 import loginPage from '../pageobjects/login.page';
 import rakutencardPage from '../pageobjects/rakutencard.page';
@@ -64,6 +64,15 @@ describe('Rakuten', () => {
         }
         await browser.pause(2000)
     });
+    
+    it('kuji_default_get_point', async () => {
+        await credentials();
+        for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
+            await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
+            await kujiPage.handleProcessAfterClickKuji(true);
+        }
+        await browser.pause(2000)
+    });
 
     it('kuji_get_point', async () => {
         await credentials();
@@ -72,18 +81,11 @@ describe('Rakuten', () => {
         if (kujiCount > 0) {
             for (let index = 0; index < kujiCount; index++) {
                 await kujiPage.open();
-                await kujiPage.handleClickKujiElementIndex(index);
-                await kujiPage.handleProcessAfterClickKuji();
+                let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
+                if (clickedKuji) {
+                    await kujiPage.handleProcessAfterClickKuji();
+                }
             }
-        }
-        await browser.pause(2000)
-    });
-    
-    it('kuji_default_get_point', async () => {
-        await credentials();
-        for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
-            await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
-            await kujiPage.handleProcessAfterClickKuji(true);
         }
         await browser.pause(2000)
     });

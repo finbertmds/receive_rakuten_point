@@ -1,4 +1,4 @@
-import config from './config';
+import config from '../../config';
 import Page from './page';
 
 /**
@@ -21,12 +21,24 @@ class KujiPage extends Page {
         return (await this.liKujiList).length;
     }
 
-    async getKujiElementIndex (index: number) {
-        return (await (await this.liKujiList)[index].$('a')).$('img')
+    async getKujiElementIndex (index: number): Promise<WebdriverIO.Element | null> {
+        let kujiElementList = (await this.liKujiList);
+        if (kujiElementList.length > 0) {
+            let kujiElement = kujiElementList[index];
+            return (await kujiElement.$('a')).$('img')
+        }
+        return null;
+        // return (await (await this.liKujiList)[index].$('a')).$('img')
     }
 
-    async handleClickKujiElementIndex (index: number) {
-        await (await this.getKujiElementIndex(index)).click()
+    async handleClickKujiElementIndex (index: number): Promise<boolean> {
+        let kujiElementIndex = await this.getKujiElementIndex(index)
+        if (!kujiElementIndex) {
+            return false;
+        }
+        await kujiElementIndex.click();
+        return true;
+        // await (await this.getKujiElementIndex(index)).click()
         // await browser.pause(1000)
     }
 
@@ -39,7 +51,7 @@ class KujiPage extends Page {
     }
 
     async hasEntry () {
-        await browser.pause(1000)
+        await browser.pause(2000)
         return await (await this.btnEntry).isExisting();
     }
 
@@ -65,7 +77,10 @@ class KujiPage extends Page {
             await this.handleHasDisnon();
         }
         if (await this.hasEntry()) {
+            console.log("hasEntry");
             await this.handleClickEntry();
+        } else {
+            console.log("notEntry");
         }
     }
 

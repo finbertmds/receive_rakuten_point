@@ -1,5 +1,5 @@
+import config from '../../config';
 import webSearchHelpers from '../helpers/webSearchHelpers';
-import config from './config';
 import Page from './page';
 
 /**
@@ -52,9 +52,11 @@ class WebSearchPage extends Page {
 
     async search (): Promise<void> {
         if (!await (await this.labelCurrentSearchCount).isExisting()) {
+            console.log("labelCurrentSearchCount not found");
             return;
         }
         let currentSearchCount = await (await this.labelCurrentSearchCount).getText();
+        console.log("currentSearchCount: ", currentSearchCount);
         while (parseInt(currentSearchCount) < config.WEBSEARCH_MAX_COUNT) {
             let myRandomKeySearch = webSearchHelpers.generateRandomKeySearch();
             await (await this.inputSearchFormTxt).setValue(myRandomKeySearch)
