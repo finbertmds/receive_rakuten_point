@@ -15,6 +15,10 @@ class RakutenCardPage extends Page {
     get labelClickPointCountTxt () { return $('.sprite-ico_rc_enavi_point_01 > .rce-number') }
     get btnClickPointCountLink () { return $('.sprite-ico_rc_enavi_point_01') }
     get clickPointList () { return $$('.topArea') }
+
+    get videoBtn () { return $('#vjs_video_3 > button') }
+    get videoGetPointImg () { return $('//*[@id="vjs_video_3"]/div[8]/div[1]/div/div/a/img') }
+
     get btnClickShoppingLink () { return $('.pNav03 > a') }
     get btnClickShoppingTxt () { return $('.pNav03 > a > span') }
     get btnClickShoppingReceivePoint () { return $('#js-coreppo-receive') }
@@ -78,6 +82,30 @@ class RakutenCardPage extends Page {
 
     async handleClickShoppingReceivePoint (): Promise<void> {
         await (await this.btnClickShoppingReceivePoint).click();
+    }
+
+    async handlClickVideo () {
+        let videoBtn = await this.videoBtn
+        if (!videoBtn.isDisplayed()) {
+            return;
+        }
+        await videoBtn.scrollIntoView()
+        await videoBtn.click();
+        await browser.waitUntil(async () => {
+            try {
+                return await (await this.videoGetPointImg).isDisplayed();
+            } catch (error) {
+                return true
+            }
+        },
+        {
+            timeout: 300000,
+            timeoutMsg: 'expected video end after 5m'
+        })
+        console.log("view video end");
+        await (await this.videoGetPointImg).click();
+
+        await browser.pause(3000)
     }
 
     /**

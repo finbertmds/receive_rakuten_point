@@ -26,4 +26,5 @@ export default {
         'https://kuji.rakuten.co.jp/9ea32a8dfa',
     ],
     RAKUTENCARD_HOME_PAGE: 'https://www.rakuten-card.co.jp/e-navi/index.xhtml',
+    DAY_VIEW_VIDEO_GET_POINT: 15,
 }
