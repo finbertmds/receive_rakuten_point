@@ -25,6 +25,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+    - uses: nanasess/setup-chromedriver@master
     - name: Install and Run Appium Server
       run: |
         chmod +x ./scripts/RunAppiumServer.sh

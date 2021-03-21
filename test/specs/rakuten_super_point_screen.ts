@@ -51,7 +51,8 @@ describe('rakuten_super_point_screen', () => {
         sHomeAlertScreen.waitForMessageIsChanged(message1);
         sHomeAlertScreen.alertContainerOkButton.click();
         
-        permission.waitForIsShown();
+        // permission.waitForIsShown();
+        driver.pause(2000);
         permission.allowButton.click();
         
         sHomeAlertScreen.waitForIsShown();
