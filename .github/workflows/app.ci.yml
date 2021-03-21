@@ -35,4 +35,4 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-        script: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test)
+        script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test"
