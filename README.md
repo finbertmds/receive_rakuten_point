@@ -1,7 +1,10 @@
 # Automatically receive daily points of Rakuten
 
-## Technologies
-- Selenium IDE
+## Developer
+### Technologies
+- WebdriverIO
+- Jasmine
+- Appium
 
-## How To Run
-[How to run](HOW-TO-RUN.md) includes more details
+### How To Run
+[How to run by Developer](HOW-TO-RUN-DEVELOPER.md) includes more details
