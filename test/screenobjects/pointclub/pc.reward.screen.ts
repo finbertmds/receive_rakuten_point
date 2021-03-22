@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -26,13 +27,17 @@ class PC_RewardScreen extends AppScreen {
 
     waitForUnclaimBoxIsShown () {
         return $(SELECTORS.UNCLAIM_BOX).waitForDisplayed({
-            timeout: 10000,
+            timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
 
     waitForSuggestProductIsShown () {
-        return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
+        // return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
+        return $(SELECTORS.SUGGEST_PRODUCT_LABEL).waitForDisplayed({
+            timeout: 120000,
+            reverse: false,
+        });
     }
 
     waitForUnclaimListIsShown () {
@@ -65,7 +70,11 @@ class PC_RewardScreen extends AppScreen {
     }
 
     waitForGetPointDoneLabelIsShown () {
-        return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
+        // return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
+        return $(SELECTORS.GET_POINT_DONE_LABEL).waitForDisplayed({
+            timeout: 120000,
+            reverse: false,
+        });
     }
 
     get getPointDoneLabel () {
