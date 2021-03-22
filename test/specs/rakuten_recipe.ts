@@ -44,6 +44,7 @@ describe('rakuten_recipe', () => {
                 rHomeSettingScreen.serveyCancelButton.click();
             }
         }
+        driver.pause(10000);
     }
 
     function handleOpenTabMyPageAndLogin () {
@@ -86,6 +87,12 @@ describe('rakuten_recipe', () => {
 
         rRewardScreen.waitForIsShown();
         rRewardScreen.waitForSuggestProductIsShown();
+        let retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
+        while (retryLableIsShown) {
+            rRewardScreen.retryLabel.click();
+            rRewardScreen.waitForSuggestProductIsShown();
+            retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
+        }
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
         if (needLoginMoreTimeButton.isDisplayed()) {
             rRewardScreen.closeButton.click();

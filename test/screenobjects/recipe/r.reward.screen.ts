@@ -4,6 +4,7 @@ import AppScreen from '../app.screen';
 const SELECTORS = {
     REWARD_SCREEN: getByText("楽天リワード"),
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByText("ログインする"),
+    RETRY_LABEL: getByText("再試行"),
     SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
     UNCLAIM_BOX: getByResouceId("unclaim-box"),
     UNCLAIM_LIST: getByResouceId("unclaimed-list"),
@@ -19,6 +20,10 @@ class R_RewardScreen extends AppScreen {
 
     get suggestProductLabel () {
         return $(SELECTORS.SUGGEST_PRODUCT_LABEL);
+    }
+
+    get retryLabel () {
+        return $(SELECTORS.RETRY_LABEL);
     }
 
     get needLoginButton () {

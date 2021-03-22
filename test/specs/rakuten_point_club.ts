@@ -103,30 +103,36 @@ describe('rakuten_point_club', () => {
         
         driver.pause(2000)
         let unclaimBox = pcRewardScreen.unclaimBox;
-        if (unclaimBox.isDisplayed()) {
-            // console.log("rewardScreen: ", unclaimBox?.getText());
-            unclaimBox.click();
+        if (!unclaimBox.isDisplayed()) {
+            pcRewardScreen.closeButton.click();
+            return;
+        }
+        // console.log("rewardScreen: ", unclaimBox?.getText());
+        unclaimBox.click();
 
-            pcRewardScreen.waitForUnclaimListIsShown();
-            let unclaimListCount = pcRewardScreen.getUnclaimListItems?.length
-            console.log("unclaimListCount: ", unclaimListCount);
-            
-            if (unclaimListCount) {
-                for (let index = 0; index < unclaimListCount; index++) {
-                    // pcRewardScreen.waitForUnclaimBoxIsShown();
-                    let unclaimListIndexButton = pcRewardScreen.getUnclaimListIndexButton(0);
-                    if (unclaimListIndexButton) {
-                        // console.log("unclaimText: ", pcRewardScreen.getUnclaimListIndexButton(index)?.getText());
-                        unclaimListIndexButton.click();
-                        
-                        pcRewardScreen.waitForGetPointDoneLabelIsShown();
-                        driver.pause(7000);
-                        // console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
+        pcRewardScreen.waitForUnclaimListIsShown();
+        let unclaimListCount = pcRewardScreen.getUnclaimListItems?.length
+        console.log("unclaimListCount: ", unclaimListCount);
+        
+        if (unclaimListCount) {
+            for (let index = 0; index < unclaimListCount; index++) {
+                if (index !== 0) {
+                    pcRewardScreen.waitForUnclaimBoxIsShown();
+                    unclaimBox.click();
+                    pcRewardScreen.waitForUnclaimListIsShown();
+                }
+                let unclaimListIndexButton = pcRewardScreen.getUnclaimListIndexButton(0);
+                if (unclaimListIndexButton) {
+                    // console.log("unclaimText: ", pcRewardScreen.getUnclaimListIndexButton(index)?.getText());
+                    unclaimListIndexButton.click();
+                    
+                    pcRewardScreen.waitForGetPointDoneLabelIsShown();
+                    driver.pause(7000);
+                    // console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
 
-                        pcRewardScreen.backButton.click();
-                        driver.pause(3000);
-                    }
-                }                
+                    pcRewardScreen.backButton.click();
+                    driver.pause(3000);
+                }
             }
         }
         pcRewardScreen.closeButton.click();
@@ -146,13 +152,25 @@ describe('rakuten_point_club', () => {
     });
 
     it('pc_click_point_history', () => {
+        let currentDate = new Date().getDay();
+        if (currentDate !== 1) {
+            console.log(`only run pc_click_point_history at Monday everyweek`);
+            return;
+        }
         handleClickPointHistory();
         driver.pause(2000)
     });
 
     it('pc_click_first_ad_banner', () => {
-        handleClickFirstAdBanner();
-        driver.pause(2000);
+        let currentDate = new Date().getDay();
+        if (currentDate !== 1) {
+            console.log(`only run pc_click_first_ad_banner at Monday everyweek`);
+            return;
+        }
+        for (let index = 0; index < 3; index++) {
+            handleClickFirstAdBanner();
+            driver.pause(2000);
+        }
     });
 
     it('pc_get_point_from_reward', () => {
