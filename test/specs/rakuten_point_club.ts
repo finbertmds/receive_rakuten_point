@@ -61,15 +61,18 @@ describe('rakuten_point_club', () => {
     function handleClickPointHistory () {
         pcHomeScreen.waitForPointHistoryIsShown();
         pcHomeScreen.pointHistoryIcon.click();
-        driver.pause(2000)
         pcHomeScreen.waitForWebCloseButtonIsShown();
-        driver.pause(6000)
+        driver.pause(10000)
         pcHomeScreen.webCloseButton.click();
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
     function handleClickFirstAdBanner () {
-        pcHomeScreen.firstAdBanner?.click();
+        let firstAdBanner = pcHomeScreen.firstAdBanner
+        if (firstAdBanner === null) {
+            return;
+        }
+        firstAdBanner.click();
         driver.pause(2000)
         pcHomeScreen.waitForWebCloseTabButtonIsShown();
         driver.pause(3000)
