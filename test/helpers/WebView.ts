@@ -39,7 +39,15 @@ class WebView {
      * @param {string} context should be native of webview
      */
     switchToContext (context: string) {
-        driver.switchContext(this.getCurrentContexts()[context === CONTEXT_REF.WEBVIEW ? (this.getCurrentContexts().length - 1) : 0]);
+        let currentContexts = this.getCurrentContexts();
+        if (context === CONTEXT_REF.NATIVE) {
+            driver.switchContext(currentContexts[0]);
+        } else if (currentContexts.indexOf(context) > -1){
+            driver.switchContext(context);
+        } else {
+            driver.switchContext(currentContexts[currentContexts.length - 1]);
+        }
+        // driver.switchContext(this.getCurrentContexts()[context === CONTEXT_REF.WEBVIEW ? (this.getCurrentContexts().length - 1) : 0]);
     }
 
     /**

@@ -61,9 +61,11 @@ describe('rakuten_point_club', () => {
     function handleClickPointHistory () {
         pcHomeScreen.waitForPointHistoryIsShown();
         pcHomeScreen.pointHistoryIcon.click();
-        pcHomeScreen.waitForWebCloseButtonIsShown();
+        // pcHomeScreen.waitForWebCloseButtonIsShown();
         driver.pause(10000)
-        pcHomeScreen.webCloseButton.click();
+        // pcHomeScreen.webCloseButton.click();
+        driver.back();
+        driver.pause(2000);
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
@@ -73,10 +75,12 @@ describe('rakuten_point_club', () => {
             return;
         }
         firstAdBanner.click();
-        driver.pause(2000)
-        pcHomeScreen.waitForWebCloseTabButtonIsShown();
-        driver.pause(3000)
-        pcHomeScreen.webCloseTabButton.click();
+        // driver.pause(2000)
+        // pcHomeScreen.waitForWebCloseTabButtonIsShown();
+        // pcHomeScreen.webCloseTabButton.click();
+        driver.pause(10000);
+        driver.back();
+        driver.pause(2000);
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
