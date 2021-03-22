@@ -15,6 +15,8 @@ describe('rakuten_recipe', () => {
     })
 
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
+        driver.pause(5000);
+        rFirststartScreen.waitForStartLablelIsShown();
         if (rFirststartScreen.startLabel.isDisplayed()) {
             rFirststartScreen.startLabel.click();
             driver.pause(7000);

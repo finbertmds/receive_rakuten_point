@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -12,6 +13,13 @@ const SELECTORS = {
 class PC_FirstStartScreen extends AppScreen {
     constructor () {
         super(SELECTORS.FIRSTSTSRT_SCREEN);
+    }
+
+    waitForWarningLablelIsShown () {
+        return $(SELECTORS.WARNING_LABEL).waitForDisplayed({
+            timeout: config.DEFAULT_TIMEOUT,
+            reverse: false,
+        });
     }
 
     get warningLabel () {

@@ -11,6 +11,7 @@ describe('rakuten_point_club', () => {
     function handleFirstTimeCloseWarning () {
         pcFirststartScreen.waitForIsShown();
         driver.pause(5000)
+        pcFirststartScreen.waitForWarningLablelIsShown();
         let isDiplayedWarning = pcFirststartScreen.warningLabel.isDisplayed()
         if (isDiplayedWarning) {
             pcFirststartScreen.neverDisplayCheckbox.click()

@@ -19,7 +19,7 @@ class S_HomeGetPointScreen extends AppScreen {
 
     waitForDoneButtonIsShown () {
         return this.doneButton.waitForDisplayed({
-            timeout: 30000,
+            timeout: 90000,
             reverse: false,
         });
     }

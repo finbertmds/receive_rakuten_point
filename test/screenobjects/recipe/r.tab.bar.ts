@@ -1,3 +1,4 @@
+import config from "../../../config";
 import { getByResouceId } from "../../helpers/UiSelectorHelper";
 
 const SELECTORS = {
@@ -27,7 +28,7 @@ export default class R_TabBar {
 
     static waitForTabBarShown () {
         $(SELECTORS.BOTTOM_ICON).waitForDisplayed({
-            timeout: 20000,
+            timeout: config.DEFAULT_TIMEOUT,
         });
     }
 }
