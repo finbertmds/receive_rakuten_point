@@ -58,7 +58,7 @@ describe('rakuten_super_point_screen', () => {
     function handleClosePermissionRequestAlert () {
         driver.pause(2000);
         if (!sHomeAlertScreen.alertContainer.isExisting()) {
-            return;
+            return false;
         }
         let permissionRequestAlertText = sHomeAlertScreen.alertContainerMessage.getText();
         console.log("permissionRequestAlertText: ", permissionRequestAlertText);
@@ -70,6 +70,7 @@ describe('rakuten_super_point_screen', () => {
             driver.back();
             driver.pause(2000);
         }
+        return true;
     }
 
     function handleClickPointNumber () {
@@ -89,8 +90,11 @@ describe('rakuten_super_point_screen', () => {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
                     // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, pointNumberButton.getText());
                     pointNumberButton.click();
-
-                    handleClosePermissionRequestAlert();
+                    
+                    let needClosePermissionRequestAlert = handleClosePermissionRequestAlert();
+                    if (needClosePermissionRequestAlert) {
+                        pointNumberButton.click();
+                    }
 
                     sHomeGetpointScreen.waitForIsShown();
                     sHomeGetpointScreen.waitForDoneButtonIsShown();
