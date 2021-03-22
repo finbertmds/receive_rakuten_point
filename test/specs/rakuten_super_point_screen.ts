@@ -15,10 +15,6 @@ describe('rakuten_super_point_screen', () => {
         driver.pause(5000);
     })
 
-    afterAll(() => {
-        driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-    })
-
     function handleSkipButton () {
         sFirststartScreen.waitForIsShown();
         driver.pause(2000);
@@ -71,8 +67,8 @@ describe('rakuten_super_point_screen', () => {
 
         if (permission.settingsContainer.isExisting()) {
             permission.settingsSwitchRadio.click();
+            driver.back();
             driver.pause(2000);
-            driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
         }
     }
 

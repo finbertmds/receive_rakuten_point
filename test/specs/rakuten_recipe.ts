@@ -14,10 +14,6 @@ describe('rakuten_recipe', () => {
         driver.pause(5000);
     })
 
-    afterAll(() => {
-        driver.terminateApp(config.RAKUTEN_RECIPE_APP_ID);
-    })
-
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
         if (rFirststartScreen.startLabel.isDisplayed()) {
             rFirststartScreen.startLabel.click();

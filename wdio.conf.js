@@ -36,7 +36,6 @@ config.capabilities = [
         'appium:noReset': true,
         'appium:newCommandTimeout': 240,
         'appium:nativeWebScreenshot': true,
-        'appium:androidInstallTimeout': 300000,
     },
 ];
 

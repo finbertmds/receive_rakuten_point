@@ -7,10 +7,6 @@ import pcRewardScreen from '../screenobjects/pointclub/pc.reward.screen';
 import webviewScreen from "../screenobjects/webview.screen";
 
 describe('rakuten_point_club', () => {
-    afterAll(() => {
-        driver.terminateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
-        driver.pause(5000)
-    })
 
     function handleFirstTimeCloseWarning () {
         pcFirststartScreen.waitForIsShown();
