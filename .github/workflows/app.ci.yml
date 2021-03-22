@@ -36,6 +36,7 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
+        target: google_apis
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test"
     - name: upload-artifact
       if: ${{ failure() }}

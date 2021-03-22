@@ -83,6 +83,7 @@ describe('rakuten_recipe', () => {
     }
 
     function openRewardScreen () {
+        Gestures.swipeUp(0.7);
         rMypageScreen.rewardButton.click();
 
         rRewardScreen.waitForIsShown();

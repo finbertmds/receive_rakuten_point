@@ -6,6 +6,8 @@ const SELECTORS = {
   ALLOW_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_foreground_only_button"),
   // ONE_TIME_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_one_time_button"),
   DENY_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_deny_button"),
+  SETTINGS_CONTAINER: getByResouceId("com.android.settings:id/content_frame"),
+  SETTINGS_SWITCH_RADIO: getByResouceId("android:id/switch_widget"),
 };
 
 class Permission extends AppScreen {
@@ -23,6 +25,14 @@ class Permission extends AppScreen {
 
   get denyButton () {
     return $(SELECTORS.DENY_BUTTON);
+  }
+
+  get settingsContainer () {
+    return $(SELECTORS.SETTINGS_CONTAINER);
+  }
+
+  get settingsSwitchRadio () {
+    return $(SELECTORS.SETTINGS_SWITCH_RADIO);
   }
 }
 

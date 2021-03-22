@@ -59,6 +59,23 @@ describe('rakuten_super_point_screen', () => {
         sHomeAlertScreen.alertContainerOkButton.click();
     }
 
+    function handleClosePermissionRequestAlert () {
+        driver.pause(2000);
+        if (!sHomeAlertScreen.alertContainer.isExisting()) {
+            return;
+        }
+        let permissionRequestAlertText = sHomeAlertScreen.alertContainerMessage.getText();
+        console.log("permissionRequestAlertText: ", permissionRequestAlertText);
+        sHomeAlertScreen.alertContainerOkButton.click();
+        driver.pause(2000);
+
+        if (permission.settingsContainer.isExisting()) {
+            permission.settingsSwitchRadio.click();
+            driver.pause(2000);
+            driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        }
+    }
+
     function handleClickPointNumber () {
         sHomeScreen.waitForIsShown();
         Gestures.swipeOnPercentage(
@@ -76,6 +93,8 @@ describe('rakuten_super_point_screen', () => {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
                     // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, pointNumberButton.getText());
                     pointNumberButton.click();
+
+                    handleClosePermissionRequestAlert();
 
                     sHomeGetpointScreen.waitForIsShown();
                     sHomeGetpointScreen.waitForDoneButtonIsShown();
