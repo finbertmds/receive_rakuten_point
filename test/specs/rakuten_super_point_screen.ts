@@ -12,7 +12,7 @@ import S_TabBar from '../screenobjects/superpointscreen/s.tab.bar';
 describe('rakuten_super_point_screen', () => {
     beforeAll(() => {
         driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-        driver.pause(3000);
+        driver.pause(5000);
     })
 
     afterAll(() => {
@@ -21,14 +21,14 @@ describe('rakuten_super_point_screen', () => {
 
     function handleSkipButton () {
         sFirststartScreen.waitForIsShown();
-        driver.pause(1000);
+        driver.pause(2000);
         if (sFirststartScreen.skipButon.isExisting()) {
             sFirststartScreen.skipButon.click();
         }
     }
     function handleFirstLogin () {
         // sHomeScreen.waitForIsShown();
-        driver.pause(1000);
+        driver.pause(2000);
         let loginButton = sHomeScreen.loginButton
         if (loginButton.isDisplayed()) {
             loginButton.click();
@@ -42,7 +42,7 @@ describe('rakuten_super_point_screen', () => {
     }
 
     function handleCloseAlert () {
-        driver.pause(1000);
+        driver.pause(2000);
         if (!sHomeAlertScreen.alertContainer.isExisting()) {
             return;
         }
@@ -52,7 +52,7 @@ describe('rakuten_super_point_screen', () => {
         sHomeAlertScreen.alertContainerOkButton.click();
         
         // permission.waitForIsShown();
-        driver.pause(2000);
+        driver.pause(3000);
         permission.allowButton.click();
         
         sHomeAlertScreen.waitForIsShown();
@@ -68,7 +68,7 @@ describe('rakuten_super_point_screen', () => {
         let pointNumberClickedIndex = 0;
         let swipeCount = 10;
         for (let index = 0; index < swipeCount; index++) {
-            driver.pause(1000);
+            driver.pause(2000);
             let pointNumberButtonList = sHomeScreen.pointNumberButtonList;
             if (pointNumberButtonList) {
                 console.log("pointNumberButtonListCount: ", pointNumberButtonList?.length);
@@ -93,7 +93,7 @@ describe('rakuten_super_point_screen', () => {
 
     function handleClickGetPoint () {
         sLuckycountScreen.waitForIsShown();
-        driver.pause(1000)
+        driver.pause(2000)
         let getButton = sLuckycountScreen.getButton;
         if (getButton.isExisting()) {
             getButton.click();
@@ -103,7 +103,7 @@ describe('rakuten_super_point_screen', () => {
     }
 
     function handleClickChallenge () {
-        driver.pause(1000)
+        driver.pause(2000)
         let challengeButton = sLuckycountScreen.challengeButton
         if (challengeButton.isExisting()) {
             challengeButton.click();
@@ -125,7 +125,7 @@ describe('rakuten_super_point_screen', () => {
         handleCloseAlert();
         handleClickPointNumber();
         
-        driver.pause(1000)
+        driver.pause(2000)
     });
 
     it('sps_get_point_and_challenge', () => {
@@ -134,7 +134,7 @@ describe('rakuten_super_point_screen', () => {
         handleClickGetPoint();
         handleClickChallenge();
 
-        driver.pause(1000)
+        driver.pause(2000)
     });
 
 });

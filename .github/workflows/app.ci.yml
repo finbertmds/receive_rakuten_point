@@ -37,3 +37,12 @@ jobs:
       with:
         api-level: 29
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test"
+    - name: upload-artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: upload-screenshots
+        path: screenshots
+    - name: remove-screenshots
+      if: ${{ failure() }}
+      run: rm ./screenshots/*

@@ -11,7 +11,7 @@ import sHomeModalScreen from '../screenobjects/superpointscreen/s.home.modal.scr
 describe('rakuten_recipe', () => {
     beforeAll(() => {
         driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
-        driver.pause(3000);
+        driver.pause(5000);
     })
 
     afterAll(() => {
@@ -21,12 +21,12 @@ describe('rakuten_recipe', () => {
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
         if (rFirststartScreen.startLabel.isDisplayed()) {
             rFirststartScreen.startLabel.click();
-            driver.pause(5000);
+            driver.pause(7000);
         }
         if (rHomeSettingScreen.scrollView.isDisplayed()) {
             if (completeServey) {
                 rHomeSettingScreen.choice1Option1.click();
-                driver.pause(1000);
+                driver.pause(2000);
                 Gestures.swipeUp();
                 rHomeSettingScreen.choice2Option1.click();
                 rHomeSettingScreen.choice3Option1.click();
@@ -53,12 +53,12 @@ describe('rakuten_recipe', () => {
         rTabBar.openMyPage();
 
         // rMypageScreen.waitForIsShown();
-        driver.pause(1000);
+        driver.pause(2000);
         if (rMypageScreen.loginButton.isDisplayed()) {
             rMypageScreen.loginButton.click();
 
             handleFirstTimeLogin();
-            driver.pause(2000);
+            driver.pause(3000);
             // rMypageScreen.waitForMyPageAfterLoginIsShown();
             // console.log("usernameLabel: ", rMypageScreen.usernameLabel.getText());
         }
@@ -74,11 +74,11 @@ describe('rakuten_recipe', () => {
     }
 
     function handleCloseModal () {
-        driver.pause(2000);
+        driver.pause(3000);
         if (sHomeModalScreen.modalContainer.isDisplayed()) {
             sHomeModalScreen.modalNotShowButton.click();
             sHomeModalScreen.closeButton.click();
-            driver.pause(2000);
+            driver.pause(3000);
         }
     }
 
@@ -96,7 +96,7 @@ describe('rakuten_recipe', () => {
     }
     
     function clickUnclaimButton () {
-        driver.pause(1000)
+        driver.pause(2000)
         let unclaimBox = rRewardScreen.unclaimBox;
         if (unclaimBox.isDisplayed()) {
             unclaimBox.click();
@@ -112,7 +112,7 @@ describe('rakuten_recipe', () => {
                         unclaimListIndexButton.click();
                         
                         rRewardScreen.waitForGetPointDoneLabelIsShown();
-                        driver.pause(5000)
+                        driver.pause(7000)
                         console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
 
                         rRewardScreen.backButton.click();
@@ -135,7 +135,7 @@ describe('rakuten_recipe', () => {
         }
         clickUnclaimButton();
         
-        driver.pause(1000)
+        driver.pause(2000)
     });
 
 });

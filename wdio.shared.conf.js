@@ -204,8 +204,20 @@ exports.config = {
     /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: function(test, context, { error, result, duration, passed, retries }) {
+        // if test passed, ignore, else take and save screenshot.
+        if (passed) {
+            return;
+        }
+        var dir = './screenshots';
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+        var filename = encodeURIComponent(test.description.replace(/\s+/g, '-'));
+        var filePath = join(process.cwd(), `${dir}/${filename}-${new Date().getTime()}.png`);
+        browser.saveScreenshot(filePath)
+        console.log('\n\tScreenshot location:', filePath, '\n');
+    },
 
 
     /**
