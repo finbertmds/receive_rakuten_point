@@ -45,4 +45,4 @@ jobs:
         path: screenshots
     - name: remove-screenshots
       if: ${{ failure() }}
-      run: rm ./screenshots/*
+      run: rm -rf ./screenshots
