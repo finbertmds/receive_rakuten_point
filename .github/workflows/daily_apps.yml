@@ -1,0 +1,48 @@
+name: Daily Apps
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  build:
+    if: (github.event_name == 'schedule')
+    env:
+      RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+      RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: 'rakuten_apps'
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - uses: nanasess/setup-chromedriver@master
+    - name: Install and Run Appium Server
+      run: |
+        chmod +x ./scripts/RunAppiumServer.sh
+        ./scripts/RunAppiumServer.sh
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+    - name: Run Appium Tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 29
+        target: google_apis
+        script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test"
+    - name: upload-artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: upload-screenshots
+        path: screenshots
+    - name: remove-screenshots
+      if: ${{ failure() }}
+      run: rm -rf ./screenshots
