@@ -1,3 +1,6 @@
+var fs = require('fs');
+const { join } = require('path');
+
 exports.config = {
     //
     // ====================
