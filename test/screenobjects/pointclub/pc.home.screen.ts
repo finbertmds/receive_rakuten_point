@@ -27,11 +27,15 @@ class PC_HomeScreen extends AppScreen {
         super(SELECTORS.HOME_SCREEN);
     }
 
-    waitForToolbarIsShown (): boolean | void {
-        return $(SELECTORS.TOOLBAR_ELEMENT).waitForDisplayed({
+    waitForRakutenNameLableIsShown (): boolean | void {
+        return $(SELECTORS.RAKUTEN_NAME_LABLEL).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
+    }
+
+    waitForNotificationSettingLabelIsShown () {
+        return this.waitForElementIsShown(SELECTORS.NOTIFICATION_SETTING_LABEL);
     }
 
     get notificationSettingLabel () {
@@ -46,6 +50,10 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.NOTIFICATION_SETTING_ON_LABEL);
     }
 
+    waitForOkButtonIsShown () {
+        return this.waitForElementIsShown(SELECTORS.NOTIFICATION_OK_BUTTON);
+    }
+
     get notificationOkButon () {
         return $(SELECTORS.NOTIFICATION_OK_BUTTON);
     }
@@ -56,6 +64,10 @@ class PC_HomeScreen extends AppScreen {
 
     get menuNavigationButton () {
         return $(SELECTORS.TOOLBAR_ELEMENT).$(SELECTORS.MENU_NAVIGATION_BUTTON);
+    }
+
+    waitForRakutenRewardLabelIsShown () {
+        return this.waitForElementIsShown(SELECTORS.RAKUTEN_REWARD_LABEL);
     }
 
     get rakutenRewardLabel () {

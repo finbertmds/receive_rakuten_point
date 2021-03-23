@@ -35,7 +35,7 @@ class PC_RewardScreen extends AppScreen {
     waitForSuggestProductIsShown () {
         // return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
         return $(SELECTORS.SUGGEST_PRODUCT_LABEL).waitForDisplayed({
-            timeout: 120000,
+            timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
@@ -72,7 +72,7 @@ class PC_RewardScreen extends AppScreen {
     waitForGetPointDoneLabelIsShown () {
         // return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
         return $(SELECTORS.GET_POINT_DONE_LABEL).waitForDisplayed({
-            timeout: 120000,
+            timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }

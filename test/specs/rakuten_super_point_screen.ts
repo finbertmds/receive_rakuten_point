@@ -17,14 +17,12 @@ describe('rakuten_super_point_screen', () => {
 
     function handleSkipButton () {
         sFirststartScreen.waitForIsShown();
-        driver.pause(2000);
         if (sFirststartScreen.skipButon.isExisting()) {
             sFirststartScreen.skipButon.click();
         }
     }
     function handleFirstLogin () {
-        // sHomeScreen.waitForIsShown();
-        driver.pause(2000);
+        sHomeScreen.waitForLoginButtonIsShown();
         let loginButton = sHomeScreen.loginButton
         if (loginButton.isDisplayed()) {
             loginButton.click();
@@ -82,7 +80,6 @@ describe('rakuten_super_point_screen', () => {
         let pointNumberClickedIndex = 0;
         let swipeCount = 10;
         for (let index = 0; index < swipeCount; index++) {
-            driver.pause(2000);
             let pointNumberButtonList = sHomeScreen.pointNumberButtonList;
             if (pointNumberButtonList) {
                 console.log("pointNumberButtonListCount: ", pointNumberButtonList?.length);
@@ -143,8 +140,6 @@ describe('rakuten_super_point_screen', () => {
         handleFirstLogin();
         handleCloseAlert();
         handleClickPointNumber();
-        
-        driver.pause(2000)
     });
 
     it('sps_get_point_and_challenge', () => {
@@ -152,8 +147,6 @@ describe('rakuten_super_point_screen', () => {
         S_TabBar.openLuckyCoint();
         handleClickGetPoint();
         handleClickChallenge();
-
-        driver.pause(2000)
     });
 
 });

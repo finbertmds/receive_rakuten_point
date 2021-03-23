@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -28,7 +29,7 @@ class S_HomeAlertScreen extends AppScreen {
         return this.alertContainerMessage.waitUntil(function () {
             return this.getText() !== preMessage;
         }, {
-            timeout: 5000,
+            timeout: config.DEFAULT_TIMEOUT,
             timeoutMsg: 'expected text to change after 5s'
         });
     }

@@ -13,6 +13,10 @@ class S_HomeScreen extends AppScreen {
         super(SELECTORS.DEFAULT_SELECTOR);
     }
 
+    waitForLoginButtonIsShown () {
+        return this.waitForElementIsShown(SELECTORS.LOGIN_BUTTON);
+    }
+
     get loginButton () {
         return $(SELECTORS.LOGIN_BUTTON);
     }

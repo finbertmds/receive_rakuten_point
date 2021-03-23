@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -36,7 +37,7 @@ class R_RewardScreen extends AppScreen {
 
     waitForUnclaimBoxIsShown () {
         return $(SELECTORS.UNCLAIM_BOX).waitForDisplayed({
-            timeout: 10000,
+            timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }

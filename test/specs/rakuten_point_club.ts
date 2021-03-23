@@ -10,15 +10,12 @@ describe('rakuten_point_club', () => {
 
     function handleFirstTimeCloseWarning () {
         pcFirststartScreen.waitForIsShown();
-        driver.pause(5000)
         pcFirststartScreen.waitForWarningLablelIsShown();
         let isDiplayedWarning = pcFirststartScreen.warningLabel.isDisplayed()
         if (isDiplayedWarning) {
             pcFirststartScreen.neverDisplayCheckbox.click()
-            driver.pause(2000)
             pcFirststartScreen.closeLabel.click()
         }
-        driver.pause(3000)
     }
 
     function handleFirstTimeLogin () {
@@ -26,7 +23,6 @@ describe('rakuten_point_club', () => {
         let loginButtonWebView = $('//*[contains(text(),"ログイン")]')
         if (loginButtonWebView.isExisting()) {
             loginButtonWebView.click();
-            driver.pause(2000)
         }
         webviewScreen.switchToContext(CONTEXT_REF.NATIVE);
         pcLoginScreen.waitForIsShown();
@@ -38,14 +34,13 @@ describe('rakuten_point_club', () => {
 
     function handleFirstTimeCloseNotification () {
         // pcHomeScreen.waitForToolbarIsShown();
-        driver.pause(2000)
+        pcHomeScreen.waitForNotificationSettingLabelIsShown();
         let isDiplayedNotification = pcHomeScreen.notificationSettingLabel.isDisplayed()
         if (isDiplayedNotification) {
             pcHomeScreen.notificationYesButon.click();
-            driver.pause(3000)
             // console.log(homeScreen.notificationSettingOnLabel.getText());
+            pcHomeScreen.waitForOkButtonIsShown();
             pcHomeScreen.notificationOkButon.click();
-            driver.pause(3000)
         }
     }
 
@@ -62,10 +57,9 @@ describe('rakuten_point_club', () => {
         pcHomeScreen.waitForPointHistoryIsShown();
         pcHomeScreen.pointHistoryIcon.click();
         // pcHomeScreen.waitForWebCloseButtonIsShown();
-        driver.pause(10000)
         // pcHomeScreen.webCloseButton.click();
+        driver.pause(10000);
         driver.back();
-        driver.pause(2000);
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
@@ -75,20 +69,20 @@ describe('rakuten_point_club', () => {
             return;
         }
         firstAdBanner.click();
-        // driver.pause(2000)
         // pcHomeScreen.waitForWebCloseTabButtonIsShown();
         // pcHomeScreen.webCloseTabButton.click();
         driver.pause(10000);
         driver.back();
-        driver.pause(2000);
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
     function openRewardScreen (closeScreenWhenEnd: boolean = true) {
-        driver.pause(2000);
+        pcHomeScreen.waitForRakutenNameLableIsShown();
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         pcHomeScreen.menuNavigationButton.click();
-        driver.pause(2000);
         // console.log("rakutenRewardNumberLabel: ", homeScreen.rakutenRewardNumberLabel?.getText());
+        pcHomeScreen.waitForRakutenRewardLabelIsShown();
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         pcHomeScreen.rakutenRewardLabel.click();
         
         pcRewardScreen.waitForIsShown();
@@ -101,7 +95,7 @@ describe('rakuten_point_club', () => {
     function clickUnclaimButton () {
         openRewardScreen(false);
         
-        driver.pause(2000)
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = pcRewardScreen.unclaimBox;
         if (!unclaimBox.isDisplayed()) {
             pcRewardScreen.closeButton.click();
@@ -127,11 +121,9 @@ describe('rakuten_point_club', () => {
                     unclaimListIndexButton.click();
                     
                     pcRewardScreen.waitForGetPointDoneLabelIsShown();
-                    driver.pause(7000);
                     // console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
 
                     pcRewardScreen.backButton.click();
-                    driver.pause(3000);
                 }
             }
         }
@@ -148,7 +140,6 @@ describe('rakuten_point_club', () => {
             handleFirstTimeLogin();
             handleFirstTimeCloseNotification();
         }
-        driver.pause(2000)
     });
 
     it('pc_click_point_history', () => {
@@ -158,7 +149,6 @@ describe('rakuten_point_club', () => {
             return;
         }
         handleClickPointHistory();
-        driver.pause(2000)
     });
 
     it('pc_click_first_ad_banner', () => {
@@ -169,7 +159,6 @@ describe('rakuten_point_club', () => {
         }
         for (let index = 0; index < 3; index++) {
             handleClickFirstAdBanner();
-            driver.pause(2000);
         }
     });
 
@@ -178,7 +167,6 @@ describe('rakuten_point_club', () => {
             openRewardScreen();
         }
         clickUnclaimButton();
-        driver.pause(2000)
     });
 });
 

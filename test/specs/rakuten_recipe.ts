@@ -15,16 +15,15 @@ describe('rakuten_recipe', () => {
     })
 
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
-        driver.pause(5000);
         rFirststartScreen.waitForStartLablelIsShown();
-        if (rFirststartScreen.startLabel.isDisplayed()) {
-            rFirststartScreen.startLabel.click();
-            driver.pause(7000);
+        if (!rFirststartScreen.startLabel.isDisplayed()) {
+            return;
         }
+        rFirststartScreen.startLabel.click();
+        rHomeSettingScreen.waitForIsShown();
         if (rHomeSettingScreen.scrollView.isDisplayed()) {
             if (completeServey) {
                 rHomeSettingScreen.choice1Option1.click();
-                driver.pause(2000);
                 Gestures.swipeUp();
                 rHomeSettingScreen.choice2Option1.click();
                 rHomeSettingScreen.choice3Option1.click();
@@ -51,15 +50,11 @@ describe('rakuten_recipe', () => {
         rTabBar.waitForTabBarShown();
         rTabBar.openMyPage();
 
-        // rMypageScreen.waitForIsShown();
         driver.pause(2000);
         if (rMypageScreen.loginButton.isDisplayed()) {
             rMypageScreen.loginButton.click();
 
             handleFirstTimeLogin();
-            driver.pause(3000);
-            // rMypageScreen.waitForMyPageAfterLoginIsShown();
-            // console.log("usernameLabel: ", rMypageScreen.usernameLabel.getText());
         }
     }
 
@@ -102,7 +97,7 @@ describe('rakuten_recipe', () => {
     }
     
     function clickUnclaimButton () {
-        driver.pause(2000)
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = rRewardScreen.unclaimBox;
         if (unclaimBox.isDisplayed()) {
             unclaimBox.click();
@@ -114,12 +109,11 @@ describe('rakuten_recipe', () => {
                 for (let index = 0; index < unclaimListCount; index++) {
                     let unclaimListIndexButton = rRewardScreen.getUnclaimListIndexButton(index);
                     if (unclaimListIndexButton) {
-                        console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
+                        // console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
                         unclaimListIndexButton.click();
                         
                         rRewardScreen.waitForGetPointDoneLabelIsShown();
-                        driver.pause(7000)
-                        console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
+                        // console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
 
                         rRewardScreen.backButton.click();
                     }
@@ -140,8 +134,6 @@ describe('rakuten_recipe', () => {
             loggedIn = openRewardScreen();
         }
         clickUnclaimButton();
-        
-        driver.pause(2000)
     });
 
 });

@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -19,7 +20,7 @@ class S_HomeGetPointScreen extends AppScreen {
 
     waitForDoneButtonIsShown () {
         return this.doneButton.waitForDisplayed({
-            timeout: 90000,
+            timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }

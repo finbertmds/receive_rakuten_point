@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByClassname, getByResouceId } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -46,7 +47,7 @@ class R_LuckyCointScreen extends AppScreen {
 
     waitForPlayIconIsShown () {
         return this.playIcon.waitForDisplayed({
-            timeout: 90000,
+            timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
