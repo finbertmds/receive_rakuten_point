@@ -36,7 +36,7 @@ jobs:
       with:
         api-level: 29
         target: google_apis
-        script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || test:superpointscreen"
+        script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test:superpointscreen"
     - name: upload-artifact
       if: ${{ failure() }}
       uses: actions/upload-artifact@v2
