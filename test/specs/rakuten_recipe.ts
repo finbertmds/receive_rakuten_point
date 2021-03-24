@@ -103,17 +103,25 @@ describe('rakuten_recipe', () => {
             unclaimBox.click();
 
             rRewardScreen.waitForUnclaimListIsShown();
+            rRewardScreen.waitForUnclaimListItemsIsShown();
             let unclaimListCount = rRewardScreen.getUnclaimListItems?.length
+            console.log("unclaimListCount: ", unclaimListCount);
             
             if (unclaimListCount) {
                 for (let index = 0; index < unclaimListCount; index++) {
-                    let unclaimListIndexButton = rRewardScreen.getUnclaimListIndexButton(index);
+                    if (index !== 0) {
+                        rRewardScreen.waitForUnclaimBoxIsShown();
+                        unclaimBox.click();
+                        rRewardScreen.waitForUnclaimListIsShown();
+                        rRewardScreen.waitForUnclaimListItemsIsShown();
+                    }
+                    let unclaimListIndexButton = rRewardScreen.getUnclaimListIndexButton(0);
                     if (unclaimListIndexButton) {
-                        // console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
+                        console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
                         unclaimListIndexButton.click();
                         
                         rRewardScreen.waitForGetPointDoneLabelIsShown();
-                        // console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
+                        console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
 
                         rRewardScreen.backButton.click();
                     }

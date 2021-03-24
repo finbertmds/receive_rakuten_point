@@ -105,6 +105,7 @@ describe('rakuten_point_club', () => {
         unclaimBox.click();
 
         pcRewardScreen.waitForUnclaimListIsShown();
+        pcRewardScreen.waitForUnclaimListItemsIsShown();
         let unclaimListCount = pcRewardScreen.getUnclaimListItems?.length
         console.log("unclaimListCount: ", unclaimListCount);
         
@@ -114,14 +115,15 @@ describe('rakuten_point_club', () => {
                     pcRewardScreen.waitForUnclaimBoxIsShown();
                     unclaimBox.click();
                     pcRewardScreen.waitForUnclaimListIsShown();
+                    pcRewardScreen.waitForUnclaimListItemsIsShown();
                 }
                 let unclaimListIndexButton = pcRewardScreen.getUnclaimListIndexButton(0);
                 if (unclaimListIndexButton) {
-                    // console.log("unclaimText: ", pcRewardScreen.getUnclaimListIndexButton(index)?.getText());
+                    console.log("unclaimText: ", pcRewardScreen.getUnclaimListIndexButton(index)?.getText());
                     unclaimListIndexButton.click();
                     
                     pcRewardScreen.waitForGetPointDoneLabelIsShown();
-                    // console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
+                    console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
 
                     pcRewardScreen.backButton.click();
                 }

@@ -54,6 +54,15 @@ class R_RewardScreen extends AppScreen {
         return $(SELECTORS.UNCLAIM_LIST);
     }
 
+    waitForUnclaimListItemsIsShown () {
+        if (this.getUnclaimList.isExisting()) {
+            return this.getUnclaimList.$(SELECTORS.UNCLAIM_LIST_ITEMS).waitForDisplayed({
+                timeout: config.DEFAULT_TIMEOUT,
+                reverse: false,
+            });
+        }
+    }
+
     get getUnclaimListItems () {
         if (this.getUnclaimList.isExisting()) {
             return this.getUnclaimList.$$(SELECTORS.UNCLAIM_LIST_ITEMS);
