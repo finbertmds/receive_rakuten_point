@@ -109,7 +109,7 @@ describe('rakuten_super_point_screen', () => {
 
     function handleClickGetPoint () {
         sLuckycountScreen.waitForIsShown();
-        driver.pause(2000)
+        driver.pause(2000);
         let getButton = sLuckycountScreen.getButton;
         if (getButton.isExisting()) {
             getButton.click();
@@ -118,8 +118,24 @@ describe('rakuten_super_point_screen', () => {
         }
     }
 
+    function handleClickPlay () {
+        sLuckycountScreen.waitForIsShown();
+        driver.pause(2000);
+        let playButton = sLuckycountScreen.playButton;
+        if (playButton.isExisting()) {
+            playButton.click();
+            sLuckycountScreen.waitForChallengePlayButtonIsShown();
+            sLuckycountScreen.waitForPlayIconIsShown();
+            sLuckycountScreen.challengePlayButton.click();
+            driver.pause(config.DEFAULT_TIMEOUT);
+            driver.back();
+            sLuckycountScreen.waitForGetDoneButtonIsShown();
+            sLuckycountScreen.getDoneButton.click();
+        }
+    }
+
     function handleClickChallenge () {
-        driver.pause(2000)
+        driver.pause(2000);
         let challengeButton = sLuckycountScreen.challengeButton
         if (challengeButton.isExisting()) {
             challengeButton.click();
@@ -147,6 +163,12 @@ describe('rakuten_super_point_screen', () => {
         S_TabBar.openLuckyCoint();
         handleClickGetPoint();
         handleClickChallenge();
+    });
+
+    it('sps_click_ad', () => {
+        handleCloseAlert();
+        S_TabBar.openLuckyCoint();
+        handleClickPlay();
     });
 
 });
