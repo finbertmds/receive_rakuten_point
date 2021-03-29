@@ -73,16 +73,14 @@ class K_HomeScreen extends AppScreen {
     }
 
     mainLayoutKujiIndex (index: number) {
-        if (this.mainLayout.isExisting()) {
-            let kujiList = this.mainLayoutKujiList;
-            if (kujiList === null) {
-                return null;
-            }
-            if (kujiList.length > index) {
-                let kujiElement = this.mainLayout.$(getByClassname("android.widget.ImageView", index));
-                if (kujiElement) {
-                    return kujiElement;
-                }
+        let kujiList = this.mainLayoutKujiList;
+        if (kujiList === null) {
+            return null;
+        }
+        if (kujiList.length > index) {
+            let kujiElement = this.mainLayout.$(getByClassname("android.widget.ImageView", index));
+            if (kujiElement) {
+                return kujiElement;
             }
         }
         return null;

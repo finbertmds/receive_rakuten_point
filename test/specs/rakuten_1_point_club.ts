@@ -146,7 +146,7 @@ describe('rakuten_point_club', () => {
 
     it('pc_click_point_history', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 2) {
+        if (currentDate !== 1) {
             console.log(`today donot run pc_click_point_history`);
             return;
         }
@@ -155,7 +155,7 @@ describe('rakuten_point_club', () => {
 
     it('pc_click_first_ad_banner', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 2) {
+        if (currentDate !== 1) {
             console.log(`today donot run pc_click_first_ad_banner`);
             return;
         }

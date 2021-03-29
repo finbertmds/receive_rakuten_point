@@ -39,6 +39,7 @@ describe('rakuten_kuji', () => {
                 if (!kujiElement) {
                     continue;
                 }
+                kujiElement.click();
                 driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                 if (!kHomeScreen.playMovieIcon.isDisplayed()) {
                     driver.pause(config.DEFAULT_TIMEOUT);
