@@ -58,7 +58,11 @@ describe('rakuten_point_club', () => {
         pcHomeScreen.pointHistoryIcon.click();
         // pcHomeScreen.waitForWebCloseButtonIsShown();
         // pcHomeScreen.webCloseButton.click();
-        driver.pause(10000);
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+        if (pcHomeScreen.pointHistoryIcon.isDisplayed()) {
+            console.log("pointHistoryIcon still displayed");
+            return;
+        }
         driver.back();
         pcHomeScreen.waitForAdBannerIsShown();
     }
@@ -71,7 +75,11 @@ describe('rakuten_point_club', () => {
         firstAdBanner.click();
         // pcHomeScreen.waitForWebCloseTabButtonIsShown();
         // pcHomeScreen.webCloseTabButton.click();
-        driver.pause(10000);
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+        if (pcHomeScreen.firstAdBanner) {
+            console.log("firstAdBanner still displayed");
+            return;
+        }
         driver.back();
         pcHomeScreen.waitForAdBannerIsShown();
     }
@@ -146,7 +154,7 @@ describe('rakuten_point_club', () => {
 
     it('pc_click_point_history', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 1) {
+        if (currentDate !== config.RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST) {
             console.log(`today donot run pc_click_point_history`);
             return;
         }
@@ -155,7 +163,7 @@ describe('rakuten_point_club', () => {
 
     it('pc_click_first_ad_banner', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 1) {
+        if (currentDate !== config.RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST) {
             console.log(`today donot run pc_click_first_ad_banner`);
             return;
         }

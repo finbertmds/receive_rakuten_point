@@ -50,6 +50,7 @@ describe('rakuten_kuji', () => {
                     driver.back();
                     driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
+                    driver.pause(5000);
                 }
             }
         }
@@ -62,6 +63,7 @@ describe('rakuten_kuji', () => {
         if (!kHomeScreen.playMovieIcon.isDisplayed()) {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
             driver.back();
+            driver.pause(5000);
         }
     }
 
@@ -79,8 +81,10 @@ describe('rakuten_kuji', () => {
             messageElement.click();
             driver.pause(5000);
             driver.back();
+            driver.pause(5000);
         }
         driver.back();
+        driver.pause(5000);
     }
 
     function handleLuckyKuji () {
@@ -98,14 +102,14 @@ describe('rakuten_kuji', () => {
         handleClickMainLayoutKuji();
     });
 
-    it('k_click_message', () => {
-        handleLuckyKuji();
-        handleClickMessage();
-    });
-
     it('k_click_ad', () => {
         handleLuckyKuji();
         handleClickAd();
+    });
+
+    it('k_click_message', () => {
+        handleLuckyKuji();
+        handleClickMessage();
     });
 });
 
