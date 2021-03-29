@@ -146,22 +146,22 @@ describe('rakuten_point_club', () => {
 
     it('pc_click_point_history', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 1) {
-            console.log(`only run pc_click_point_history at Monday everyweek`);
+        if (currentDate !== 2) {
+            console.log(`today donot run pc_click_point_history`);
             return;
         }
-        // handleClickPointHistory();
+        handleClickPointHistory();
     });
 
     it('pc_click_first_ad_banner', () => {
         let currentDate = new Date().getDay();
-        if (currentDate !== 1) {
-            console.log(`only run pc_click_first_ad_banner at Monday everyweek`);
+        if (currentDate !== 2) {
+            console.log(`today donot run pc_click_first_ad_banner`);
             return;
         }
-        // for (let index = 0; index < 3; index++) {
-        //     handleClickFirstAdBanner();
-        // }
+        for (let index = 0; index < 3; index++) {
+            handleClickFirstAdBanner();
+        }
     });
 
     it('pc_get_point_from_reward', () => {

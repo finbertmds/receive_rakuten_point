@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -54,7 +55,11 @@ class K_HomeScreen extends AppScreen {
     }
 
     waitForMainLayoutIsShown () {
-        return this.waitForElementIsShown(SELECTORS.MAIN_LAYOUT);
+        // return this.waitForElementIsShown(SELECTORS.MAIN_LAYOUT);
+        return $(SELECTORS.MAIN_LAYOUT).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT,
+            reverse: false,
+        });
     }
 
     get mainLayoutKujiList () {
