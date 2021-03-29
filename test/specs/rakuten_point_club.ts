@@ -150,7 +150,7 @@ describe('rakuten_point_club', () => {
             console.log(`only run pc_click_point_history at Monday everyweek`);
             return;
         }
-        handleClickPointHistory();
+        // handleClickPointHistory();
     });
 
     it('pc_click_first_ad_banner', () => {
@@ -159,9 +159,9 @@ describe('rakuten_point_club', () => {
             console.log(`only run pc_click_first_ad_banner at Monday everyweek`);
             return;
         }
-        for (let index = 0; index < 3; index++) {
-            handleClickFirstAdBanner();
-        }
+        // for (let index = 0; index < 3; index++) {
+        //     handleClickFirstAdBanner();
+        // }
     });
 
     it('pc_get_point_from_reward', () => {

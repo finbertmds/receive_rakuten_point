@@ -34,9 +34,12 @@ describe('rakuten_kuji', () => {
         
         if (kujiList && kujiList.length > 0) {
             for (let index = 0; index < kujiList.length; index++) {
-                const kujiElement = kujiList[index];
-                kujiElement.click();
-                driver.pause(5000);
+                handleLuckyKuji();
+                const kujiElement = kHomeScreen.mainLayoutKujiIndex(index);
+                if (!kujiElement) {
+                    continue;
+                }
+                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                 if (!kHomeScreen.playMovieIcon.isDisplayed()) {
                     driver.pause(config.DEFAULT_TIMEOUT);
                     if (kFirststartScreen.noButton.isDisplayed()) {
