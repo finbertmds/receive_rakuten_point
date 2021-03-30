@@ -4,6 +4,7 @@ import AppScreen from '../app.screen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/parentPanel"),
+    LOGO_SELECTOR: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/logo"),
     WARNING_LABEL: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/alertTitle"),
     CLOSE_LABEL: getByResouceId("android:id/button1"),
     NO_BUTTON: getByResouceId("android:id/button2"),

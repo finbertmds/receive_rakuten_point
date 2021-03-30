@@ -91,6 +91,13 @@ describe('rakuten_kuji', () => {
         driver.pause(5000);
         if (kLuckykujiScreen.announcement.isDisplayed()) {
             kLuckykujiScreen.okButton.click();
+            return;
+        }
+        if (kLuckykujiScreen.entry.isDisplayed()) {
+            kLuckykujiScreen.entry.click();
+            driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
+            driver.back();
+            driver.pause(5000);
         }
     }
 
