@@ -51,6 +51,10 @@ describe('rakuten_kuji', () => {
                     driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
                     driver.pause(5000);
+                    if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+                        kHomeScreen.closeAppNoButton.click();
+                        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                    }
                 }
             }
         }
@@ -64,6 +68,10 @@ describe('rakuten_kuji', () => {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
             driver.back();
             driver.pause(5000);
+            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+                kHomeScreen.closeAppNoButton.click();
+                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            }
         }
     }
 
@@ -82,9 +90,17 @@ describe('rakuten_kuji', () => {
             driver.pause(5000);
             driver.back();
             driver.pause(5000);
+            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+                kHomeScreen.closeAppNoButton.click();
+                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            }
         }
         driver.back();
         driver.pause(5000);
+        if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+            kHomeScreen.closeAppNoButton.click();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        }
     }
 
     function handleLuckyKuji () {
@@ -98,6 +114,10 @@ describe('rakuten_kuji', () => {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
             driver.back();
             driver.pause(5000);
+            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+                kHomeScreen.closeAppNoButton.click();
+                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            }
         }
     }
 

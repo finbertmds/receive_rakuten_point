@@ -12,7 +12,7 @@ const SELECTORS = {
     
     MAIN_LAYOUT: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/main_layout"),
     GROUP_KUJI: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/gridview_group_kuji"),
-
+    CLOSEAPP_NO_BUTTON: getByText("いいえ"),
 };
 
 class K_HomeScreen extends AppScreen {
@@ -84,6 +84,10 @@ class K_HomeScreen extends AppScreen {
             }
         }
         return null;
+    }
+
+    get closeAppNoButton () {
+        return $(SELECTORS.CLOSEAPP_NO_BUTTON);
     }
 
     get groupKuji () {
