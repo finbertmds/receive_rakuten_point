@@ -146,7 +146,7 @@ describe('rakuten_super_point_screen', () => {
 
             sLuckycountScreen.waitForChallengePlayButtonIsShown();
 
-            handleClickPlay();
+            // handleClickPlay();
         }
     }
 
