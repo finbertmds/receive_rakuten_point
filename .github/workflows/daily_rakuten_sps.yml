@@ -2,7 +2,7 @@ name: Daily App SPS every night
 
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '20 9 * * *'
 
 jobs:
   build:

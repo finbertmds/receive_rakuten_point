@@ -2,7 +2,7 @@ name: Daily Apps
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '20 2 * * *'
 
 jobs:
   build:
