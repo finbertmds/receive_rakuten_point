@@ -4,6 +4,10 @@ import AppScreen from '../app.screen';
 
 const SELECTORS = {
     REWARD_SCREEN: getByText("楽天リワード"),
+    REQUIRE_LOGIN_LABEL: getByText("[Rakuten]Login"),
+    LOGIN_INPUT: getByResouceId("username"),
+    LOGIN_PASSWORD: getByResouceId("password"),
+    LOGIN_BUTTON: getByText("Login"),
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByText("ログインする"),
     RETRY_LABEL: getByText("再試行"),
     SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
@@ -98,6 +102,29 @@ class R_RewardScreen extends AppScreen {
 
     get backButton () {
         return $(SELECTORS.REWARD_SCREEN).parent.$(getByClassname("android.widget.ImageButton", 0));
+    }
+
+    get requireLoginLabel () {
+        return $(SELECTORS.REQUIRE_LOGIN_LABEL);
+    }
+
+    get loginButton () {
+        return $(SELECTORS.LOGIN_BUTTON);
+    }
+
+    get userid () {
+        return $(SELECTORS.LOGIN_INPUT);
+    }
+
+    get password () {
+        return $(SELECTORS.LOGIN_PASSWORD);
+    }
+
+    waitForLoggedIn () {
+        return $(SELECTORS.LOGIN_INPUT).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT,
+            reverse: true,
+        });
     }
 }
 

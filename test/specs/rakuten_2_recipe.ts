@@ -121,6 +121,10 @@ describe('rakuten_recipe', () => {
                         console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
                         unclaimListIndexButton.click();
                         
+                        let loginAgain = handleLoginRequireAgain();
+                        if (loginAgain) {
+                            return true;
+                        }
                         rRewardScreen.waitForGetPointDoneLabelIsShown();
                         console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
 
@@ -130,6 +134,21 @@ describe('rakuten_recipe', () => {
             }
         }
         rRewardScreen.closeButton.click();
+        return false;
+    }
+
+    function handleLoginRequireAgain () {
+        driver.pause(5000);
+        if (!rRewardScreen.requireLoginLabel.isDisplayed()) {
+            return false;
+        }
+        Gestures.swipeUp(0.7);
+        rRewardScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        rRewardScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        rRewardScreen.loginButton.click();
+        rRewardScreen.waitForLoggedIn();
+        console.log("logged in one again");
+        return true;
     }
 
     it('r_first_login', () => {
@@ -142,7 +161,10 @@ describe('rakuten_recipe', () => {
         while (!loggedIn) {
             loggedIn = openRewardScreen();
         }
-        clickUnclaimButton();
+        let requireLoginAgain = clickUnclaimButton();
+        if (requireLoginAgain) {
+            requireLoginAgain = clickUnclaimButton();
+        }
     });
 
 });
