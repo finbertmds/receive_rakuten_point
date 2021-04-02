@@ -17,7 +17,7 @@ export default {
         'https://kuji.rakuten.co.jp/6c238469a1',
         'https://kuji.rakuten.co.jp/71f38444b5',
         'https://kuji.rakuten.co.jp/5103830522',
-
+        'https://kuji.rakuten.co.jp/4263816d7f',
         'https://kuji.rakuten.co.jp/ffc1c52299',
         'https://kuji.rakuten.co.jp/14d330d3e0',
         'https://kuji.rakuten.co.jp/4e9371dd92',
