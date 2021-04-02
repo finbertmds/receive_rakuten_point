@@ -4,7 +4,7 @@ export default {
     LOGIN_PAGE: 'https://kuji.rakuten.co.jp/256356cd1a',
     WEBSEARCH_SEARCH_PAGE: 'https://websearch.rakuten.co.jp/Web?qt=test&col=OW',
     WEBSEARCH_MAX_COUNT: 30,
-    WEBSEARCH_PREFIX: '魚',
+    WEBSEARCH_PREFIX: '桜',
     KUJI_HOME_PAGE: 'https://kuji.rakuten.co.jp',
     KUJI_DEFAULT_LINK: [
         'https://kuji.rakuten.co.jp/256356cd1a',
@@ -28,6 +28,7 @@ export default {
         'https://kuji.rakuten.co.jp/9ea32a8dfa',
         'https://kuji.rakuten.co.jp/ad1321af05',
         'https://kuji.rakuten.co.jp/4ad36145c2',
+        'https://www.rakuten-card.co.jp/point/pointsave/takara-sagashi/redirect/?l-id=corp_oo_takara_sagashi_win-redirect',
     ],
     RAKUTENCARD_HOME_PAGE: 'https://www.rakuten-card.co.jp/e-navi/index.xhtml',
     DAY_VIEW_VIDEO_GET_POINT: 15,
