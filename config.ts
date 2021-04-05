@@ -29,6 +29,7 @@ export default {
         'https://kuji.rakuten.co.jp/ad1321af05',
         'https://kuji.rakuten.co.jp/4ad36145c2',
         'https://www.rakuten-card.co.jp/point/pointsave/takara-sagashi/redirect/?l-id=corp_oo_takara_sagashi_win-redirect',
+        'https://kuji.rakuten.co.jp/1243541a35',
     ],
     RAKUTENCARD_HOME_PAGE: 'https://www.rakuten-card.co.jp/e-navi/index.xhtml',
     DAY_VIEW_VIDEO_GET_POINT: 15,
