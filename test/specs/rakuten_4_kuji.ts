@@ -42,19 +42,14 @@ describe('rakuten_kuji', () => {
                 kujiElement.click();
                 driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                 if (!kHomeScreen.playMovieIcon.isDisplayed()) {
-                    driver.pause(config.DEFAULT_TIMEOUT);
+                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
                     if (kFirststartScreen.noButton.isDisplayed()) {
                         kFirststartScreen.noButton.click();
-                        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                     }
                     driver.back();
-                    driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                    handleDontCloseApp();
                     driver.back();
-                    driver.pause(5000);
-                    if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-                        kHomeScreen.closeAppNoButton.click();
-                        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-                    }
+                    handleDontCloseApp();
                 }
             }
         }
@@ -67,16 +62,12 @@ describe('rakuten_kuji', () => {
         if (!kHomeScreen.playMovieIcon.isDisplayed()) {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
             driver.back();
-            driver.pause(5000);
-            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-                kHomeScreen.closeAppNoButton.click();
-                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            }
+            handleDontCloseApp();
         }
     }
 
     function handleClickMessage () {
-        let unreadMessageCount = kHomeScreen.unreadMessageCount.getText();
+        let unreadMessageCount = kHomeScreen.unreadMessageCount;
         if (!unreadMessageCount) {
             return;
         }
@@ -89,35 +80,36 @@ describe('rakuten_kuji', () => {
             messageElement.click();
             driver.pause(5000);
             driver.back();
-            driver.pause(5000);
-            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-                kHomeScreen.closeAppNoButton.click();
-                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            }
+            handleDontCloseApp();
         }
         driver.back();
-        driver.pause(5000);
-        if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-            kHomeScreen.closeAppNoButton.click();
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        }
+        handleDontCloseApp();
     }
 
     function handleLuckyKuji () {
         driver.pause(5000);
         if (kLuckykujiScreen.announcement.isDisplayed()) {
-            kLuckykujiScreen.okButton.click();
-            return;
+            driver.pause(5000);
+            if (kLuckykujiScreen.okButton.isDisplayed()) {
+                kLuckykujiScreen.okButton.click();
+                return;
+            }
         }
         if (kLuckykujiScreen.entry.isDisplayed()) {
             kLuckykujiScreen.entry.click();
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
-            driver.back();
-            driver.pause(5000);
-            if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-                kHomeScreen.closeAppNoButton.click();
+            if (kLuckykujiScreen.entry.isDisplayed()) {
+                kLuckykujiScreen.entry.click();
                 driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             }
+            driver.back();
+            handleDontCloseApp();
+        }
+    }
+
+    function handleDontCloseApp () {
+        if (kHomeScreen.closeAppNoButton.isDisplayed()) {
+            kHomeScreen.closeAppNoButton.click();
         }
     }
 
