@@ -8,7 +8,7 @@
     "test:pointclub": "npx wdio run wdio.apps.pointclub.conf.js",
     "test:recipe": "npx wdio run wdio.apps.recipe.conf.js",
     "test:superpointscreen": "npx wdio run wdio.apps.superpointscreen.conf.js",
-    "test": "npx wdio run wdio.apps.kuji.conf.js"
+    "test": "npx wdio run wdio.conf.js"
   },
   "dependencies": {
     "@wdio/cli": "^7.2.0"
