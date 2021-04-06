@@ -118,7 +118,9 @@ describe('rakuten_kuji', () => {
 
         handleFirstTimeEnterApp();
         handleLuckyKuji();
-        handleClickMainLayoutKuji();
+        for (let index = 0; index < config.RAKUTEN_KUJI_RUN_AGAIN_TEST; index++) {
+            handleClickMainLayoutKuji();
+        }
     });
 
     it('k_click_ad', () => {
