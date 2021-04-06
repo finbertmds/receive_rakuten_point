@@ -42,7 +42,7 @@ describe('rakuten_kuji', () => {
                 kujiElement.click();
                 driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                 if (!kHomeScreen.playMovieIcon.isDisplayed()) {
-                    driver.pause(parseInt(String(5 * config.DEFAULT_TIMEOUT / 3)));
+                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
                     if (kFirststartScreen.noButton.isDisplayed()) {
                         kFirststartScreen.noButton.click();
                     }
