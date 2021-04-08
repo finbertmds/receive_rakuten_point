@@ -4,6 +4,7 @@ import AppScreen from '../app.screen';
 const SELECTORS = {
     FIRSTSTSRT_SCREEN: getByResouceId("android:id/content"),
     SKIP_BUTTON: getByResouceId("jp.co.rakuten.slide:id/atv2_button_skip"),
+    MAINTENANCE_CONTAINER: getByResouceId("jp.co.rakuten.slide:id/activity_maintenance_v2_constraint_container"),
 };
 
 class S_FirstStartScreen extends AppScreen {
@@ -13,6 +14,10 @@ class S_FirstStartScreen extends AppScreen {
 
     get skipButon () {
         return $(SELECTORS.SKIP_BUTTON);
+    }
+
+    get maintenanceContainer () {
+        return $(SELECTORS.MAINTENANCE_CONTAINER);
     }
 }
 

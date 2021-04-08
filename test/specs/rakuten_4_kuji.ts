@@ -103,11 +103,12 @@ describe('rakuten_kuji', () => {
                 driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             }
             driver.back();
-            handleDontCloseApp();
+            // handleDontCloseApp();
         }
     }
 
     function handleDontCloseApp () {
+        handleLuckyKuji();
         if (kHomeScreen.closeAppNoButton.isDisplayed()) {
             kHomeScreen.closeAppNoButton.click();
         }

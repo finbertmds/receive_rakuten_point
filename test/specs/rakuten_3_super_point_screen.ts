@@ -15,6 +15,10 @@ describe('rakuten_super_point_screen', () => {
         driver.pause(5000);
     })
 
+    function handleMaintenance () {
+        return sFirststartScreen.maintenanceContainer.isDisplayed();
+    }
+
     function handleSkipButton () {
         sFirststartScreen.waitForIsShown();
         if (sFirststartScreen.skipButon.isExisting()) {
@@ -152,7 +156,9 @@ describe('rakuten_super_point_screen', () => {
 
     it('sps_click_point_number', () => {
         driver.pause(7000);
-
+        if (handleMaintenance()) {
+            return;
+        }
         handleSkipButton();
         handleFirstLogin();
         handleCloseAlert();
@@ -160,6 +166,9 @@ describe('rakuten_super_point_screen', () => {
     });
 
     it('sps_get_point_and_challenge', () => {
+        if (handleMaintenance()) {
+            return;
+        }
         handleCloseAlert();
         S_TabBar.openLuckyCoint();
         handleClickGetPoint();
