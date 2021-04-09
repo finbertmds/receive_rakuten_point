@@ -40,9 +40,9 @@ config.capabilities = [
         'appium:noReset': true,
         'appium:newCommandTimeout': 240,
         'appium:nativeWebScreenshot': true,
-        'appium:androidInstallTimeout': 900000,
-        'appium:uiautomator2ServerLaunchTimeout': 900000,
-        'appium:uiautomator2ServerInstallTimeout': 900000,
+        'appium:androidInstallTimeout': 1800000,
+        'appium:uiautomator2ServerLaunchTimeout': 1800000,
+        'appium:uiautomator2ServerInstallTimeout': 1800000,
     },
 ];
 
