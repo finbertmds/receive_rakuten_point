@@ -86,7 +86,7 @@ class RakutenCardPage extends Page {
 
     async handlClickVideo () {
         let videoBtn = await this.videoBtn
-        if (!videoBtn.isDisplayed()) {
+        if (! await videoBtn.isDisplayed()) {
             return;
         }
         await videoBtn.scrollIntoView()
