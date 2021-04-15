@@ -7,3 +7,20 @@
 
 ## How To Run
 [How to run](HOW-TO-RUN.md) includes more details
+
+## For Developer
+If you want to automatically run every day to receive points of rakuten, you can start by forking the project and follow these steps run it with [Github Actions](https://github.com/features/actions)
+
+1. Fork the project
+2. Settings Rakuten username and password to Actions secrets
+
+  ```
+  RAKUTEN_USERNAME
+  RAKUTEN_PASSWORD
+  ```
+
+  ![Github actions guide](./images/github_actions_guide.png)
+
+3. View all runs from Github actions every day
+
+  ![Github actions guide](./images/github_actions_run.png)
