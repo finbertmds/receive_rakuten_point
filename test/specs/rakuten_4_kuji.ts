@@ -67,8 +67,7 @@ describe('rakuten_kuji', () => {
     }
 
     function handleClickMessage () {
-        let unreadMessageCount = kHomeScreen.unreadMessageCount;
-        if (!unreadMessageCount) {
+        if (!kHomeScreen.messageLabel.isDisplayed()) {
             return;
         }
         kHomeScreen.messageLabel.click();
@@ -100,7 +99,7 @@ describe('rakuten_kuji', () => {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? config.DEFAULT_TIMEOUT : 45000);
             if (kLuckykujiScreen.entry.isDisplayed()) {
                 kLuckykujiScreen.entry.click();
-                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT)));
             }
             driver.back();
             // handleDontCloseApp();
