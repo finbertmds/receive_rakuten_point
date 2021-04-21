@@ -21,10 +21,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Install and Run Appium Server
-      run: |
-        chmod +x ./scripts/RunAppiumServer.sh
-        ./scripts/RunAppiumServer.sh
+    - name: Install Appium
+      uses: FinbertMDS/setup-appium@latest
+      with:
+        appium-version: "1.20.2"
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
