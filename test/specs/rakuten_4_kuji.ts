@@ -28,7 +28,7 @@ describe('rakuten_kuji', () => {
     }
 
     function handleClickMainLayoutKuji () {
-        kHomeScreen.waitForMainLayoutIsShown();
+        // kHomeScreen.waitForMainLayoutIsShown();
         let kujiList = kHomeScreen.mainLayoutKujiList;
         console.log("kujiCount: ", kujiList?.length);
         
@@ -56,7 +56,10 @@ describe('rakuten_kuji', () => {
     }
 
     function handleClickAd () {
-        kHomeScreen.waitForPlayMoviewIconIsShown();
+        // kHomeScreen.waitForPlayMoviewIconIsShown();
+        if (!kHomeScreen.playMovieIcon.isDisplayed()) {
+            return;
+        }
         kHomeScreen.playMovieIcon.click();
         driver.pause(5000);
         if (!kHomeScreen.playMovieIcon.isDisplayed()) {
