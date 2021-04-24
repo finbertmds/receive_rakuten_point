@@ -25,7 +25,10 @@ class KujiPage extends Page {
         let kujiElementList = (await this.liKujiList);
         if (kujiElementList.length > 0) {
             let kujiElement = kujiElementList[index];
-            return (await kujiElement.$('a')).$('img')
+            let kujiElementLink = (await kujiElement.$$('a')).length > 0;
+            if (kujiElementLink) {
+                return (await kujiElement.$('a')).$('img')
+            }
         }
         return null;
         // return (await (await this.liKujiList)[index].$('a')).$('img')
