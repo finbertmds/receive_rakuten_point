@@ -15,7 +15,11 @@ describe('rakuten_recipe', () => {
     })
 
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
-        rFirststartScreen.waitForStartLablelIsShown();
+        // rFirststartScreen.waitForStartLablelIsShown();
+        if (rFirststartScreen.cancelUpgradeLabel.isDisplayed()) {
+            rFirststartScreen.cancelUpgradeLabel.click();
+            driver.pause(5000);
+        }
         if (!rFirststartScreen.startLabel.isDisplayed()) {
             return;
         }

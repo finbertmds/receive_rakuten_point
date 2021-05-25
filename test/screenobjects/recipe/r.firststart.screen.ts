@@ -5,6 +5,7 @@ import AppScreen from '../app.screen';
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.recipe:id/action_bar_root"),
     START_LABEL: getByText("今すぐはじめる"),
+    CANCEL_UPGRADE_LABEL: getByText("キャンセル"),
 };
 
 class R_FirstStartScreen extends AppScreen {
@@ -21,6 +22,10 @@ class R_FirstStartScreen extends AppScreen {
 
     get startLabel () {
         return $(SELECTORS.START_LABEL);
+    }
+
+    get cancelUpgradeLabel () {
+        return $(SELECTORS.CANCEL_UPGRADE_LABEL);
     }
 
 }
