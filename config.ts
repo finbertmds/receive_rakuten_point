@@ -4,7 +4,7 @@ export default {
     LOGIN_PAGE: 'https://kuji.rakuten.co.jp/256356cd1a',
     WEBSEARCH_SEARCH_PAGE: 'https://websearch.rakuten.co.jp/Web?qt=test&col=OW',
     WEBSEARCH_MAX_COUNT: 30,
-    WEBSEARCH_PREFIX: '桜',
+    WEBSEARCH_PREFIX: 'パン',
     KUJI_HOME_PAGE: 'https://kuji.rakuten.co.jp',
     KUJI_DEFAULT_LINK: [
         'https://www.rakuten-card.co.jp/point/pointsave/janken/redirect/?l-id=corp_oo_janken_win-redirect',
@@ -39,4 +39,8 @@ export default {
     ],
     RAKUTENCARD_HOME_PAGE: 'https://www.rakuten-card.co.jp/e-navi/index.xhtml',
     DAY_VIEW_VIDEO_GET_POINT: 15,
+    CAMPAIGN_PAGE_LIST: [
+        'https://event.rakuten.co.jp/campaign/card/pointday',
+        'https://event.rakuten.co.jp/campaign/sports',
+    ],
 }

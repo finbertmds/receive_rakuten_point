@@ -1,4 +1,5 @@
 import config from '../../config';
+import campaignPage from '../pageobjects/campaign.page';
 import kujiPage from '../pageobjects/kuji.page';
 import loginPage from '../pageobjects/login.page';
 import rakutencardPage from '../pageobjects/rakutencard.page';
@@ -104,6 +105,11 @@ describe('Rakuten', () => {
         await rakutencardPage.handleClickPointCountLink();
 
         await rakutencardPage.handlClickVideo();
+    });
+    
+    it('entry_campaign', async () => {
+        await credentials();
+        await campaignPage.entryCampaign();
     });
 });
 
