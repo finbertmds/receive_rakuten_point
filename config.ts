@@ -8,7 +8,7 @@ export default {
     RAKUTEN_POINT_CLUB_APK_VERSION: 'v4.5.1',
     RAKUTEN_POINT_CLUB_APK_NAME: 'R_PointClub.apk',
     RAKUTEN_POINT_CLUB_APP_ID: 'jp.co.rakuten.pointclub.android',
-    RAKUTEN_RECIPE_APK_VERSION: 'v3.7.2',
+    RAKUTEN_RECIPE_APK_VERSION: 'v4.0.1',
     RAKUTEN_RECIPE_APK_NAME: 'R_Recipe.apk',
     RAKUTEN_RECIPE_APP_ID: 'jp.co.rakuten.recipe',
     RAKUTEN_SUPER_POINT_SCREEN_APK_VERSION: 'v7.1.6',
@@ -16,4 +16,5 @@ export default {
     RAKUTEN_SUPER_POINT_SCREEN_APP_ID: 'jp.co.rakuten.slide',
     RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST: 1,
     RAKUTEN_KUJI_RUN_AGAIN_TEST: 2,
+    RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT: 5,
 }

@@ -1,12 +1,13 @@
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
 import rFirststartScreen from '../screenobjects/recipe/r.firststart.screen';
+import sHomeModalScreen from '../screenobjects/recipe/r.home.modal.screen';
+import rHomeScreen from '../screenobjects/recipe/r.home.screen';
 import rHomeSettingScreen from '../screenobjects/recipe/r.home.setting.screen';
 import rLoginScreen from '../screenobjects/recipe/r.login.screen';
 import rMypageScreen from '../screenobjects/recipe/r.mypage.screen';
 import rRewardScreen from '../screenobjects/recipe/r.reward.screen';
 import rTabBar from '../screenobjects/recipe/r.tab.bar';
-import sHomeModalScreen from '../screenobjects/superpointscreen/s.home.modal.screen';
 
 describe('rakuten_recipe', () => {
     beforeAll(() => {
@@ -48,6 +49,17 @@ describe('rakuten_recipe', () => {
             }
         }
         driver.pause(10000);
+    }
+
+    function handleFirstTimeEnterAppNew () {
+        if (rFirststartScreen.welcomeSkipButton.isDisplayed()) {
+            rFirststartScreen.welcomeSkipButton.click();
+            driver.pause(5000);
+        }
+        if (rFirststartScreen.surveyCancelButton.isDisplayed()) {
+            rFirststartScreen.surveyCancelButton.click();
+            driver.pause(5000);
+        }
     }
 
     function handleOpenTabMyPageAndLogin () {
@@ -155,12 +167,7 @@ describe('rakuten_recipe', () => {
         return true;
     }
 
-    it('r_first_login', () => {
-        driver.pause(7000);
-        
-        handleFirstTimeEnterApp();
-        handleOpenTabMyPageAndLogin();
-        handleCloseModal();
+    function handleClickUnClaim() {
         let loggedIn = openRewardScreen();
         while (!loggedIn) {
             loggedIn = openRewardScreen();
@@ -169,6 +176,50 @@ describe('rakuten_recipe', () => {
         if (requireLoginAgain) {
             requireLoginAgain = clickUnclaimButton();
         }
+    }
+
+    function openHomeScreen() {
+        rTabBar.waitForTabBarShown();
+        rTabBar.openHome();
+        driver.pause(2000);
+    }
+
+    function handleClickReceipe() {
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        handleCloseModal();
+        let firstReceipeImage = rHomeScreen.firstRecipeImage;
+        if (firstReceipeImage) {
+            firstReceipeImage.click();
+            handleCloseModal();
+            if (rHomeScreen.swipeGuideImage.isDisplayed()) {
+                rHomeScreen.swipeGuideImage.click();
+            }
+            rHomeScreen.waitForBackButtonIsShown();
+            rHomeScreen.backButton.click();
+        }
+    }
+
+    it('r_first_login', () => {
+        driver.pause(7000);
+        
+        handleFirstTimeEnterApp();
+        handleFirstTimeEnterAppNew();
+        handleOpenTabMyPageAndLogin();
+        handleCloseModal();
+        handleClickUnClaim();
+    });
+
+    it('r_click_recipe', () => {
+        handleCloseModal();
+        openHomeScreen();
+        handleCloseModal();
+        rHomeScreen.tabbarPopularLabel.click();
+        for (let index = 0; index < config.RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT; index++) {
+            handleClickReceipe();
+        }
+        handleOpenTabMyPageAndLogin();
+        handleCloseModal();
+        handleClickUnClaim();
     });
 
 });

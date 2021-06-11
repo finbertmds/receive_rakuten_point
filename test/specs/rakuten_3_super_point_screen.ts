@@ -150,7 +150,7 @@ describe('rakuten_super_point_screen', () => {
 
             sLuckycountScreen.waitForChallengePlayButtonIsShown();
 
-            // handleClickPlay();
+            handleClickPlay();
         }
     }
 
@@ -172,7 +172,7 @@ describe('rakuten_super_point_screen', () => {
         handleCloseAlert();
         S_TabBar.openLuckyCoint();
         handleClickGetPoint();
-        // handleClickPlay();
+        handleClickPlay();
         handleClickChallenge();
     });
 
