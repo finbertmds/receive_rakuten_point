@@ -130,10 +130,13 @@ describe('rakuten_super_point_screen', () => {
             sLuckycountScreen.waitForChallengePlayButtonIsShown();
             sLuckycountScreen.waitForPlayIconIsShown();
             sLuckycountScreen.challengePlayButton.click();
-            driver.pause(config.DEFAULT_TIMEOUT);
+            driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
             driver.back();
-            sLuckycountScreen.waitForGetDoneButtonIsShown();
-            sLuckycountScreen.getDoneButton.click();
+            // sLuckycountScreen.waitForGetDoneButtonIsShown();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            if (sLuckycountScreen.getDoneButton.isDisplayed()) {
+                sLuckycountScreen.getDoneButton.click();
+            }
         }
     }
 
@@ -172,8 +175,8 @@ describe('rakuten_super_point_screen', () => {
         handleCloseAlert();
         S_TabBar.openLuckyCoint();
         handleClickGetPoint();
-        handleClickPlay();
         handleClickChallenge();
+        handleClickPlay();
     });
 
 });

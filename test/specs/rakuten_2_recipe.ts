@@ -54,12 +54,12 @@ describe('rakuten_recipe', () => {
     function handleFirstTimeEnterAppNew () {
         if (rFirststartScreen.welcomeSkipButton.isDisplayed()) {
             rFirststartScreen.welcomeSkipButton.click();
-            driver.pause(5000);
         }
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (rFirststartScreen.surveyCancelButton.isDisplayed()) {
             rFirststartScreen.surveyCancelButton.click();
-            driver.pause(5000);
         }
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
     }
 
     function handleOpenTabMyPageAndLogin () {
