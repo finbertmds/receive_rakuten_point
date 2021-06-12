@@ -195,8 +195,10 @@ describe('rakuten_recipe', () => {
             if (rHomeScreen.swipeGuideImage.isDisplayed()) {
                 rHomeScreen.swipeGuideImage.click();
             }
-            rHomeScreen.waitForBackButtonIsShown();
-            rHomeScreen.backButton.click();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            driver.back();
+            // rHomeScreen.waitForBackButtonIsShown();
+            // rHomeScreen.backButton.click();
         }
     }
 
