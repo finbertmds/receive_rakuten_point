@@ -1,3 +1,4 @@
+import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
@@ -35,7 +36,10 @@ class R_HomeScreen extends AppScreen {
     }
 
     waitForBackButtonIsShown () {
-        return this.waitForElementIsShown(SELECTORS.BACK_BUTTON);
+        return $(SELECTORS.BACK_BUTTON).waitForDisplayed({
+            timeout: 3 * config.DEFAULT_TIMEOUT,
+            reverse: false,
+        });
     }
 
 }

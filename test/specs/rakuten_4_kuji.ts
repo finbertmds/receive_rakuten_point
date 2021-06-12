@@ -52,6 +52,7 @@ describe('rakuten_kuji', () => {
                     driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
                     handleDontCloseApp();
+                    console.log(`"kuji clicked: ${index + 1}"`);
                 }
             }
         }
@@ -68,6 +69,7 @@ describe('rakuten_kuji', () => {
             driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
             driver.back();
             handleDontCloseApp();
+            console.log(`"kujiAd clicked"`);
         }
     }
 

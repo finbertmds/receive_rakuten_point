@@ -28,7 +28,7 @@ class S_LoginScreen extends AppScreen {
 
     waitForLoggedIn () {
         return $(SELECTORS.INPUT).waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
+            timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });
     }
