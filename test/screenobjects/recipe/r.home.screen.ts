@@ -37,7 +37,7 @@ class R_HomeScreen extends AppScreen {
 
     waitForBackButtonIsShown () {
         return $(SELECTORS.BACK_BUTTON).waitForDisplayed({
-            timeout: 3 * config.DEFAULT_TIMEOUT,
+            timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }

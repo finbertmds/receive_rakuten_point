@@ -46,10 +46,10 @@ describe('rakuten_kuji', () => {
                     if (kFirststartScreen.noButton.isDisplayed()) {
                         kFirststartScreen.noButton.click();
                     }
-                    driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
                     handleDontCloseApp();
-                    driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
                     handleDontCloseApp();
                     console.log(`"kuji clicked: ${index + 1}"`);

@@ -191,6 +191,7 @@ describe('rakuten_recipe', () => {
         if (firstReceipeImage) {
             firstReceipeImage.click();
             handleCloseModal();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (rHomeScreen.swipeGuideImage.isDisplayed()) {
                 rHomeScreen.swipeGuideImage.click();
             }
