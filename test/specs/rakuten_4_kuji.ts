@@ -28,6 +28,7 @@ describe('rakuten_kuji', () => {
     }
 
     function handleClickMainLayoutKuji () {
+        driver.pause(config.DEFAULT_TIMEOUT);
         // kHomeScreen.waitForMainLayoutIsShown();
         let kujiList = kHomeScreen.mainLayoutKujiList;
         console.log("kujiCount: ", kujiList?.length);
