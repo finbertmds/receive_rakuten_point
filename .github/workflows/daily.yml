@@ -43,3 +43,21 @@ jobs:
     - name: remove-screenshots
       if: ${{ failure() }}
       run: rm -rf ./screenshots
+
+  ##################################
+  ### Run when a schedule failed ###
+  ##################################
+  restart_when_failed:
+    name: Restarts the scheduled run when it failed
+    runs-on: ubuntu-18.04
+    if: github.event_name == 'schedule' && failure()
+    needs: [build]
+    steps:
+      - name: Retry the workflow
+        run: |
+          curl -i \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.ACTIONS_PAT }}" \
+          https://api.github.com/repos/FinbertMDS/receive_rakuten_point/actions/workflows/6691016/dispatches \
+          -d '{"ref": "${{ github.ref }}" }'
