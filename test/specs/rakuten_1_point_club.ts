@@ -162,11 +162,6 @@ describe('rakuten_point_club', () => {
     });
 
     it('pc_click_first_ad_banner', () => {
-        let currentDate = new Date().getDay();
-        if (currentDate !== config.RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST) {
-            console.log(`today donot run pc_click_first_ad_banner`);
-            return;
-        }
         for (let index = 0; index < 3; index++) {
             handleClickFirstAdBanner();
         }
