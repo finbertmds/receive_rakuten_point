@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    if: (github.event_name == 'schedule')
     runs-on: macos-10.15
 
     steps:
