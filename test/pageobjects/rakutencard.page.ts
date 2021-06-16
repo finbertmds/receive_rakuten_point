@@ -17,7 +17,7 @@ class RakutenCardPage extends Page {
     get clickPointList () { return $$('.topArea') }
 
     get videoBtn () { return $('#vjs_video_3 > button') }
-    get videoGetPointImg () { return $('//*[@id="vjs_video_3"]/div[8]/div[1]/div/div/a/img') }
+    get videoGetPointImg () { return $('.js-movie-point-finish') }
 
     get btnClickShoppingLink () { return $('.pNav03 > a') }
     get btnClickShoppingTxt () { return $('.pNav03 > a > span') }

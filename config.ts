@@ -38,7 +38,7 @@ export default {
         'https://kuji.rakuten.co.jp/f3a3832d0c',
     ],
     RAKUTENCARD_HOME_PAGE: 'https://www.rakuten-card.co.jp/e-navi/index.xhtml',
-    DAY_VIEW_VIDEO_GET_POINT: 15,
+    DAY_VIEW_VIDEO_GET_POINT: 20,
     CAMPAIGN_PAGE_LIST: [
         'https://event.rakuten.co.jp/campaign/card/pointday',
         'https://event.rakuten.co.jp/campaign/sports',

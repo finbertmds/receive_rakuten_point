@@ -91,21 +91,21 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
     
-    it('view_video_get_point_one_day_monthly', async () => {
-        let currentDate = new Date().getDate();
-        if (currentDate !== config.DAY_VIEW_VIDEO_GET_POINT) {
-            console.log(`only view video in day ${config.DAY_VIEW_VIDEO_GET_POINT}`);
-            return;
-        }
-        await credentials();
-        await rakutencardPage.open();
-        if (await rakutencardPage.isNeedLogin()) {
-            await rakutencardPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
-        }
-        await rakutencardPage.handleClickPointCountLink();
+    // it('view_video_get_point_one_day_monthly', async () => {
+    //     let currentDate = new Date().getDate();
+    //     if (currentDate !== config.DAY_VIEW_VIDEO_GET_POINT) {
+    //         console.log(`only view video in day ${config.DAY_VIEW_VIDEO_GET_POINT}`);
+    //         return;
+    //     }
+    //     await credentials();
+    //     await rakutencardPage.open();
+    //     if (await rakutencardPage.isNeedLogin()) {
+    //         await rakutencardPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
+    //     }
+    //     await rakutencardPage.handleClickPointCountLink();
 
-        await rakutencardPage.handlClickVideo();
-    });
+    //     await rakutencardPage.handlClickVideo();
+    // });
     
     it('entry_campaign', async () => {
         await credentials();
