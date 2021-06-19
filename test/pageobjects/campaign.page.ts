@@ -25,10 +25,11 @@ class CampaignPage extends Page {
             this.open(element);
             await browser.pause(2000);
             if (!await this.canEntry()) {
-                return;
+                continue;
             }
             await this.clickBtnEntry();
             await browser.pause(5000);
+            console.log("entryCampaign: ", element);
         }
     }
 }

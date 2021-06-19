@@ -40,14 +40,14 @@ class WebSearchPage extends Page {
 
     async login (username: string, password: string): Promise<void> {
         await this.clickBtnLogin();
-        await browser.pause(2000)
+        await browser.pause(config.DEFAULT_TIMEOUT)
         if (!await this.isNotLoggedIn()) {
             return;
         }
         await (await this.inputUsername).setValue(username);
         await (await this.inputPassword).setValue(password);
         await (await this.btnSubmit).click();
-        await browser.pause(2000)
+        await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
     async search (): Promise<void> {

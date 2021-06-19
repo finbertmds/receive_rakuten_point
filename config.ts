@@ -44,4 +44,5 @@ export default {
         'https://event.rakuten.co.jp/campaign/card/pointday',
         'https://event.rakuten.co.jp/campaign/sports',
     ],
+    DEFAULT_TIMEOUT: 15000,
 }
