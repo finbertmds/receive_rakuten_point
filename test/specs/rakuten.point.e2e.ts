@@ -39,6 +39,7 @@ describe('Rakuten', () => {
         await rakutencardPage.open();
         if (await rakutencardPage.isNeedLogin()) {
             await rakutencardPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
+            await rakutencardPage.open()
         }
         let labelclickPointCountTxt = await rakutencardPage.getLableClickPointCountTxt();
         await rakutencardPage.handleClickPointCountLink();
@@ -101,6 +102,7 @@ describe('Rakuten', () => {
     //     await rakutencardPage.open();
     //     if (await rakutencardPage.isNeedLogin()) {
     //         await rakutencardPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
+    //         await rakutencardPage.open()
     //     }
     //     await rakutencardPage.handleClickPointCountLink();
 
