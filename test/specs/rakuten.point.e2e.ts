@@ -15,6 +15,7 @@ describe('Rakuten', () => {
         await loginPage.open();
         await loginPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
         await websearchPage.open();
+        await browser.pause(config.DEFAULT_TIMEOUT);
         if (await websearchPage.isNeedLogin()) {
             await websearchPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
         }
@@ -22,6 +23,7 @@ describe('Rakuten', () => {
 
     async function loginExtension() {
         await websearchPage.open();
+        await browser.pause(config.DEFAULT_TIMEOUT);
         if (await websearchPage.isNeedLogin()) {
             await websearchPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
         }
