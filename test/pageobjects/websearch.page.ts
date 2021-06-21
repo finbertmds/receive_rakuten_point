@@ -61,7 +61,7 @@ class WebSearchPage extends Page {
             let myRandomKeySearch = webSearchHelpers.generateRandomKeySearch();
             await (await this.inputSearchFormTxt).setValue(myRandomKeySearch)
             await (await this.inputSearchBtn).click()
-            await browser.pause(2000)
+            await browser.pause(config.DEFAULT_TIMEOUT)
             currentSearchCount = await (await this.labelCurrentSearchCount).getText();
             console.log("currentSearchCount: ", currentSearchCount);
         }
