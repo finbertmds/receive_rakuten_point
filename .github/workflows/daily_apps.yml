@@ -62,7 +62,7 @@ jobs:
   restart_when_failed:
     name: Restarts the scheduled run when it failed
     runs-on: macos-10.15
-    if: github.event_name == 'schedule' && failure()
+    if: failure()
     needs: [build]
     steps:
       - name: Retry the workflow
