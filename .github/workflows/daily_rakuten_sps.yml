@@ -1,4 +1,4 @@
-name: Daily App SPS every night
+name: Daily App SPS
 
 on:
   schedule:
