@@ -6,7 +6,7 @@ const SELECTORS = {
     HOME_SCREEN: getByResouceId("android:id/content"),
     TOOLBAR_ELEMENT: getByResouceId("rakuten-toolbar"),
     NOTIFICATION_SETTING_LABEL: getByText("通知設定"),
-    NOTIFICATION_YES_BUTTON: getByText("はい"),
+    NOTIFICATION_NO_BUTTON: getByText("いいえ"),
     NOTIFICATION_SETTING_ON_LABEL: getByText("プッシュ通知を許可設定しました"),
     NOTIFICATION_OK_BUTTON: getByText("OK"),
 
@@ -42,8 +42,8 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.NOTIFICATION_SETTING_LABEL);
     }
 
-    get notificationYesButon () {
-        return $(SELECTORS.NOTIFICATION_YES_BUTTON);
+    get notificationNoButon () {
+        return $(SELECTORS.NOTIFICATION_NO_BUTTON);
     }
 
     get notificationSettingOnLabel () {

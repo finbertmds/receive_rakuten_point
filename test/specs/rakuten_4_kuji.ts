@@ -53,6 +53,9 @@ describe('rakuten_kuji', () => {
                     driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
                     driver.back();
                     handleDontCloseApp();
+                    if(kHomeScreen.homeTabLabel.isDisplayed()) {
+                        kHomeScreen.homeTabLabel.click();
+                    }
                     console.log(`"kuji clicked: ${index + 1}"`);
                 }
             }
@@ -126,6 +129,7 @@ describe('rakuten_kuji', () => {
 
         handleFirstTimeEnterApp();
         handleLuckyKuji();
+        driver.pause(config.DEFAULT_TIMEOUT);
         for (let index = 0; index < config.RAKUTEN_KUJI_RUN_AGAIN_TEST; index++) {
             handleClickMainLayoutKuji();
         }

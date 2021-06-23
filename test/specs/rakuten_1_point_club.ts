@@ -37,7 +37,7 @@ describe('rakuten_point_club', () => {
         pcHomeScreen.waitForNotificationSettingLabelIsShown();
         let isDiplayedNotification = pcHomeScreen.notificationSettingLabel.isDisplayed()
         if (isDiplayedNotification) {
-            pcHomeScreen.notificationYesButon.click();
+            pcHomeScreen.notificationNoButon.click();
             // console.log(homeScreen.notificationSettingOnLabel.getText());
             pcHomeScreen.waitForOkButtonIsShown();
             pcHomeScreen.notificationOkButon.click();

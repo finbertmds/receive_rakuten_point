@@ -8,6 +8,7 @@ const SELECTORS = {
     UNREAD_MESSAGE_COUNT: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/unreadMessageCount"),
     MESSAGE_LABEL: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/message"),
 
+    HOME_TAB_LABEL: getByText("HOME"),
     PLAY_MOVIE_ICON: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/play_movie_icon"),
     
     MAIN_LAYOUT: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/main_layout"),
@@ -30,6 +31,10 @@ class K_HomeScreen extends AppScreen {
 
     get messageLabel () {
         return $(SELECTORS.MESSAGE_LABEL);
+    }
+
+    get homeTabLabel () {
+        return $(SELECTORS.HOME_TAB_LABEL);
     }
 
     waitForPlayMoviewIconIsShown () {
