@@ -6,11 +6,10 @@ on:
       - rakuten_apps
     paths:
     - "test/**"
-    - ".github/workflows/app.ci.yml"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
