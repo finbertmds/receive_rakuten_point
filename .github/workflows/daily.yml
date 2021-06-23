@@ -50,7 +50,7 @@ jobs:
   restart_when_failed:
     name: Restarts the scheduled run when it failed
     runs-on: ubuntu-18.04
-    if: failure()
+    if: github.event_name == 'schedule' && failure()
     needs: [build]
     steps:
       - name: Retry the workflow
