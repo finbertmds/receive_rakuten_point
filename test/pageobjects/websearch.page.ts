@@ -59,8 +59,10 @@ class WebSearchPage extends Page {
         console.log("currentSearchCount: ", currentSearchCount);
         while (parseInt(currentSearchCount) < config.WEBSEARCH_MAX_COUNT) {
             let myRandomKeySearch = webSearchHelpers.generateRandomKeySearch();
-            await (await this.inputSearchFormTxt).setValue(myRandomKeySearch)
-            await (await this.inputSearchBtn).click()
+            // await (await this.inputSearchFormTxt).setValue(myRandomKeySearch)
+            // await (await this.inputSearchBtn).click()
+            const searchLink = `https://websearch.rakuten.co.jp/Web?qt=${myRandomKeySearch}&col=OW`
+            await super.open(searchLink);
             await browser.pause(5000)
             currentSearchCount = (parseInt(currentSearchCount) + 1).toString()
             let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
