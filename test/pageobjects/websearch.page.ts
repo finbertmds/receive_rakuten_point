@@ -65,8 +65,10 @@ class WebSearchPage extends Page {
             await super.open(searchLink);
             await browser.pause(5000)
             currentSearchCount = (parseInt(currentSearchCount) + 1).toString()
-            let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
-            console.log("currentSearchCount: ", currentSearchCountLabel);
+            if (await (await this.labelCurrentSearchCount).isExisting()) {
+                let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
+                console.log("currentSearchCount: ", currentSearchCountLabel);
+            }
         }
     }
 
