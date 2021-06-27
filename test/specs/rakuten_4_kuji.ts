@@ -82,8 +82,9 @@ describe('rakuten_kuji', () => {
             return;
         }
         kHomeScreen.messageLabel.click();
-        kMessageboxScreen.waitForIsShown();
-        kMessageboxScreen.waitForMessageIsShown();
+        // kMessageboxScreen.waitForIsShown();
+        // kMessageboxScreen.waitForMessageIsShown();
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
         let messageList = kMessageboxScreen.messageThumbnailList;
         for (let index = 0; index < messageList.length; index++) {
             const messageElement = messageList[index];
