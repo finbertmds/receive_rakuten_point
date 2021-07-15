@@ -17,6 +17,7 @@ describe('rakuten_recipe', () => {
 
     function handleFirstTimeEnterApp (completeServey: boolean = false) {
         // rFirststartScreen.waitForStartLablelIsShown();
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (rFirststartScreen.cancelUpgradeLabel.isDisplayed()) {
             rFirststartScreen.cancelUpgradeLabel.click();
             driver.pause(5000);
