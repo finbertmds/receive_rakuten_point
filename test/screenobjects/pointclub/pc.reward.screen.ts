@@ -8,7 +8,7 @@ const SELECTORS = {
     UNCLAIM_BOX: getByResouceId("unclaim-box"),
     UNCLAIM_LIST: getByResouceId("unclaimed-list"),
     UNCLAIM_LIST_ITEMS: getByResouceId("unclaimed-list-items"),
-
+    RETRY_LABEL: getByText("再試行"),
     GET_POINT_DONE_LABEL: getByResouceId("claimads-claimend"),
 };
 
@@ -19,6 +19,10 @@ class PC_RewardScreen extends AppScreen {
 
     get suggestProductLabel () {
         return $(SELECTORS.SUGGEST_PRODUCT_LABEL);
+    }
+
+    get retryLabel () {
+        return $(SELECTORS.RETRY_LABEL);
     }
 
     get unclaimBox () {
@@ -33,11 +37,11 @@ class PC_RewardScreen extends AppScreen {
     }
 
     waitForSuggestProductIsShown () {
-        // return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
-        return $(SELECTORS.SUGGEST_PRODUCT_LABEL).waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
-            reverse: false,
-        });
+        return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
+        // return $(SELECTORS.SUGGEST_PRODUCT_LABEL).waitForDisplayed({
+        //     timeout: 2 * config.DEFAULT_TIMEOUT,
+        //     reverse: false,
+        // });
     }
 
     waitForUnclaimListIsShown () {

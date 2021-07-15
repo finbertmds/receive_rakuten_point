@@ -98,14 +98,15 @@ describe('rakuten_recipe', () => {
         rMypageScreen.rewardButton.click();
 
         rRewardScreen.waitForIsShown();
-        rRewardScreen.waitForSuggestProductIsShown();
+        // rRewardScreen.waitForSuggestProductIsShown();
+        driver.pause(config.DEFAULT_TIMEOUT);
         let retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
         while (retryLableIsShown) {
             rRewardScreen.retryLabel.click();
             driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
             retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
         }
-        rRewardScreen.waitForSuggestProductIsShown();
+        // rRewardScreen.waitForSuggestProductIsShown();
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
         if (needLoginMoreTimeButton.isDisplayed()) {
             rRewardScreen.closeButton.click();

@@ -94,6 +94,13 @@ describe('rakuten_point_club', () => {
         pcHomeScreen.rakutenRewardLabel.click();
         
         pcRewardScreen.waitForIsShown();
+        driver.pause(config.DEFAULT_TIMEOUT);
+        let retryLableIsShown = pcRewardScreen.retryLabel.isDisplayed();
+        while (retryLableIsShown) {
+            pcRewardScreen.retryLabel.click();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+            retryLableIsShown = pcRewardScreen.retryLabel.isDisplayed();
+        }
         pcRewardScreen.waitForSuggestProductIsShown();
         if (closeScreenWhenEnd) {
             pcRewardScreen.closeButton.click();
