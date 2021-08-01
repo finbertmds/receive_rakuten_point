@@ -101,10 +101,15 @@ describe('rakuten_recipe', () => {
         // rRewardScreen.waitForSuggestProductIsShown();
         driver.pause(config.DEFAULT_TIMEOUT);
         let retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
-        while (retryLableIsShown) {
+        let retryCount = 0;
+        while (retryLableIsShown && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
             rRewardScreen.retryLabel.click();
             driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
             retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
+            retryCount++;
+        }
+        if (retryCount >= config.RAKUTEN_RETRY_MAX_COUNT) {
+            return false;
         }
         // rRewardScreen.waitForSuggestProductIsShown();
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
@@ -171,8 +176,10 @@ describe('rakuten_recipe', () => {
 
     function handleClickUnClaim() {
         let loggedIn = openRewardScreen();
-        while (!loggedIn) {
+        let retryCount = 0;
+        while (!loggedIn && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
             loggedIn = openRewardScreen();
+            retryCount++;
         }
         let requireLoginAgain = clickUnclaimButton();
         if (requireLoginAgain) {

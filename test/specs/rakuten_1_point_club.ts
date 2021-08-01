@@ -84,7 +84,7 @@ describe('rakuten_point_club', () => {
         pcHomeScreen.waitForAdBannerIsShown();
     }
 
-    function openRewardScreen (closeScreenWhenEnd: boolean = true) {
+    function openRewardScreen (closeScreenWhenEnd: boolean = true): boolean {
         pcHomeScreen.waitForRakutenNameLableIsShown();
         driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         pcHomeScreen.menuNavigationButton.click();
@@ -96,19 +96,29 @@ describe('rakuten_point_club', () => {
         pcRewardScreen.waitForIsShown();
         driver.pause(config.DEFAULT_TIMEOUT);
         let retryLableIsShown = pcRewardScreen.retryLabel.isDisplayed();
-        while (retryLableIsShown) {
+        let retryCount = 0;
+        while (retryLableIsShown && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
             pcRewardScreen.retryLabel.click();
             driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
             retryLableIsShown = pcRewardScreen.retryLabel.isDisplayed();
+            retryCount++;
         }
+        if (retryCount >= config.RAKUTEN_RETRY_MAX_COUNT) {
+            return false;
+        }
+
         pcRewardScreen.waitForSuggestProductIsShown();
         if (closeScreenWhenEnd) {
             pcRewardScreen.closeButton.click();
         }
+        return true;
     }
 
     function clickUnclaimButton () {
-        openRewardScreen(false);
+        let skipFlag = openRewardScreen(false);
+        if (!skipFlag) {
+            return;
+        }
         
         driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = pcRewardScreen.unclaimBox;
@@ -149,7 +159,7 @@ describe('rakuten_point_club', () => {
 
     it('pc_first_login', () => {
         pcHomeScreen.waitForIsShown();
-        driver.pause(7000);
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
 
         let isLoggedIn = checkIsLoggedIn();
         if (!isLoggedIn) {
@@ -160,6 +170,10 @@ describe('rakuten_point_club', () => {
     });
 
     it('pc_click_point_history', () => {
+        let isLoggedIn = checkIsLoggedIn();
+        if (!isLoggedIn) {
+            return;
+        }
         let currentDate = new Date().getDay();
         if (currentDate !== config.RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST) {
             console.log(`today donot run pc_click_point_history`);
@@ -169,12 +183,20 @@ describe('rakuten_point_club', () => {
     });
 
     it('pc_click_first_ad_banner', () => {
+        let isLoggedIn = checkIsLoggedIn();
+        if (!isLoggedIn) {
+            return;
+        }
         for (let index = 0; index < 3; index++) {
             handleClickFirstAdBanner();
         }
     });
 
     it('pc_get_point_from_reward', () => {
+        let isLoggedIn = checkIsLoggedIn();
+        if (!isLoggedIn) {
+            return;
+        }
         for (let index = 0; index < 2; index++) {
             openRewardScreen();
         }
