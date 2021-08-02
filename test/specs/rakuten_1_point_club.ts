@@ -85,8 +85,11 @@ describe('rakuten_point_club', () => {
     }
 
     function openRewardScreen (closeScreenWhenEnd: boolean = true): boolean {
-        pcHomeScreen.waitForRakutenNameLableIsShown();
+        // pcHomeScreen.waitForRakutenNameLableIsShown();
         driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        if (!pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+            return false;
+        }
         pcHomeScreen.menuNavigationButton.click();
         // console.log("rakutenRewardNumberLabel: ", homeScreen.rakutenRewardNumberLabel?.getText());
         pcHomeScreen.waitForRakutenRewardLabelIsShown();
