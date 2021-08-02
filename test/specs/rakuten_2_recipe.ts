@@ -95,6 +95,9 @@ describe('rakuten_recipe', () => {
 
     function openRewardScreen () {
         Gestures.swipeUp(0.7);
+        if (!rMypageScreen.rewardButton.isDisplayed()) {
+            return false;
+        }
         rMypageScreen.rewardButton.click();
 
         rRewardScreen.waitForIsShown();
@@ -115,7 +118,7 @@ describe('rakuten_recipe', () => {
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
         if (needLoginMoreTimeButton.isDisplayed()) {
             rRewardScreen.closeButton.click();
-            return false
+            return false;
         }
         return true;
     }
