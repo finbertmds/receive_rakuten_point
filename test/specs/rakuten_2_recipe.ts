@@ -184,6 +184,9 @@ describe('rakuten_recipe', () => {
             loggedIn = openRewardScreen();
             retryCount++;
         }
+        if (!loggedIn) {
+            return;
+        }
         let requireLoginAgain = clickUnclaimButton();
         if (requireLoginAgain) {
             requireLoginAgain = clickUnclaimButton();
@@ -221,7 +224,7 @@ describe('rakuten_recipe', () => {
         handleFirstTimeEnterAppNew();
         handleOpenTabMyPageAndLogin();
         handleCloseModal();
-        handleClickUnClaim();
+        // handleClickUnClaim();
     });
 
     it('r_click_recipe', () => {
