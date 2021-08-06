@@ -2,7 +2,7 @@ name: Daily App PoinClub
 
 on:
   schedule:
-    - cron: '20 2 * * *'
+    - cron: '0 1,8 * * *'
   workflow_dispatch:
 
 jobs:

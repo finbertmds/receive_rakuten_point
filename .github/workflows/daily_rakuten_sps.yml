@@ -2,7 +2,7 @@ name: Daily App SPS
 
 on:
   schedule:
-    - cron: '20 2,9 * * *'
+    - cron: '0 3,10 * * *'
   workflow_dispatch:
 
 jobs:
