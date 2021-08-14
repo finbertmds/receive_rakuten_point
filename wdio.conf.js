@@ -27,7 +27,7 @@ config.capabilities = [
         // http://appium.io/docs/en/writing-running-appium/caps/
         // This is `appium:` for all Appium Capabilities which can be found here
         'appium:deviceName': 'Android Emulator',
-        'appium:platformVersion': '10',
+        // 'appium:platformVersion': '10',
         'appium:orientation': 'PORTRAIT',
         // `automationName` will be mandatory, see
         // https://github.com/appium/appium/releases/tag/v1.13.0
