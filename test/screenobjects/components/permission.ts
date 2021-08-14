@@ -1,11 +1,13 @@
-import { getByResouceId } from "../../helpers/UiSelectorHelper";
+import { getByResouceId, getByText } from "../../helpers/UiSelectorHelper";
 import AppScreen from "../app.screen";
 
 const SELECTORS = {
   DEFAULT_SELECTOR: getByResouceId("com.android.permissioncontroller:id/grant_dialog"),
-  ALLOW_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_foreground_only_button"),
+  // ALLOW_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_foreground_only_button"),
+  ALLOW_BUTTON: getByText("ALLOW"),
   // ONE_TIME_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_one_time_button"),
-  DENY_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_deny_button"),
+  // DENY_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_deny_button"),
+  DENY_BUTTON: getByText("DENY"),
   SETTINGS_CONTAINER: getByResouceId("com.android.settings:id/content_frame"),
   SETTINGS_SWITCH_RADIO: getByResouceId("android:id/switch_widget"),
 };
