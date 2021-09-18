@@ -43,6 +43,9 @@ export default {
     CAMPAIGN_PAGE_LIST: [
         'https://event.rakuten.co.jp/campaign/card/pointday',
         'https://event.rakuten.co.jp/campaign/sports',
+        'https://event.rakuten.co.jp/campaign/rank/point',
+        'https://event.rakuten.co.jp/campaign/point-up/marathon',
+        '',
     ],
     DEFAULT_TIMEOUT: 15000,
 }
