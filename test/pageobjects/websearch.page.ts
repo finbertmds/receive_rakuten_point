@@ -13,7 +13,7 @@ class WebSearchPage extends Page {
 
     get inputSearchFormTxt () { return $('#srchformtxt_qt') }
     get inputSearchBtn () { return $('#searchBtn') }
-    get labelCurrentSearchCount () { return $('.sc-fzqNJr') }
+    get labelCurrentSearchCount () { return $('.sc-fzoyAV') }
 
     /**
      * login page require
@@ -55,8 +55,9 @@ class WebSearchPage extends Page {
             console.log("labelCurrentSearchCount not found");
             return;
         }
-        let currentSearchCount = await (await this.labelCurrentSearchCount).getText();
-        console.log("currentSearchCount: ", currentSearchCount);
+        let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
+        console.log("currentSearchCount: ", currentSearchCountLabel);
+        let currentSearchCount = "0";
         while (parseInt(currentSearchCount) < config.WEBSEARCH_MAX_COUNT) {
             let myRandomKeySearch = webSearchHelpers.generateRandomKeySearch();
             // await (await this.inputSearchFormTxt).setValue(myRandomKeySearch)
@@ -66,7 +67,7 @@ class WebSearchPage extends Page {
             await browser.pause(5000)
             currentSearchCount = (parseInt(currentSearchCount) + 1).toString()
             if (await (await this.labelCurrentSearchCount).isExisting()) {
-                let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
+                currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
                 console.log("currentSearchCount: ", currentSearchCountLabel);
             }
         }

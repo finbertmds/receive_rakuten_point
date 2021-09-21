@@ -1,3 +1,5 @@
+import config from "../../config";
+
 const getRandomString = (length: number): string => {
     var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var result = '';
@@ -9,6 +11,6 @@ const getRandomString = (length: number): string => {
 
 export default {
     generateRandomKeySearch: ():string => {
-        return getRandomString(4) + Math.floor(Math.random()*100).toString()
+        return config.WEBSEARCH_PREFIX + " " + getRandomString(2) + " " + Math.floor(Math.random()*100).toString()
     }
 }
