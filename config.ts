@@ -3,7 +3,7 @@ export default {
     RAKUTEN_PASSWORD: process.env.RAKUTEN_PASSWORD || '',
     LOGIN_PAGE: 'https://kuji.rakuten.co.jp/256356cd1a',
     WEBSEARCH_SEARCH_PAGE: 'https://websearch.rakuten.co.jp/Web?qt=test&col=OW',
-    WEBSEARCH_MAX_COUNT: 15,
+    WEBSEARCH_MAX_COUNT: 30,
     WEBSEARCH_PREFIX: 'おもちゃ',
     KUJI_HOME_PAGE: 'https://kuji.rakuten.co.jp',
     KUJI_DEFAULT_LINK: [
