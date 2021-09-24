@@ -11,6 +11,6 @@ const getRandomString = (length: number): string => {
 
 export default {
     generateRandomKeySearch: ():string => {
-        return config.WEBSEARCH_PREFIX + " " + getRandomString(2) + " " + Math.floor(Math.random()*100).toString()
+        return config.WEBSEARCH_PREFIX + " " + getRandomString(2) + " " + Math.floor(Math.random()*10000).toString()
     }
 }
