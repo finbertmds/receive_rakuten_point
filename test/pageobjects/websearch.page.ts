@@ -13,7 +13,16 @@ class WebSearchPage extends Page {
 
     get inputSearchFormTxt () { return $('#srchformtxt_qt') }
     get inputSearchBtn () { return $('#searchBtn') }
-    get labelCurrentSearchCount () { return $('.sc-fzoyAV') }
+    get labelCurrentSearchCount () {
+        return (async () => {
+            let searchCountContainerList = await $$('//span[contains(text(),\'口\')]')
+            if (searchCountContainerList.length > 0) {
+                let searchCountContainer = searchCountContainerList[0];
+                return searchCountContainer.$('./em');
+            }
+            return $('.sc-fFucqa')
+        })();
+     }
 
     /**
      * login page require
@@ -51,10 +60,6 @@ class WebSearchPage extends Page {
     }
 
     async search (): Promise<void> {
-        if (!await (await this.labelCurrentSearchCount).isExisting()) {
-            console.log("labelCurrentSearchCount not found");
-            return;
-        }
         let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
         console.log("currentSearchCount: ", currentSearchCountLabel);
         let currentSearchCount = "0";
