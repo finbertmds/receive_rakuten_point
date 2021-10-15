@@ -31,6 +31,32 @@ class WebSearchPage extends Page {
     get inputPassword () { return $('#loginInner_p') }
     get btnSubmit () { return $('[name="submit"]') }
 
+    get btnEarnPoint () { return $('//*[contains(text(),\'ポイントを貯める\')]') }
+    get earnPointLinkCount (): Promise<number> {
+        return (async () => {
+            let pointsListContainer = await $('.points-list2')
+            if (pointsListContainer) {
+                let earnPointList = await pointsListContainer.$$('./li');
+                return earnPointList.length;
+            }
+            return 0;
+        })();
+    }
+
+    getEarnPointLink (index: number) {
+        return (async () => {
+            let pointsListContainer = await $('.points-list2')
+            if (pointsListContainer) {
+                let earnPointList = await pointsListContainer.$$('./li');
+                if (earnPointList.length > 0 && index < earnPointList.length) {
+                    let earnPointItem = earnPointList[index];
+                    return earnPointItem.$('./a');
+                }
+            }
+            return null;
+        })();
+    }
+
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -75,6 +101,24 @@ class WebSearchPage extends Page {
             if (await (await this.labelCurrentSearchCount).isExisting()) {
                 currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
                 console.log("currentSearchCount: ", currentSearchCountLabel);
+            }
+        }
+    }
+
+    async entryCampaign (): Promise<void> {
+        super.open(config.WEBSEARCH_SEARCH_HOME_PAGE);
+        await browser.pause(5000);
+        await (await this.btnEarnPoint).click();
+        let earnPointLinkCount = await this.earnPointLinkCount;
+        if (earnPointLinkCount > 0) {
+            for (let index = 0; index < earnPointLinkCount; index++) {
+                let earnPointLink = await this.getEarnPointLink(index);
+                if (earnPointLink) {
+                    await earnPointLink.click();
+                    await browser.pause(10000);
+                    const windows = await browser.getWindowHandles();
+                    await browser.switchToWindow(windows[0]);
+                }
             }
         }
     }
