@@ -1,4 +1,5 @@
 import config from '../../config';
+import Gestures from '../helpers/Gestures';
 import { CONTEXT_REF } from "../helpers/WebView";
 import pcFirststartScreen from "../screenobjects/pointclub/pc.firststart.screen";
 import pcHomeScreen from '../screenobjects/pointclub/pc.home.screen';
@@ -34,6 +35,10 @@ describe('rakuten_point_club', () => {
 
     function handleFirstTimeCloseNotification () {
         // pcHomeScreen.waitForToolbarIsShown();
+        let isUpdateVersion = pcHomeScreen.notificationUpdateLabel.isDisplayed()
+        if (isUpdateVersion) {
+            pcHomeScreen.notificationNoButon.click();
+        }
         pcHomeScreen.waitForNotificationSettingLabelIsShown();
         let isDiplayedNotification = pcHomeScreen.notificationSettingLabel.isDisplayed()
         if (isDiplayedNotification) {
@@ -111,9 +116,29 @@ describe('rakuten_point_club', () => {
         }
 
         pcRewardScreen.waitForSuggestProductIsShown();
+        let needLoginMoreTimeButton = pcRewardScreen.needLoginButton;
+        if (needLoginMoreTimeButton) {
+            needLoginMoreTimeButton.click();
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+            handleLoginRequireAgain();
+        }
         if (closeScreenWhenEnd) {
             pcRewardScreen.closeButton.click();
         }
+        return true;
+    }
+
+    function handleLoginRequireAgain () {
+        driver.pause(5000);
+        if (!pcRewardScreen.requireLoginLabel.isDisplayed()) {
+            return false;
+        }
+        Gestures.swipeUp(0.7);
+        pcRewardScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        pcRewardScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        pcRewardScreen.loginButton.click();
+        pcRewardScreen.waitForLoggedIn();
+        console.log("logged in one again");
         return true;
     }
 
@@ -149,7 +174,10 @@ describe('rakuten_point_club', () => {
                 if (unclaimListIndexButton) {
                     console.log("unclaimText: ", pcRewardScreen.getUnclaimListIndexButton(index)?.getText());
                     unclaimListIndexButton.click();
-                    
+                    let loginAgain = handleLoginRequireAgain();
+                    if (loginAgain) {
+                        return true;
+                    }
                     pcRewardScreen.waitForGetPointDoneLabelIsShown();
                     console.log("getPointDoneLabel: ", pcRewardScreen.getPointDoneLabel?.getText());
 
@@ -172,14 +200,19 @@ describe('rakuten_point_club', () => {
         }
     });
 
-    it('pc_click_point_history', () => {
+    it('pc_click_open_reward', () => {
         let isLoggedIn = checkIsLoggedIn();
         if (!isLoggedIn) {
             return;
         }
-        let currentDate = new Date().getDay();
-        if (currentDate !== config.RAKUTEN_POINT_CLUB_RUN_SPECIAL_TEST) {
-            console.log(`today donot run pc_click_point_history`);
+        for (let index = 0; index < 3; index++) {
+            openRewardScreen();
+        }
+    });
+
+    it('pc_click_point_history', () => {
+        let isLoggedIn = checkIsLoggedIn();
+        if (!isLoggedIn) {
             return;
         }
         handleClickPointHistory();
@@ -190,7 +223,7 @@ describe('rakuten_point_club', () => {
         if (!isLoggedIn) {
             return;
         }
-        for (let index = 0; index < 3; index++) {
+        for (let index = 0; index < 5; index++) {
             handleClickFirstAdBanner();
         }
     });
@@ -199,9 +232,6 @@ describe('rakuten_point_club', () => {
         let isLoggedIn = checkIsLoggedIn();
         if (!isLoggedIn) {
             return;
-        }
-        for (let index = 0; index < 2; index++) {
-            openRewardScreen();
         }
         clickUnclaimButton();
     });

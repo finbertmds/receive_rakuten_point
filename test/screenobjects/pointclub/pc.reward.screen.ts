@@ -4,6 +4,11 @@ import AppScreen from '../app.screen';
 
 const SELECTORS = {
     REWARD_SCREEN: getByText("楽天リワード"),
+    REQUIRE_LOGIN_LABEL: getByText("[Rakuten]Login"),
+    LOGIN_INPUT: getByResouceId("username"),
+    LOGIN_PASSWORD: getByResouceId("password"),
+    LOGIN_BUTTON: getByText("Login"),
+    NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByResouceId("signin-tile"),
     SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
     UNCLAIM_BOX: getByResouceId("unclaim-box"),
     UNCLAIM_LIST: getByResouceId("unclaimed-list"),
@@ -100,6 +105,38 @@ class PC_RewardScreen extends AppScreen {
 
     get backButton () {
         return $(SELECTORS.REWARD_SCREEN).parent.$(getByClassname("android.widget.ImageButton", 0));
+    }
+
+    get needLoginButton () {
+        let signInTitle = $(SELECTORS.NEED_ONE_MORE_TIME_LOGIN_BUTTON);
+        if (signInTitle.isDisplayed()) {
+            console.log("need sign in again");
+            return signInTitle.$(getByClassname("android.widget.Button"));
+        }
+        return null;
+    }
+
+    get requireLoginLabel () {
+        return $(SELECTORS.REQUIRE_LOGIN_LABEL);
+    }
+
+    get loginButton () {
+        return $(SELECTORS.LOGIN_BUTTON);
+    }
+
+    get userid () {
+        return $(SELECTORS.LOGIN_INPUT);
+    }
+
+    get password () {
+        return $(SELECTORS.LOGIN_PASSWORD);
+    }
+
+    waitForLoggedIn () {
+        return $(SELECTORS.LOGIN_INPUT).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT,
+            reverse: true,
+        });
     }
 }
 

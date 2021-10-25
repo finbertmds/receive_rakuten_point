@@ -5,6 +5,7 @@ import AppScreen from '../app.screen';
 const SELECTORS = {
     HOME_SCREEN: getByResouceId("android:id/content"),
     TOOLBAR_ELEMENT: getByResouceId("rakuten-toolbar"),
+    NOTIFICATION_UPDATE_LABEL: getByText("お知らせ"),
     NOTIFICATION_SETTING_LABEL: getByText("通知設定"),
     NOTIFICATION_NO_BUTTON: getByText("いいえ"),
     NOTIFICATION_SETTING_ON_LABEL: getByText("プッシュ通知を許可設定しました"),
@@ -32,6 +33,10 @@ class PC_HomeScreen extends AppScreen {
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
+    }
+
+    get notificationUpdateLabel () {
+        return $(SELECTORS.NOTIFICATION_UPDATE_LABEL);
     }
 
     waitForNotificationSettingLabelIsShown () {
