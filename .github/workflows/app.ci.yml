@@ -1,11 +1,11 @@
 name: Appium CI
 
 on:
-  # push:
-  #   branches:
-  #     - rakuten_apps
-  #   paths:
-  #   - "test/**"
+  push:
+    branches:
+      - rakuten_apps
+    paths:
+    - "test/**"
   workflow_dispatch:
 
 jobs:
