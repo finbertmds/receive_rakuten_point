@@ -116,7 +116,7 @@ describe('Rakuten', () => {
         await campaignPage.entryCampaign();
     });
     
-    it('websearch_entry_campaign_get_point', async () => {
+    it('websearch_entry_get_point', async () => {
         await credentials();
         await websearchPage.entryCampaign();
         await browser.pause(2000)
