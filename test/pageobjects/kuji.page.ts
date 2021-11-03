@@ -54,7 +54,7 @@ class KujiPage extends Page {
     }
 
     async hasEntry () {
-        await browser.pause(2000)
+        await browser.pause(5000)
         return await (await this.btnEntry).isExisting();
     }
 
