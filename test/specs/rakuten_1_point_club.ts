@@ -35,6 +35,7 @@ describe('rakuten_point_club', () => {
 
     function handleFirstTimeCloseNotification () {
         // pcHomeScreen.waitForToolbarIsShown();
+        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let isUpdateVersion = pcHomeScreen.notificationUpdateLabel.isDisplayed()
         if (isUpdateVersion) {
             pcHomeScreen.notificationNoButon.click();
