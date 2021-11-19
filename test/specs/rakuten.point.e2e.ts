@@ -73,7 +73,7 @@ describe('Rakuten', () => {
         await credentials();
         for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
             await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
-            await kujiPage.handleProcessAfterClickKuji(true);
+            await kujiPage.handleProcessAfterClickKuji(index, true);
         }
         await browser.pause(2000)
     });
@@ -87,7 +87,7 @@ describe('Rakuten', () => {
                 await kujiPage.open();
                 let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
                 if (clickedKuji) {
-                    await kujiPage.handleProcessAfterClickKuji();
+                    await kujiPage.handleProcessAfterClickKuji(index, false);
                 }
             }
         }

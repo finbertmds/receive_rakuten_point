@@ -50,4 +50,5 @@ export default {
         'https://event.rakuten.co.jp/group/sbc',
     ],
     DEFAULT_TIMEOUT: 15000,
+    DEFAULT_KUJI_PAGE_TIMEOUT: 2 * 60000,
 }

@@ -65,9 +65,19 @@ class KujiPage extends Page {
 
     async handleClickEntry () {
         await browser.pause(1000)
+        if (!(await (await this.btnEntry).isClickable())) {
+            return;
+        }
         await (await this.btnEntry).click();
+        let clickedAfterTime = new Date();
         await browser.waitUntil(async () => {
             try {
+                let now = new Date();
+                let diffMs = (now.valueOf() - clickedAfterTime.valueOf());
+                let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+                if (diffMins >= config.DEFAULT_KUJI_PAGE_TIMEOUT) {
+                    return true;
+                }
                 return !(await (await this.btnEntry).isDisplayed())
             } catch (error) {
                 return true
@@ -75,12 +85,12 @@ class KujiPage extends Page {
         })
     }
 
-    async handleProcessAfterClickKuji (isDefaultLink: boolean = false) {
+    async handleProcessAfterClickKuji (index: number, isDefaultLink: boolean = false) {
         if (!isDefaultLink && await this.hasDisnon()) {
             await this.handleHasDisnon();
         }
         if (await this.hasEntry()) {
-            console.log("hasEntry");
+            console.log(`kuji ${index}: hasEntry`);
             await this.handleClickEntry();
         } else {
             console.log("notEntry");
