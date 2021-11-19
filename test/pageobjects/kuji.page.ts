@@ -82,6 +82,10 @@ class KujiPage extends Page {
             } catch (error) {
                 return true
             }
+        },
+        {
+            timeout: config.DEFAULT_KUJI_PAGE_TIMEOUT * 2,
+            timeoutMsg: 'expected end page kuji'
         })
     }
 
