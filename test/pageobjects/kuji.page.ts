@@ -65,7 +65,8 @@ class KujiPage extends Page {
 
     async handleClickEntry () {
         await browser.pause(1000)
-        if (!(await (await this.btnEntry).isClickable())) {
+        let url = await browser.getUrl()
+        if (url.indexOf(config.KUJI_HOME_PAGE) == -1 || !(await (await this.btnEntry).isClickable())) {
             return;
         }
         await (await this.btnEntry).click();
@@ -74,10 +75,12 @@ class KujiPage extends Page {
             try {
                 let now = new Date();
                 let diffMs = (now.valueOf() - clickedAfterTime.valueOf());
-                let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-                if (diffMins >= config.DEFAULT_KUJI_PAGE_TIMEOUT) {
+                url = await browser.getUrl()
+                if (url.indexOf(config.KUJI_HOME_PAGE) == -1 || diffMs >= config.DEFAULT_KUJI_PAGE_TIMEOUT) {
+                    console.log(`diffMs greater than timeout`);
                     return true;
                 }
+                console.log(`diffMs less than timeout`);
                 return !(await (await this.btnEntry).isDisplayed())
             } catch (error) {
                 return true
@@ -85,11 +88,13 @@ class KujiPage extends Page {
         },
         {
             timeout: config.DEFAULT_KUJI_PAGE_TIMEOUT * 2,
-            timeoutMsg: 'expected end page kuji'
+            timeoutMsg: 'expected end page kuji',
+            interval: 5000
         })
     }
 
     async handleProcessAfterClickKuji (index: number, isDefaultLink: boolean = false) {
+        await browser.pause(5000)
         if (!isDefaultLink && await this.hasDisnon()) {
             await this.handleHasDisnon();
         }
