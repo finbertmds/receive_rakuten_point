@@ -1,4 +1,5 @@
 import config from "../../config";
+import Gestures from "../helpers/Gestures";
 import kFirststartScreen from "../screenobjects/kuji/k.firststart.screen";
 import kHomeScreen from "../screenobjects/kuji/k.home.screen";
 import kLoginScreen from "../screenobjects/kuji/k.login.screen";
@@ -131,6 +132,7 @@ describe('rakuten_kuji', () => {
         handleFirstTimeEnterApp();
         handleLuckyKuji();
         driver.pause(config.DEFAULT_TIMEOUT);
+        Gestures.swipeUp(4 / 10);
         for (let index = 0; index < config.RAKUTEN_KUJI_RUN_AGAIN_TEST; index++) {
             handleClickMainLayoutKuji();
         }
@@ -138,6 +140,10 @@ describe('rakuten_kuji', () => {
 
     it('k_click_ad', () => {
         handleLuckyKuji();
+        Gestures.swipeOnPercentage(
+            Gestures._calculateXY({ x: 50, y: 35 }, 1),
+            Gestures._calculateXY({ x: 50, y: 85 }, 1),
+        );
         handleClickAd();
     });
 

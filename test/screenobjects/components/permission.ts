@@ -3,7 +3,7 @@ import AppScreen from "../app.screen";
 
 const SELECTORS = {
   DEFAULT_SELECTOR: getByResouceId("com.android.permissioncontroller:id/grant_dialog"),
-  // ALLOW_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_foreground_only_button"),
+  ALLOW_BUTTON_API29: getByResouceId("com.android.permissioncontroller:id/permission_allow_foreground_only_button"),
   ALLOW_BUTTON: getByText("ALLOW"),
   // ONE_TIME_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_allow_one_time_button"),
   // DENY_BUTTON: getByResouceId("com.android.permissioncontroller:id/permission_deny_button"),
@@ -18,7 +18,11 @@ class Permission extends AppScreen {
   }
 
   get allowButton () {
-    return $(SELECTORS.ALLOW_BUTTON);
+    let result = $(SELECTORS.ALLOW_BUTTON);
+    if (!result.isDisplayed()) {
+      result = $(SELECTORS.ALLOW_BUTTON_API29);
+    }
+    return result;
   }
 
   // get oneTimeButton () {

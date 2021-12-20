@@ -2,7 +2,7 @@ export default {
     DEFAULT_TIMEOUT: 60000,
     RAKUTEN_USERNAME: process.env.RAKUTEN_USERNAME || '',
     RAKUTEN_PASSWORD: process.env.RAKUTEN_PASSWORD || '',
-    RAKUTEN_KUJI_APK_VERSION: 'v5.4.8',
+    RAKUTEN_KUJI_APK_VERSION: 'v5.4.15',
     RAKUTEN_KUJI_APK_NAME: 'R_Kuji.apk',
     RAKUTEN_KUJI_APP_ID: 'jp.co.rakuten.rakutenluckykuji',
     RAKUTEN_POINT_CLUB_APK_VERSION: 'v4.8.0',
