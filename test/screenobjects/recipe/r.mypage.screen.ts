@@ -1,4 +1,4 @@
-import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import { getByResouceId, getByTextInScrollable } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../app.screen';
 
 const SELECTORS = {
@@ -8,7 +8,7 @@ const SELECTORS = {
     USERNAME_LABEL: getByResouceId("jp.co.rakuten.recipe:id/user_name"),
     LOGIN_BUTTON: getByResouceId("jp.co.rakuten.recipe:id/mypage_login"),
     MYPAGE_SETTING_MENU_CONTAINER: getByResouceId("jp.co.rakuten.recipe:id/mypage_setting_menu"),
-    REWARD_BUTTON: getByText("楽天リワード（ポイントミッション）"),
+    REWARD_BUTTON: getByTextInScrollable("jp.co.rakuten.recipe:id/action_bar_root", "楽天リワード（ポイントミッション）"),
 };
 
 class R_MyPageScreen extends AppScreen {

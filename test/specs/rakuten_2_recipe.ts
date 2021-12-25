@@ -94,7 +94,7 @@ describe('rakuten_recipe', () => {
     }
 
     function openRewardScreen () {
-        Gestures.swipeUp(0.7);
+        // Gestures.swipeUp(0.7);
         if (!rMypageScreen.rewardButton.isDisplayed()) {
             return false;
         }
@@ -176,6 +176,29 @@ describe('rakuten_recipe', () => {
         console.log("logged in one again");
         return true;
     }
+    
+    function openRewardGetPoint() {
+        let loggedIn = openRewardScreen();
+        let retryCount = 0;
+        while (!loggedIn && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
+            loggedIn = openRewardScreen();
+            retryCount++;
+        }
+        if (!loggedIn) {
+            return;
+        }
+        rRewardScreen.closeButton.click();
+        for (let index = 0; index < 4; index++) {
+            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            if (!rMypageScreen.rewardButton.isDisplayed()) {
+                return false;
+            }
+            rMypageScreen.rewardButton.click();
+            rRewardScreen.waitForIsShown();
+            rRewardScreen.closeButton.click();
+            driver.back();
+        }
+    }
 
     function handleClickUnClaim() {
         let loggedIn = openRewardScreen();
@@ -223,7 +246,7 @@ describe('rakuten_recipe', () => {
         handleFirstTimeEnterApp();
         handleFirstTimeEnterAppNew();
         handleOpenTabMyPageAndLogin();
-        handleCloseModal();
+        // handleCloseModal();
         // handleClickUnClaim();
     });
 
@@ -235,6 +258,15 @@ describe('rakuten_recipe', () => {
         for (let index = 0; index < config.RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT; index++) {
             handleClickReceipe();
         }
+    });
+
+    it('r_open_reward', () => {
+        handleOpenTabMyPageAndLogin();
+        handleCloseModal();
+        openRewardGetPoint();
+    });
+
+    it('r_claim_point', () => {
         handleOpenTabMyPageAndLogin();
         handleCloseModal();
         handleClickUnClaim();

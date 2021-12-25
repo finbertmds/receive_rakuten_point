@@ -32,6 +32,16 @@ export function getByText (text: string): string {
 }
 
 /**
+ * Get uiselector by text in scrollable
+ * @param containerResouceId 
+ * @param text 
+ * @returns 
+ */
+export function getByTextInScrollable (containerResouceId: string, text: string): string {
+  return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().text("${text}"))`);
+}
+
+/**
 * Get uiselector by class name
 * @param {string} classNameString
 * @param {number} index
@@ -56,7 +66,7 @@ export function getByClassnameAndText (classNameString: string, text: string): s
 }
 
 /**
-* Get uiselector by text and class name
+* Get uiselector by from parent
 * @param {string} uiselector auto remove prefix android if contain
 * @returns {string}
 */
@@ -69,6 +79,6 @@ export function getByFromParent (uiselector: string): string {
  * @param {string} resourceId
  * @returns {string}
  */
- export function getByResouceIdInScrollable (containerResouceId: string, resourceId: string): string {
+export function getByResouceIdInScrollable (containerResouceId: string, resourceId: string): string {
   return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().resourceId("${resourceId}"))`);
 }
