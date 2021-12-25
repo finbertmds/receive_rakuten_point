@@ -117,7 +117,8 @@ describe('rakuten_recipe', () => {
         // rRewardScreen.waitForSuggestProductIsShown();
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
         if (needLoginMoreTimeButton.isDisplayed()) {
-            rRewardScreen.closeButton.click();
+            // rRewardScreen.closeButton.click();
+            driver.back();
             return false;
         }
         return true;
@@ -159,7 +160,8 @@ describe('rakuten_recipe', () => {
                 }                
             }
         }
-        rRewardScreen.closeButton.click();
+        // rRewardScreen.closeButton.click();
+        driver.back();
         return false;
     }
 
@@ -187,7 +189,8 @@ describe('rakuten_recipe', () => {
         if (!loggedIn) {
             return;
         }
-        rRewardScreen.closeButton.click();
+        // rRewardScreen.closeButton.click();
+        driver.back();
         for (let index = 0; index < 4; index++) {
             driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (!rMypageScreen.rewardButton.isDisplayed()) {
@@ -195,7 +198,7 @@ describe('rakuten_recipe', () => {
             }
             rMypageScreen.rewardButton.click();
             rRewardScreen.waitForIsShown();
-            rRewardScreen.closeButton.click();
+            // rRewardScreen.closeButton.click();
             driver.back();
         }
     }
@@ -246,8 +249,6 @@ describe('rakuten_recipe', () => {
         handleFirstTimeEnterApp();
         handleFirstTimeEnterAppNew();
         handleOpenTabMyPageAndLogin();
-        // handleCloseModal();
-        // handleClickUnClaim();
     });
 
     it('r_click_recipe', () => {

@@ -82,7 +82,7 @@ describe('rakuten_super_point_screen', () => {
             Gestures._calculateXY({ x: 50, y: 85 }, 1)
         );
         let pointNumberClickedIndex = 0;
-        let swipeCount = 10;
+        let swipeCount = config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SWIPE_COUNT;
         for (let index = 0; index < swipeCount; index++) {
             let pointNumberButtonList = sHomeScreen.pointNumberButtonList;
             if (pointNumberButtonList) {
@@ -106,7 +106,10 @@ describe('rakuten_super_point_screen', () => {
                 }
             }
             console.log("swipeUp: ", index);
-            Gestures.swipeUp(7 / swipeCount);
+            Gestures.swipeOnPercentage(
+                Gestures._calculateXY({ x: 50, y: 85 }, 1),
+                Gestures._calculateXY({ x: 50, y: 50 }, 1),
+            );
         }
         console.log(`todayPointLabel: `, sHomeScreen.todayPointLabel.getText());
     }
