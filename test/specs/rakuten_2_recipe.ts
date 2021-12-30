@@ -264,6 +264,7 @@ describe('rakuten_recipe', () => {
     it('r_open_reward', () => {
         handleOpenTabMyPageAndLogin();
         handleCloseModal();
+        Gestures.swipeUp(0.7);
         openRewardGetPoint();
     });
 
