@@ -10,6 +10,8 @@ class CampaignPage extends Page {
         '.btn-entry-anim',
     ]
 
+    get noticeClose () { return $('.spu-popup-notice__footer-close') }
+
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
@@ -33,6 +35,10 @@ class CampaignPage extends Page {
             const element = config.CAMPAIGN_PAGE_LIST[index];
             this.open(element);
             await browser.pause(5000);
+            if (await (await this.noticeClose).isDisplayed()) {
+                await (await this.noticeClose).click();
+                await browser.pause(2000);
+            }
             let isClickedEntry = false;
             let canClickEntryIndex = await this.canEntry();
             if (canClickEntryIndex > -1) {
