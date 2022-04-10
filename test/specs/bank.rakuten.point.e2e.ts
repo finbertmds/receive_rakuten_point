@@ -2,7 +2,7 @@ import config from '../../config';
 import bankCampaignPage from '../pageobjects/bank.campaign.page';
 import bankLoginPage from '../pageobjects/bank.login.page';
 
-describe('Rakuten', () => {
+describe('Rakuten bank', () => {
     beforeEach(async function() {
       const windows = await browser.getWindowHandles();
       await browser.switchToWindow(windows[0]);
