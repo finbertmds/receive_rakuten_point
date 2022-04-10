@@ -43,6 +43,8 @@ jobs:
       env:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
       with:
         api-level: 28
         target: google_apis
