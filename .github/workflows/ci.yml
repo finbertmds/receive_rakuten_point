@@ -30,10 +30,12 @@ jobs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Test
-      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test)
+      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD || [ -z $BANK_RAKUTEN_PASSWORD || [ -z $BANK_RAKUTEN_PASSWORD ] || yarn test)
       env:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
     - name: upload-artifact
       if: ${{ failure() }}
       uses: actions/upload-artifact@v2
