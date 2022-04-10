@@ -51,4 +51,7 @@ export default {
     ],
     DEFAULT_TIMEOUT: 15000,
     DEFAULT_KUJI_PAGE_TIMEOUT: 2 * 60000,
+    BANK_LOGIN_PAGE: 'https://www.rakuten-bank.co.jp/present/',
+    BANK_RAKUTEN_USERNAME: process.env.BANK_RAKUTEN_USERNAME || '',
+    BANK_RAKUTEN_PASSWORD: process.env.BANK_RAKUTEN_PASSWORD || '',
 }
