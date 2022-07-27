@@ -10,7 +10,7 @@ on:
 
 jobs:
   kuji:
-    runs-on: macos-10.15
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -58,7 +58,7 @@ jobs:
       run: rm -rf ./screenshots
 
   pointclub:
-    runs-on: macos-10.15
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -106,7 +106,7 @@ jobs:
       run: rm -rf ./screenshots
 
   recipe:
-    runs-on: macos-10.15
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -154,7 +154,7 @@ jobs:
       run: rm -rf ./screenshots
 
   superpointscreen:
-    runs-on: macos-10.15
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
