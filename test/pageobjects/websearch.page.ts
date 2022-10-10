@@ -31,6 +31,14 @@ class WebSearchPage extends Page {
     get inputPassword () { return $('#loginInner_p') }
     get btnSubmit () { return $('[name="submit"]') }
 
+    /**
+     * new login page require
+     */
+    get inputUsernameV2 () { return $('#user_id') }
+    get inputPasswordV2 () { return $('#password_current') }
+    get btnNextV2 () { return $$('.omni-e2e-button__submit') }
+    get btnLoginConfirmV2 () { return $('#prim_continue') }
+
     get btnEarnPoint () { return $('//*[contains(text(),\'ポイントを貯める\')]') }
     get earnPointLinkCount (): Promise<number> {
         return (async () => {
@@ -82,6 +90,36 @@ class WebSearchPage extends Page {
         await (await this.inputUsername).setValue(username);
         await (await this.inputPassword).setValue(password);
         await (await this.btnSubmit).click();
+        await browser.pause(config.DEFAULT_TIMEOUT)
+    }
+
+    async isNotLoggedInV2 (): Promise<boolean> {
+        let inputUsernameIsDisplayed = await (await this.inputUsernameV2).isDisplayed();
+        let inputPasswordIsDisplayed = await (await this.inputPasswordV2).isDisplayed();
+        return inputUsernameIsDisplayed || inputPasswordIsDisplayed
+    }
+
+    async loginV2 (username: string, password: string): Promise<void> {
+        await this.clickBtnLogin();
+        await browser.pause(config.DEFAULT_TIMEOUT)
+        if (!await this.isNotLoggedInV2()) {
+            return;
+        }
+        if (await (await this.inputUsernameV2).isDisplayed()) {
+            await (await this.inputUsernameV2).setValue(username);
+            let btnNextList = await this.btnNextV2;
+            await (btnNextList[0]).click();
+            await browser.pause(2000);
+        }
+        if (await (await this.inputPasswordV2).isDisplayed()) {
+            await (await this.inputPasswordV2).setValue(password);
+            let btnNextList = await this.btnNextV2;
+            await (btnNextList[1]).click();
+            await browser.pause(2000);
+        }
+        if (await (await this.btnLoginConfirmV2).isDisplayed()) {
+            await (await this.btnLoginConfirmV2).click();
+        }
         await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
