@@ -20,7 +20,7 @@ class WebSearchPage extends Page {
                 let searchCountContainer = searchCountContainerList[0];
                 return searchCountContainer.$('./em');
             }
-            return $('.sc-fFucqa')
+            return $('.sc-fzoyAV')
         })();
      }
 

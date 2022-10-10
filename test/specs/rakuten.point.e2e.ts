@@ -30,6 +30,7 @@ describe('Rakuten', () => {
 
     it('search_get_point', async () => {
         await credentials();
+        await websearchPage.open();
         await websearchPage.search();
         await browser.pause(2000)
     });
