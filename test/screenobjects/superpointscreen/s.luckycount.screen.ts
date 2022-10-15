@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByClassname, getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.slide:id/nav_host_fragment"),
@@ -29,7 +29,7 @@ class R_LuckyCointScreen extends AppScreen {
         return $(SELECTORS.GET_DONE_BUTTON)
     }
 
-    waitForGetDoneButtonIsShown () {
+    async waitForGetDoneButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.GET_DONE_BUTTON);
     }
 
@@ -45,7 +45,7 @@ class R_LuckyCointScreen extends AppScreen {
         return $(SELECTORS.CLOSE_BUTTON)
     }
 
-    waitForPlayIconIsShown () {
+    async waitForPlayIconIsShown () {
         return this.playIcon.waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,
@@ -56,7 +56,7 @@ class R_LuckyCointScreen extends AppScreen {
         return $(SELECTORS.CHALLENGE_BUTTON)
     }
 
-    waitForChallengePlayButtonIsShown () {
+    async waitForChallengePlayButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.CHALLENGE_PLAY_BUTTON);
     }
 
@@ -64,7 +64,7 @@ class R_LuckyCointScreen extends AppScreen {
         return $(SELECTORS.CHALLENGE_PLAY_BUTTON)
     }
 
-    waitForChallengeCardIsShown () {
+    async waitForChallengeCardIsShown () {
         return this.waitForElementIsShown(SELECTORS.CHALLENGE_CARD_BUTTON);
     }
 

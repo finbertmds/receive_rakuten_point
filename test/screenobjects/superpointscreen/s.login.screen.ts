@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     LOGIN_SCREEN: getByResouceId("jp.co.rakuten.slide:id/login_outer_container"),
@@ -26,7 +26,7 @@ class S_LoginScreen extends AppScreen {
         return $(SELECTORS.PASSWORD);
     }
 
-    waitForLoggedIn () {
+    async waitForLoggedIn () {
         return $(SELECTORS.INPUT).waitForDisplayed({
             timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: true,

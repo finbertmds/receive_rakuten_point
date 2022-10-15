@@ -10,8 +10,8 @@
     "strictNullChecks": true,
     "types": [
       "node",
-      "webdriverio/sync",
-      "@wdio/jasmine-framework",
+      "webdriverio/async",
+      "@wdio/mocha-framework",
       "expect-webdriverio",
       "@wdio/appium-service"
     ],

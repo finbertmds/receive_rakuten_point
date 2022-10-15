@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     REWARD_SCREEN: getByText("楽天リワード"),
@@ -39,18 +39,18 @@ class R_RewardScreen extends AppScreen {
         return $(SELECTORS.UNCLAIM_BOX);
     }
 
-    waitForUnclaimBoxIsShown () {
+    async waitForUnclaimBoxIsShown () {
         return $(SELECTORS.UNCLAIM_BOX).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
 
-    waitForSuggestProductIsShown () {
+    async waitForSuggestProductIsShown () {
         return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
     }
 
-    waitForUnclaimListIsShown () {
+    async waitForUnclaimListIsShown () {
         return this.waitForElementIsShown(SELECTORS.UNCLAIM_LIST);
     }
 
@@ -58,8 +58,8 @@ class R_RewardScreen extends AppScreen {
         return $(SELECTORS.UNCLAIM_LIST);
     }
 
-    waitForUnclaimListItemsIsShown () {
-        if (this.getUnclaimList.isExisting()) {
+    async waitForUnclaimListItemsIsShown () {
+        if (await this.getUnclaimList.isExisting()) {
             return this.getUnclaimList.$(SELECTORS.UNCLAIM_LIST_ITEMS).waitForDisplayed({
                 timeout: config.DEFAULT_TIMEOUT,
                 reverse: false,
@@ -67,15 +67,15 @@ class R_RewardScreen extends AppScreen {
         }
     }
 
-    get getUnclaimListItems () {
-        if (this.getUnclaimList.isExisting()) {
+    async getUnclaimListItems () {
+        if (await this.getUnclaimList.isExisting()) {
             return this.getUnclaimList.$$(SELECTORS.UNCLAIM_LIST_ITEMS);
         }
         return null;
     }
 
-    getUnclaimListIndexButton (index: number) {
-        let unclaimListItems =  this.getUnclaimListItems;
+    async getUnclaimListIndexButton (index: number) {
+        let unclaimListItems = await this.getUnclaimListItems();
         if (unclaimListItems === null) {
             return null;
         }
@@ -84,11 +84,11 @@ class R_RewardScreen extends AppScreen {
         }
     }
 
-    getButtonCountInHeader () {
-        return $(SELECTORS.REWARD_SCREEN).parent.$$(getByClassname("android.widget.ImageButton")).length;
+    async getButtonCountInHeader () {
+        return (await $(SELECTORS.REWARD_SCREEN).parent).$$(getByClassname("android.widget.ImageButton")).length;
     }
 
-    waitForGetPointDoneLabelIsShown () {
+    async waitForGetPointDoneLabelIsShown () {
         return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
     }
 
@@ -96,12 +96,12 @@ class R_RewardScreen extends AppScreen {
         return $(SELECTORS.GET_POINT_DONE_LABEL);
     }
 
-    get closeButton () {
-        return $(SELECTORS.REWARD_SCREEN).parent.$(getByClassname("android.widget.ImageButton", this.getButtonCountInHeader() - 1));
+    async closeButton () {
+        return (await $(SELECTORS.REWARD_SCREEN).parent).$(getByClassname("android.widget.ImageButton", await this.getButtonCountInHeader() - 1));
     }
 
-    get backButton () {
-        return $(SELECTORS.REWARD_SCREEN).parent.$(getByClassname("android.widget.ImageButton", 0));
+    async backButton () {
+        return (await $(SELECTORS.REWARD_SCREEN).parent).$(getByClassname("android.widget.ImageButton", 0));
     }
 
     get requireLoginLabel () {
@@ -120,7 +120,7 @@ class R_RewardScreen extends AppScreen {
         return $(SELECTORS.LOGIN_PASSWORD);
     }
 
-    waitForLoggedIn () {
+    async waitForLoggedIn () {
         return $(SELECTORS.LOGIN_INPUT).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: true,

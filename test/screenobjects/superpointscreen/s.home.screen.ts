@@ -1,5 +1,5 @@
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.slide:id/toolbar_app_logo"),
@@ -13,7 +13,7 @@ class S_HomeScreen extends AppScreen {
         super(SELECTORS.DEFAULT_SELECTOR);
     }
 
-    waitForLoginButtonIsShown () {
+    async waitForLoginButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.LOGIN_BUTTON);
     }
 
@@ -25,8 +25,8 @@ class S_HomeScreen extends AppScreen {
         return $(SELECTORS.TODAY_POINT_LABEL);
     }
 
-    get pointNumberButtonList () {
-        let pointNumberButton = $$(SELECTORS.POINT_NUMBER_BUTTON);
+    async pointNumberButtonList () {
+        let pointNumberButton = await $$(SELECTORS.POINT_NUMBER_BUTTON);
         if (pointNumberButton.length > 0) {
             return pointNumberButton;
         }

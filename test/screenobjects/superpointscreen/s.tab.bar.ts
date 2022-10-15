@@ -9,20 +9,20 @@ const SELECTORS = {
 };
 
 export default class S_TabBar {
-    static openHome () {
-        $(SELECTORS.BOTTOM_ICON).click();
+    static async openHome () {
+        await $(SELECTORS.BOTTOM_ICON).click();
     }
 
-    static openLuckyCoint () {
-        $(SELECTORS.LUCKY_COINT_ICON).click();
+    static async openLuckyCoint () {
+        await $(SELECTORS.LUCKY_COINT_ICON).click();
     }
 
-    static openPointHistory () {
-        $(SELECTORS.POINT_HISTORY_ICON).click();
+    static async openPointHistory () {
+        await $(SELECTORS.POINT_HISTORY_ICON).click();
     }
 
-    static waitForTabBarShown () {
-        $(SELECTORS.BOTTOM_ICON).waitForDisplayed({
+    static async waitForTabBarShown () {
+        return $(SELECTORS.BOTTOM_ICON).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
         });
     }

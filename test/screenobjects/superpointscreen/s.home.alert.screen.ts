@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     ALERT_CONTAINER: getByResouceId("jp.co.rakuten.slide:id/container"),
@@ -25,7 +25,7 @@ class S_HomeAlertScreen extends AppScreen {
         return $(SELECTORS.ALERT_CONTAINER).$(SELECTORS.ALERT_CONTAINER_BUTTON);
     }
 
-    waitForMessageIsChanged (preMessage: string) {
+    async waitForMessageIsChanged (preMessage: string) {
         return this.alertContainerMessage.waitUntil(function () {
             return this.getText() !== preMessage;
         }, {

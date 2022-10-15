@@ -1,5 +1,5 @@
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/setting"),
@@ -15,7 +15,7 @@ class K_MessageBoxScreen extends AppScreen {
         return $$(SELECTORS.MESSAGE_THUMBNAIL);
     }
 
-    waitForMessageIsShown () {
+    async waitForMessageIsShown () {
         return this.waitForElementIsShown(SELECTORS.MESSAGE_THUMBNAIL);
     }
 

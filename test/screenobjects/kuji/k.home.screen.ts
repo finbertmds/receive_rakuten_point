@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByText("今日のミッション"),
@@ -37,7 +37,7 @@ class K_HomeScreen extends AppScreen {
         return $(SELECTORS.HOME_TAB_LABEL);
     }
 
-    waitForPlayMoviewIconIsShown () {
+    async waitForPlayMoviewIconIsShown () {
         return this.waitForElementIsShown(SELECTORS.PLAY_MOVIE_ICON);
     }
 
@@ -45,21 +45,21 @@ class K_HomeScreen extends AppScreen {
         return $(SELECTORS.PLAY_MOVIE_ICON);
     }
 
-    get playMoviewIconDoneIsShown () {
-        if (this.playMovieIcon.isExisting()) {
-            let doneIcon = this.playMovieIcon.parent.$(getByResouceId("jp.co.rakuten.rakutenluckykuji:id/done_icon"));
-            if (doneIcon.isDisplayed()) {
-                return true;
+    async playMoviewIconDoneIsShown (): Promise<boolean> {
+        if (await this.playMovieIcon.isExisting()) {
+            let doneIcon = (await this.playMovieIcon.parent).$(getByResouceId("jp.co.rakuten.rakutenluckykuji:id/done_icon"));
+            if (await doneIcon.isDisplayed()) {
+                return Promise.resolve(true);
             }
         }
-        return false;
+        return Promise.resolve(false);
     }
 
     get mainLayout () {
         return $(SELECTORS.MAIN_LAYOUT);
     }
 
-    waitForMainLayoutIsShown () {
+    async waitForMainLayoutIsShown () {
         // return this.waitForElementIsShown(SELECTORS.MAIN_LAYOUT);
         return $(SELECTORS.MAIN_LAYOUT).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
@@ -67,8 +67,8 @@ class K_HomeScreen extends AppScreen {
         });
     }
 
-    get mainLayoutKujiList () {
-        if (this.mainLayout.isExisting()) {
+    async mainLayoutKujiList () {
+        if (await this.mainLayout.isExisting()) {
             let kujiList = this.mainLayout.$$(getByClassname("android.widget.ImageView"));
             if (kujiList) {
                 return kujiList;
@@ -77,8 +77,8 @@ class K_HomeScreen extends AppScreen {
         return null;
     }
 
-    mainLayoutKujiIndex (index: number) {
-        let kujiList = this.mainLayoutKujiList;
+    async mainLayoutKujiIndex (index: number) {
+        let kujiList = await this.mainLayoutKujiList();
         if (kujiList === null) {
             return null;
         }
@@ -99,13 +99,13 @@ class K_HomeScreen extends AppScreen {
         return $(SELECTORS.GROUP_KUJI);
     }
 
-    waitForGroupKujiIsShown () {
+    async waitForGroupKujiIsShown () {
         return this.waitForElementIsShown(SELECTORS.GROUP_KUJI);
     }
 
-    get groupKujiLastKuji () {
-        if (this.groupKuji.isExisting()) {
-            let kujiElementList = this.groupKuji.$$(getByClassname("android.widget.ImageView"));
+    async groupKujiLastKuji () {
+        if (await this.groupKuji.isExisting()) {
+            let kujiElementList = await this.groupKuji.$$(getByClassname("android.widget.ImageView"));
             if (kujiElementList) {
                 return kujiElementList[kujiElementList.length - 1];
             }

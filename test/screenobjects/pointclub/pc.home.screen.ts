@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     HOME_SCREEN: getByResouceId("android:id/content"),
@@ -28,7 +28,7 @@ class PC_HomeScreen extends AppScreen {
         super(SELECTORS.HOME_SCREEN);
     }
 
-    waitForRakutenNameLableIsShown (): boolean | void {
+    async waitForRakutenNameLableIsShown () {
         return $(SELECTORS.RAKUTEN_NAME_LABLEL).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
@@ -39,7 +39,7 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.NOTIFICATION_UPDATE_LABEL);
     }
 
-    waitForNotificationSettingLabelIsShown () {
+    async waitForNotificationSettingLabelIsShown () {
         return this.waitForElementIsShown(SELECTORS.NOTIFICATION_SETTING_LABEL);
     }
 
@@ -55,7 +55,7 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.NOTIFICATION_SETTING_ON_LABEL);
     }
 
-    waitForOkButtonIsShown () {
+    async waitForOkButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.NOTIFICATION_OK_BUTTON);
     }
 
@@ -71,7 +71,7 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.TOOLBAR_ELEMENT).$(SELECTORS.MENU_NAVIGATION_BUTTON);
     }
 
-    waitForRakutenRewardLabelIsShown () {
+    async waitForRakutenRewardLabelIsShown () {
         return this.waitForElementIsShown(SELECTORS.RAKUTEN_REWARD_LABEL);
     }
 
@@ -79,11 +79,11 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.RAKUTEN_REWARD_LABEL);
     }
 
-    get rakutenRewardNumberLabel () {
-        if (this.rakutenRewardLabel.isExisting()) {
+    async rakutenRewardNumberLabel () {
+        if (await this.rakutenRewardLabel.isExisting()) {
             // logo text: pointclub_logo
             let rakutenRewardNumber = this.rakutenRewardLabel.parent.$(getByClassname("android.view.View", 1)).$(getByClassname("android.widget.TextView"));
-            if (rakutenRewardNumber.isExisting()) {
+            if (await rakutenRewardNumber.isExisting()) {
                 return rakutenRewardNumber;
             }
         }
@@ -94,7 +94,7 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.POINT_HISTORY_ICON);
     }
 
-    waitForPointHistoryIsShown () {
+    async waitForPointHistoryIsShown () {
         return this.waitForElementIsShown(SELECTORS.POINT_HISTORY_ICON);
     }
 
@@ -102,19 +102,19 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.WEB_CLOSE_BUTTON);
     }
 
-    waitForWebCloseButtonIsShown () {
+    async waitForWebCloseButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.WEB_CLOSE_BUTTON);
     }
 
-    get firstAdBanner () {
+    async firstAdBanner () {
         let adBannerList = $(SELECTORS.AD_BANNER);
-        if (adBannerList.isDisplayed()) {
+        if (await adBannerList.isDisplayed()) {
             return adBannerList.$(getByClassname("android.widget.Image"));
         }
         return null;
     }
 
-    waitForAdBannerIsShown () {
+    async waitForAdBannerIsShown () {
         return this.waitForElementIsShown(SELECTORS.AD_BANNER);
     }
 
@@ -122,7 +122,7 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.WEB_CLOSE_TAB_BUTTON);
     }
 
-    waitForWebCloseTabButtonIsShown () {
+    async waitForWebCloseTabButtonIsShown () {
         return this.waitForElementIsShown(SELECTORS.WEB_CLOSE_TAB_BUTTON);
     }
 

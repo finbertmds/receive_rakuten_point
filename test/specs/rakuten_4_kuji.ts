@@ -6,56 +6,60 @@ import kLoginScreen from "../screenobjects/kuji/k.login.screen";
 import kLuckykujiScreen from "../screenobjects/kuji/k.luckykuji.screen";
 import kMessageboxScreen from "../screenobjects/kuji/k.messagebox.screen";
 
-describe('rakuten_kuji', () => {
-    beforeAll(() => {
-        driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
-        driver.pause(5000);
+describe('rakuten_kuji', async () => {
+    before(async () => {
+        await driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
+        await driver.pause(5000);
     })
 
-    function handleFirstTimeEnterApp () {
-        if (!kFirststartScreen.warningLabel.isDisplayed()) {
+    async function handleFirstTimeEnterApp () {
+        if (! await kFirststartScreen.warningLabel.isDisplayed()) {
             return;
         }
-        kFirststartScreen.closeLabel.click();
-        handleFirstTimeLogin();
+        await kFirststartScreen.closeLabel.click();
+        await handleFirstTimeLogin();
     }
 
-    function handleFirstTimeLogin () {
-        kLoginScreen.waitForIsShown();
-        kLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
-        kLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        kLoginScreen.loginButton.click();
-        kLoginScreen.waitForLoggedIn();
+    async function handleFirstTimeLogin () {
+        await kLoginScreen.waitForIsShown();
+        await kLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await kLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await kLoginScreen.loginButton.click();
+        await kLoginScreen.waitForLoggedIn();
     }
 
-    function handleClickMainLayoutKuji () {
-        driver.pause(config.DEFAULT_TIMEOUT);
-        // kHomeScreen.waitForMainLayoutIsShown();
-        let kujiList = kHomeScreen.mainLayoutKujiList;
+    async function handleClickMainLayoutKuji () {
+        await driver.pause(config.DEFAULT_TIMEOUT);
+        // await kHomeScreen.waitForMainLayoutIsShown();
+        let kujiList = await kHomeScreen.mainLayoutKujiList();
         console.log("kujiCount: ", kujiList?.length);
         
         if (kujiList && kujiList.length > 0) {
             for (let index = 0; index < kujiList.length; index++) {
-                handleLuckyKuji();
-                const kujiElement = kHomeScreen.mainLayoutKujiIndex(index);
+                await handleLuckyKuji();
+                const kujiElement = await kHomeScreen.mainLayoutKujiIndex(index);
                 if (!kujiElement) {
                     continue;
                 }
-                kujiElement.click();
-                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-                if (!kHomeScreen.playMovieIcon.isDisplayed()) {
-                    driver.pause(config.DEFAULT_TIMEOUT);
-                    if (kFirststartScreen.noButton.isDisplayed()) {
-                        kFirststartScreen.noButton.click();
+                await kujiElement.click();
+                await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                if (! await kHomeScreen.playMovieIcon.isDisplayed()) {
+                    await driver.pause(config.DEFAULT_TIMEOUT);
+                    if (await kFirststartScreen.closeLabel.isDisplayed()) {
+                        await kFirststartScreen.closeLabel.click();
                     }
-                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
-                    driver.back();
-                    handleDontCloseApp();
-                    driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
-                    driver.back();
-                    handleDontCloseApp();
-                    if(kHomeScreen.homeTabLabel.isDisplayed()) {
-                        kHomeScreen.homeTabLabel.click();
+                    await driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
+                    if (await kFirststartScreen.noButton.isDisplayed()) {
+                        await kFirststartScreen.noButton.click();
+                    }
+                    await driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
+                    await driver.back();
+                    await handleDontCloseApp();
+                    await driver.pause(parseInt(String(2 * config.DEFAULT_TIMEOUT / 3)));
+                    await driver.back();
+                    await handleDontCloseApp();
+                    if(await kHomeScreen.homeTabLabel.isDisplayed()) {
+                        await kHomeScreen.homeTabLabel.click();
                     }
                     console.log(`"kuji clicked: ${index + 1}"`);
                 }
@@ -63,93 +67,93 @@ describe('rakuten_kuji', () => {
         }
     }
 
-    function handleClickAd () {
-        // kHomeScreen.waitForPlayMoviewIconIsShown();
-        if (!kHomeScreen.playMovieIcon.isDisplayed()) {
+    async function handleClickAd () {
+        // await kHomeScreen.waitForPlayMoviewIconIsShown();
+        if (! await kHomeScreen.playMovieIcon.isDisplayed()) {
             return;
         }
-        kHomeScreen.playMovieIcon.click();
-        driver.pause(5000);
-        if (!kHomeScreen.playMovieIcon.isDisplayed()) {
-            driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
-            driver.back();
-            handleDontCloseApp();
+        await kHomeScreen.playMovieIcon.click();
+        await driver.pause(5000);
+        if (! await kHomeScreen.playMovieIcon.isDisplayed()) {
+            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
+            await driver.back();
+            await handleDontCloseApp();
             console.log(`"kujiAd clicked"`);
         }
     }
 
-    function handleClickMessage () {
-        if (!kHomeScreen.messageLabel.isDisplayed()) {
+    async function handleClickMessage () {
+        if (! await kHomeScreen.messageLabel.isDisplayed()) {
             return;
         }
-        kHomeScreen.messageLabel.click();
-        // kMessageboxScreen.waitForIsShown();
-        // kMessageboxScreen.waitForMessageIsShown();
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-        let messageList = kMessageboxScreen.messageThumbnailList;
+        await kHomeScreen.messageLabel.click();
+        // await kMessageboxScreen.waitForIsShown();
+        // await kMessageboxScreen.waitForMessageIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+        let messageList = await kMessageboxScreen.messageThumbnailList;
         for (let index = 0; index < messageList.length; index++) {
             const messageElement = messageList[index];
-            messageElement.click();
-            driver.pause(5000);
-            driver.back();
-            handleDontCloseApp();
+            await messageElement.click();
+            await driver.pause(5000);
+            await driver.back();
+            await handleDontCloseApp();
         }
-        driver.back();
-        handleDontCloseApp();
+        await driver.back();
+        await handleDontCloseApp();
     }
 
-    function handleLuckyKuji () {
-        driver.pause(5000);
-        if (kLuckykujiScreen.announcement.isDisplayed()) {
-            driver.pause(5000);
-            if (kLuckykujiScreen.okButton.isDisplayed()) {
-                kLuckykujiScreen.okButton.click();
+    async function handleLuckyKuji () {
+        await driver.pause(5000);
+        if (await kLuckykujiScreen.announcement.isDisplayed()) {
+            await driver.pause(5000);
+            if (await kLuckykujiScreen.okButton.isDisplayed()) {
+                await kLuckykujiScreen.okButton.click();
                 return;
             }
         }
-        if (kLuckykujiScreen.entry.isDisplayed()) {
-            kLuckykujiScreen.entry.click();
-            driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
-            if (kLuckykujiScreen.entry.isDisplayed()) {
-                kLuckykujiScreen.entry.click();
-                driver.pause(parseInt(String(config.DEFAULT_TIMEOUT)));
+        if (await kLuckykujiScreen.entry.isDisplayed()) {
+            await kLuckykujiScreen.entry.click();
+            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
+            if (await kLuckykujiScreen.entry.isDisplayed()) {
+                await kLuckykujiScreen.entry.click();
+                await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT)));
             }
-            driver.back();
-            handleDontCloseApp();
+            await driver.back();
+            await handleDontCloseApp();
         }
     }
 
-    function handleDontCloseApp () {
-        handleLuckyKuji();
-        if (kHomeScreen.closeAppNoButton.isDisplayed()) {
-            kHomeScreen.closeAppNoButton.click();
+    async function handleDontCloseApp () {
+        await handleLuckyKuji();
+        if (await kHomeScreen.closeAppNoButton.isDisplayed()) {
+            await kHomeScreen.closeAppNoButton.click();
         }
     }
 
-    it('k_click_mainlayout_kuji', () => {
-        driver.pause(7000);
+    it('k_click_mainlayout_kuji', async () => {
+        await driver.pause(7000);
 
-        handleFirstTimeEnterApp();
-        handleLuckyKuji();
-        driver.pause(config.DEFAULT_TIMEOUT);
-        Gestures.swipeUp(4 / 10);
+        await handleFirstTimeEnterApp();
+        await handleLuckyKuji();
+        await driver.pause(config.DEFAULT_TIMEOUT);
+        await Gestures.swipeUp(4 / 10);
         for (let index = 0; index < config.RAKUTEN_KUJI_RUN_AGAIN_TEST; index++) {
-            handleClickMainLayoutKuji();
+            await handleClickMainLayoutKuji();
         }
     });
 
-    it('k_click_ad', () => {
-        handleLuckyKuji();
-        Gestures.swipeOnPercentage(
-            Gestures._calculateXY({ x: 50, y: 35 }, 1),
-            Gestures._calculateXY({ x: 50, y: 85 }, 1),
+    it('k_click_ad', async () => {
+        await handleLuckyKuji();
+        await Gestures.swipeOnPercentage(
+            Gestures.calculateXY({ x: 50, y: 35 }, 1),
+            Gestures.calculateXY({ x: 50, y: 85 }, 1),
         );
-        handleClickAd();
+        await handleClickAd();
     });
 
-    it('k_click_message', () => {
-        handleLuckyKuji();
-        handleClickMessage();
+    it('k_click_message', async () => {
+        await handleLuckyKuji();
+        await handleClickMessage();
     });
 });
 

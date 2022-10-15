@@ -1,5 +1,5 @@
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     MODAL_CONTAINER: getByResouceId("jp.co.rakuten.recipe:id/modal_layout"),

@@ -1,5 +1,6 @@
 import { getByResouceId, getByText } from "../../helpers/UiSelectorHelper";
-import AppScreen from "../app.screen";
+import AndroidSettings from "../AndroidSettings";
+import AppScreen from "../AppScreen";
 
 const SELECTORS = {
   DEFAULT_SELECTOR: getByResouceId("com.android.permissioncontroller:id/grant_dialog"),
@@ -19,7 +20,7 @@ class Permission extends AppScreen {
 
   get allowButton () {
     let result = $(SELECTORS.ALLOW_BUTTON);
-    if (!result.isDisplayed()) {
+    if (AndroidSettings.platformVersion == 10) {
       result = $(SELECTORS.ALLOW_BUTTON_API29);
     }
     return result;

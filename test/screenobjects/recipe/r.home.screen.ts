@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("android:id/content"),
@@ -19,8 +19,8 @@ class R_HomeScreen extends AppScreen {
         return $(SELECTORS.TABBAR_POPULAR_LABEL);
     }
 
-    get firstRecipeImage () {
-        let recipeImageList = $$(SELECTORS.RECIPE_IMAGE);
+    async firstRecipeImage () {
+        let recipeImageList = await $$(SELECTORS.RECIPE_IMAGE);
         if (recipeImageList.length > 0) {
             return recipeImageList[0];
         }
@@ -35,7 +35,7 @@ class R_HomeScreen extends AppScreen {
         return $(SELECTORS.BACK_BUTTON);
     }
 
-    waitForBackButtonIsShown () {
+    async waitForBackButtonIsShown () {
         return $(SELECTORS.BACK_BUTTON).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,

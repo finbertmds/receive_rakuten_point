@@ -9,177 +9,177 @@ import sLoginScreen from '../screenobjects/superpointscreen/s.login.screen';
 import sLuckycountScreen from '../screenobjects/superpointscreen/s.luckycount.screen';
 import S_TabBar from '../screenobjects/superpointscreen/s.tab.bar';
 
-describe('rakuten_super_point_screen', () => {
-    beforeAll(() => {
-        driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-        driver.pause(5000);
+describe('rakuten_super_point_screen', async () => {
+    before(async () => {
+        await await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        await await driver.pause(5000);
     })
 
-    function handleMaintenance () {
+    async function handleMaintenance () {
         return sFirststartScreen.maintenanceContainer.isDisplayed();
     }
 
-    function handleSkipButton () {
-        sFirststartScreen.waitForIsShown();
-        if (sFirststartScreen.skipButon.isExisting()) {
-            sFirststartScreen.skipButon.click();
+    async function handleSkipButton () {
+        await sFirststartScreen.waitForIsShown();
+        if (await sFirststartScreen.skipButon.isExisting()) {
+            await sFirststartScreen.skipButon.click();
         }
     }
-    function handleFirstLogin () {
+    async function handleFirstLogin () {
         sHomeScreen.waitForLoginButtonIsShown();
         let loginButton = sHomeScreen.loginButton
-        if (loginButton.isDisplayed()) {
-            loginButton.click();
+        if (await loginButton.isDisplayed()) {
+            await loginButton.click();
             
-            sLoginScreen.waitForIsShown();
-            sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
-            sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-            sLoginScreen.loginButton.click();
-            sLoginScreen.waitForLoggedIn();
+            await sLoginScreen.waitForIsShown();
+            await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+            await sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+            await sLoginScreen.loginButton.click();
+            await sLoginScreen.waitForLoggedIn();
         }
     }
 
-    function handleCloseAlert () {
-        driver.pause(2000);
-        if (!sHomeAlertScreen.alertContainer.isExisting()) {
+    async function handleCloseAlert () {
+        await driver.pause(2000);
+        if (! await sHomeAlertScreen.alertContainer.isExisting()) {
             return;
         }
-        let message1 = sHomeAlertScreen.alertContainerMessage.getText();
-        sHomeAlertScreen.alertContainerOkButton.click();
-        sHomeAlertScreen.waitForMessageIsChanged(message1);
-        sHomeAlertScreen.alertContainerOkButton.click();
+        let message1 = await sHomeAlertScreen.alertContainerMessage.getText();
+        await sHomeAlertScreen.alertContainerOkButton.click();
+        await sHomeAlertScreen.waitForMessageIsChanged(message1);
+        await sHomeAlertScreen.alertContainerOkButton.click();
         
-        // permission.waitForIsShown();
-        driver.pause(3000);
-        permission.allowButton.click();
+        // await permission.waitForIsShown();
+        await driver.pause(3000);
+        await permission.allowButton.click();
         
-        sHomeAlertScreen.waitForIsShown();
-        sHomeAlertScreen.alertContainerOkButton.click();
+        await sHomeAlertScreen.waitForIsShown();
+        await sHomeAlertScreen.alertContainerOkButton.click();
     }
 
-    function handleClosePermissionRequestAlert () {
-        driver.pause(2000);
-        if (!sHomeAlertScreen.alertContainer.isExisting()) {
+    async function handleClosePermissionRequestAlert () {
+        await driver.pause(2000);
+        if (! await sHomeAlertScreen.alertContainer.isExisting()) {
             return false;
         }
-        let permissionRequestAlertText = sHomeAlertScreen.alertContainerMessage.getText();
+        let permissionRequestAlertText = await sHomeAlertScreen.alertContainerMessage.getText();
         console.log("permissionRequestAlertText: ", permissionRequestAlertText);
-        sHomeAlertScreen.alertContainerOkButton.click();
-        driver.pause(2000);
+        await sHomeAlertScreen.alertContainerOkButton.click();
+        await driver.pause(2000);
 
-        if (permission.settingsContainer.isExisting()) {
-            permission.settingsSwitchRadio.click();
-            driver.back();
-            driver.pause(2000);
+        if (await permission.settingsContainer.isExisting()) {
+            await permission.settingsSwitchRadio.click();
+            await driver.back();
+            await driver.pause(2000);
         }
         return true;
     }
 
-    function handleClickPointNumber () {
-        sHomeScreen.waitForIsShown();
-        Gestures.swipeOnPercentage(
-            Gestures._calculateXY({ x: 50, y: 50 }, 1),
-            Gestures._calculateXY({ x: 50, y: 85 }, 1)
+    async function handleClickPointNumber () {
+        await sHomeScreen.waitForIsShown();
+        await Gestures.swipeOnPercentage(
+            Gestures.calculateXY({ x: 50, y: 50 }, 1),
+            Gestures.calculateXY({ x: 50, y: 85 }, 1)
         );
         let pointNumberClickedIndex = 0;
         let swipeCount = config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SWIPE_COUNT;
         for (let index = 0; index < swipeCount; index++) {
-            let pointNumberButtonList = sHomeScreen.pointNumberButtonList;
+            let pointNumberButtonList = await sHomeScreen.pointNumberButtonList();
             if (pointNumberButtonList) {
                 console.log("pointNumberButtonListCount: ", pointNumberButtonList?.length);
                 for (let buttonIndex = 0; buttonIndex < pointNumberButtonList.length; buttonIndex++) {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
-                    // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, pointNumberButton.getText());
-                    pointNumberButton.click();
+                    // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, await pointNumberButton.getText());
+                    await pointNumberButton.click();
                     
-                    let needClosePermissionRequestAlert = handleClosePermissionRequestAlert();
+                    let needClosePermissionRequestAlert = await handleClosePermissionRequestAlert();
                     if (needClosePermissionRequestAlert) {
-                        pointNumberButton.click();
+                        await pointNumberButton.click();
                     }
 
-                    sHomeGetpointScreen.waitForIsShown();
-                    sHomeGetpointScreen.waitForDoneButtonIsShown();
-                    sHomeGetpointScreen.closeButton.click();
+                    await sHomeGetpointScreen.waitForIsShown();
+                    await sHomeGetpointScreen.waitForDoneButtonIsShown();
+                    await sHomeGetpointScreen.closeButton.click();
                     
                     pointNumberClickedIndex++;
                     console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
                 }
             }
             console.log("swipeUp: ", index);
-            Gestures.swipeOnPercentage(
-                Gestures._calculateXY({ x: 50, y: 85 }, 1),
-                Gestures._calculateXY({ x: 50, y: 50 }, 1),
+            await Gestures.swipeOnPercentage(
+                Gestures.calculateXY({ x: 50, y: 85 }, 1),
+                Gestures.calculateXY({ x: 50, y: 50 }, 1),
             );
         }
-        console.log(`todayPointLabel: `, sHomeScreen.todayPointLabel.getText());
+        console.log(`todayPointLabel: `, await sHomeScreen.todayPointLabel.getText());
     }
 
-    function handleClickGetPoint () {
-        sLuckycountScreen.waitForIsShown();
-        driver.pause(2000);
+    async function handleClickGetPoint () {
+        await sLuckycountScreen.waitForIsShown();
+        await driver.pause(2000);
         let getButton = sLuckycountScreen.getButton;
-        if (getButton.isExisting()) {
-            getButton.click();
-            sLuckycountScreen.waitForGetDoneButtonIsShown();
-            sLuckycountScreen.getDoneButton.click();
+        if (await getButton.isExisting()) {
+            await getButton.click();
+            await sLuckycountScreen.waitForGetDoneButtonIsShown();
+            await sLuckycountScreen.getDoneButton.click();
         }
     }
 
-    function handleClickPlay () {
-        driver.pause(2000);
+    async function handleClickPlay () {
+        await driver.pause(2000);
         let playButton = sLuckycountScreen.playButton;
-        if (playButton.isExisting()) {
-            playButton.click();
-            sLuckycountScreen.waitForChallengePlayButtonIsShown();
-            sLuckycountScreen.waitForPlayIconIsShown();
-            sLuckycountScreen.challengePlayButton.click();
-            driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
-            driver.back();
-            // sLuckycountScreen.waitForGetDoneButtonIsShown();
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            if (sLuckycountScreen.getDoneButton.isDisplayed()) {
-                sLuckycountScreen.getDoneButton.click();
+        if (await playButton.isExisting()) {
+            await playButton.click();
+            await sLuckycountScreen.waitForChallengePlayButtonIsShown();
+            await sLuckycountScreen.waitForPlayIconIsShown();
+            await sLuckycountScreen.challengePlayButton.click();
+            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
+            await driver.back();
+            // await sLuckycountScreen.waitForGetDoneButtonIsShown();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            if (await sLuckycountScreen.getDoneButton.isDisplayed()) {
+                await sLuckycountScreen.getDoneButton.click();
             }
         }
     }
 
-    function handleClickChallenge () {
-        driver.pause(2000);
+    async function handleClickChallenge () {
+        await driver.pause(2000);
         let challengeButton = sLuckycountScreen.challengeButton
-        if (challengeButton.isExisting()) {
-            challengeButton.click();
-            sLuckycountScreen.waitForChallengePlayButtonIsShown();
-            sLuckycountScreen.challengePlayButton.click();
+        if (await challengeButton.isExisting()) {
+            await challengeButton.click();
+            await sLuckycountScreen.waitForChallengePlayButtonIsShown();
+            await sLuckycountScreen.challengePlayButton.click();
 
-            sLuckycountScreen.waitForChallengeCardIsShown();
-            sLuckycountScreen.challengeCard.click();
+            await sLuckycountScreen.waitForChallengeCardIsShown();
+            await sLuckycountScreen.challengeCard.click();
 
-            sLuckycountScreen.waitForChallengePlayButtonIsShown();
+            await sLuckycountScreen.waitForChallengePlayButtonIsShown();
 
-            handleClickPlay();
+            await handleClickPlay();
         }
     }
 
-    it('sps_click_point_number', () => {
-        driver.pause(7000);
-        if (handleMaintenance()) {
+    it('sps_click_point_number', async () => {
+        await driver.pause(7000);
+        if (await handleMaintenance()) {
             return;
         }
-        handleSkipButton();
-        handleFirstLogin();
-        handleCloseAlert();
-        handleClickPointNumber();
+        await handleSkipButton();
+        await handleFirstLogin();
+        await handleCloseAlert();
+        await handleClickPointNumber();
     });
 
-    it('sps_get_point_and_challenge', () => {
-        if (handleMaintenance()) {
+    it('sps_get_point_and_challenge', async () => {
+        if (await handleMaintenance()) {
             return;
         }
-        handleCloseAlert();
-        S_TabBar.openLuckyCoint();
-        handleClickGetPoint();
-        handleClickChallenge();
-        handleClickPlay();
+        await handleCloseAlert();
+        await S_TabBar.openLuckyCoint();
+        await handleClickGetPoint();
+        await handleClickChallenge();
+        await handleClickPlay();
     });
 
 });

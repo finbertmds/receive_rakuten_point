@@ -98,7 +98,7 @@ exports.config = {
     //
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
-    framework: 'jasmine',
+    framework: 'mocha',
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -113,6 +113,15 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ['spec'],
+    // Options to be passed to Mocha.
+    mochaOpts: {
+        ui: "bdd",
+        /**
+         * NOTE: This has been increased for more stable Appium Native app
+         * tests because they can take a bit longer.
+         */
+        timeout: 3 * 60 * 10000, // 30min
+    },
 
 
     
@@ -216,7 +225,7 @@ exports.config = {
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
-        var filename = encodeURIComponent(test.description.replace(/\s+/g, '-'));
+        var filename = encodeURIComponent(test.title.replace(/\s+/g, '-'));
         var filePath = join(process.cwd(), `${dir}/${filename}-${new Date().getTime()}.png`);
         browser.saveScreenshot(filePath)
         console.log('\n\tScreenshot location:', filePath, '\n');

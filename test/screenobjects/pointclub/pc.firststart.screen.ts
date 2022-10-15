@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     FIRSTSTSRT_SCREEN: getByResouceId("android:id/content"),
@@ -15,7 +15,7 @@ class PC_FirstStartScreen extends AppScreen {
         super(SELECTORS.FIRSTSTSRT_SCREEN);
     }
 
-    waitForWarningLablelIsShown () {
+    async waitForWarningLablelIsShown () {
         return $(SELECTORS.WARNING_LABEL).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,

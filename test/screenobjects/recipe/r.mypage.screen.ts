@@ -1,5 +1,5 @@
-import { getByResouceId, getByText, getByTextInScrollable } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("android:id/content"),

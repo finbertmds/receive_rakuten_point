@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.slide:id/toolbar"),
@@ -18,7 +18,7 @@ class S_HomeGetPointScreen extends AppScreen {
         return $(SELECTORS.DONE_BUTTON);
     }
 
-    waitForDoneButtonIsShown () {
+    async waitForDoneButtonIsShown () {
         return this.doneButton.waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: false,

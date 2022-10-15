@@ -1,5 +1,5 @@
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     FIRSTSTSRT_SCREEN: getByResouceId("android:id/content"),

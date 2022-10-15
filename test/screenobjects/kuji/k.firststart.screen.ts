@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { getByResouceId } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.rakutenluckykuji:id/parentPanel"),
@@ -15,7 +15,7 @@ class K_FirstStartScreen extends AppScreen {
         super(SELECTORS.DEFAULT_SELECTOR);
     }
 
-    waitForWarningLablelIsShown () {
+    async waitForWarningLablelIsShown () {
         return $(SELECTORS.WARNING_LABEL).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,

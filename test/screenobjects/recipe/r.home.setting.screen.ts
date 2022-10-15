@@ -1,5 +1,5 @@
 import { getByResouceId, getByResouceIdInScrollable } from '../../helpers/UiSelectorHelper';
-import AppScreen from '../app.screen';
+import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.recipe:id/scrollable_content"),
@@ -43,11 +43,11 @@ class R_HomeSettingScreen extends AppScreen {
         return $(SELECTORS.SERVEY_CANCEL_BUTTON);
     }
 
-    waitForRecommendedIsShown () {
+    async waitForRecommendedIsShown () {
         return this.waitForElementIsShown(SELECTORS.RECOMMENDED);
     }
 
-    waitForCompletionMessagesShown () {
+    async waitForCompletionMessagesShown () {
         return this.waitForElementIsShown(SELECTORS.COMPLETION_MESSAGE);
     }
 

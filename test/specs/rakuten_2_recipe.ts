@@ -9,269 +9,270 @@ import rMypageScreen from '../screenobjects/recipe/r.mypage.screen';
 import rRewardScreen from '../screenobjects/recipe/r.reward.screen';
 import rTabBar from '../screenobjects/recipe/r.tab.bar';
 
-describe('rakuten_recipe', () => {
-    beforeAll(() => {
-        driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
-        driver.pause(5000);
+describe('rakuten_recipe', async () => {
+    before(async () => {
+        await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
+        await driver.pause(5000);
     })
 
-    function handleFirstTimeEnterApp (completeServey: boolean = false) {
-        // rFirststartScreen.waitForStartLablelIsShown();
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        if (rFirststartScreen.cancelUpgradeLabel.isDisplayed()) {
-            rFirststartScreen.cancelUpgradeLabel.click();
-            driver.pause(5000);
+    async function handleFirstTimeEnterApp (completeServey: boolean = false) {
+        // await rFirststartScreen.waitForStartLablelIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        if (await rFirststartScreen.cancelUpgradeLabel.isDisplayed()) {
+            await rFirststartScreen.cancelUpgradeLabel.click();
+            await driver.pause(5000);
         }
-        if (!rFirststartScreen.startLabel.isDisplayed()) {
+        if (! await rFirststartScreen.startLabel.isDisplayed()) {
             return;
         }
-        rFirststartScreen.startLabel.click();
-        rHomeSettingScreen.waitForIsShown();
-        if (rHomeSettingScreen.scrollView.isDisplayed()) {
+        await rFirststartScreen.startLabel.click();
+        await rHomeSettingScreen.waitForIsShown();
+        if (await rHomeSettingScreen.scrollView.isDisplayed()) {
             if (completeServey) {
-                rHomeSettingScreen.choice1Option1.click();
-                Gestures.swipeUp();
-                rHomeSettingScreen.choice2Option1.click();
-                rHomeSettingScreen.choice3Option1.click();
+                await rHomeSettingScreen.choice1Option1.click();
+                await Gestures.swipeUp();
+                await rHomeSettingScreen.choice2Option1.click();
+                await rHomeSettingScreen.choice3Option1.click();
                 
                 console.log("click ok button");
                 
-                rHomeSettingScreen.serveyOkButton.click();
-                rHomeSettingScreen.waitForRecommendedIsShown();
-                rHomeSettingScreen.serveyOkButton.click();
-                rHomeSettingScreen.waitForRecommendedIsShown();
-                rHomeSettingScreen.serveyOkButton.click();
-                rHomeSettingScreen.waitForCompletionMessagesShown();
-                rHomeSettingScreen.serveyCompletionButton.click();
+                await rHomeSettingScreen.serveyOkButton.click();
+                await rHomeSettingScreen.waitForRecommendedIsShown();
+                await rHomeSettingScreen.serveyOkButton.click();
+                await rHomeSettingScreen.waitForRecommendedIsShown();
+                await rHomeSettingScreen.serveyOkButton.click();
+                await rHomeSettingScreen.waitForCompletionMessagesShown();
+                await rHomeSettingScreen.serveyCompletionButton.click();
 
             } else {
                 console.log("click cancel button");
-                rHomeSettingScreen.serveyCancelButton.click();
+                await rHomeSettingScreen.serveyCancelButton.click();
             }
         }
-        driver.pause(10000);
+        await driver.pause(10000);
     }
 
-    function handleFirstTimeEnterAppNew () {
-        if (rFirststartScreen.welcomeSkipButton.isDisplayed()) {
-            rFirststartScreen.welcomeSkipButton.click();
+    async function handleFirstTimeEnterAppNew () {
+        if (await rFirststartScreen.welcomeSkipButton.isDisplayed()) {
+            await rFirststartScreen.welcomeSkipButton.click();
         }
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        if (rFirststartScreen.surveyCancelButton.isDisplayed()) {
-            rFirststartScreen.surveyCancelButton.click();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        if (await rFirststartScreen.surveyCancelButton.isDisplayed()) {
+            await rFirststartScreen.surveyCancelButton.click();
         }
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
     }
 
-    function handleOpenTabMyPageAndLogin () {
-        rTabBar.waitForTabBarShown();
-        rTabBar.openMyPage();
+    async function handleOpenTabMyPageAndLogin () {
+        await rTabBar.waitForTabBarShown();
+        await rTabBar.openMyPage();
 
-        driver.pause(2000);
-        if (rMypageScreen.loginButton.isDisplayed()) {
-            rMypageScreen.loginButton.click();
+        await driver.pause(2000);
+        if (await rMypageScreen.loginButton.isDisplayed()) {
+            await rMypageScreen.loginButton.click();
 
-            handleFirstTimeLogin();
+            await handleFirstTimeLogin();
         }
     }
 
-    function handleFirstTimeLogin () {
-        rLoginScreen.waitForIsShown();
-        rLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
-        rLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        rLoginScreen.loginButton.click();
-        rLoginScreen.waitForLoggedIn();
+    async function handleFirstTimeLogin () {
+        await rLoginScreen.waitForIsShown();
+        await rLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await rLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await rLoginScreen.loginButton.click();
+        await rLoginScreen.waitForLoggedIn();
         console.log("logged in");
     }
 
-    function handleCloseModal () {
-        driver.pause(3000);
-        if (sHomeModalScreen.modalContainer.isDisplayed()) {
-            sHomeModalScreen.modalNotShowButton.click();
-            sHomeModalScreen.closeButton.click();
-            driver.pause(3000);
+    async function handleCloseModal () {
+        await driver.pause(3000);
+        if (await sHomeModalScreen.modalContainer.isDisplayed()) {
+            await sHomeModalScreen.modalNotShowButton.click();
+            await sHomeModalScreen.closeButton.click();
+            await driver.pause(3000);
         }
     }
 
-    function openRewardScreen () {
-        // Gestures.swipeUp(0.7);
-        if (!rMypageScreen.rewardButton.isDisplayed()) {
+    async function openRewardScreen () {
+        // await Gestures.swipeUp(0.7);
+        if (! await rMypageScreen.rewardButton.isDisplayed()) {
             return false;
         }
-        rMypageScreen.rewardButton.click();
+        await rMypageScreen.rewardButton.click();
 
-        rRewardScreen.waitForIsShown();
-        // rRewardScreen.waitForSuggestProductIsShown();
-        driver.pause(config.DEFAULT_TIMEOUT);
-        let retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
+        await rRewardScreen.waitForIsShown();
+        // await rRewardScreen.waitForSuggestProductIsShown();
+        await driver.pause(config.DEFAULT_TIMEOUT);
+        let retryLableIsShown = await rRewardScreen.retryLabel.isDisplayed();
         let retryCount = 0;
         while (retryLableIsShown && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
-            rRewardScreen.retryLabel.click();
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-            retryLableIsShown = rRewardScreen.retryLabel.isDisplayed();
+            await rRewardScreen.retryLabel.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+            retryLableIsShown = await rRewardScreen.retryLabel.isDisplayed();
             retryCount++;
         }
         if (retryCount >= config.RAKUTEN_RETRY_MAX_COUNT) {
             return false;
         }
-        // rRewardScreen.waitForSuggestProductIsShown();
+        // await rRewardScreen.waitForSuggestProductIsShown();
         let needLoginMoreTimeButton = rRewardScreen.needLoginButton;
-        if (needLoginMoreTimeButton.isDisplayed()) {
-            // rRewardScreen.closeButton.click();
-            driver.back();
+        if (await needLoginMoreTimeButton.isDisplayed()) {
+            // await rRewardScreen.closeButton.click();
+            await driver.back();
             return false;
         }
         return true;
     }
     
-    function clickUnclaimButton () {
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+    async function clickUnclaimButton () {
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = rRewardScreen.unclaimBox;
-        if (unclaimBox.isDisplayed()) {
-            unclaimBox.click();
+        if (await unclaimBox.isDisplayed()) {
+            await unclaimBox.click();
 
-            rRewardScreen.waitForUnclaimListIsShown();
-            rRewardScreen.waitForUnclaimListItemsIsShown();
-            let unclaimListCount = rRewardScreen.getUnclaimListItems?.length
+            await rRewardScreen.waitForUnclaimListIsShown();
+            await rRewardScreen.waitForUnclaimListItemsIsShown();
+            let unclaimListCount = (await rRewardScreen.getUnclaimListItems())?.length
             console.log("unclaimListCount: ", unclaimListCount);
             
             if (unclaimListCount) {
                 for (let index = 0; index < unclaimListCount; index++) {
                     if (index !== 0) {
-                        rRewardScreen.waitForUnclaimBoxIsShown();
-                        unclaimBox.click();
-                        rRewardScreen.waitForUnclaimListIsShown();
-                        rRewardScreen.waitForUnclaimListItemsIsShown();
+                        await rRewardScreen.waitForUnclaimBoxIsShown();
+                        await unclaimBox.click();
+                        await rRewardScreen.waitForUnclaimListIsShown();
+                        await rRewardScreen.waitForUnclaimListItemsIsShown();
                     }
-                    let unclaimListIndexButton = rRewardScreen.getUnclaimListIndexButton(0);
+                    let unclaimListIndexButton = await rRewardScreen.getUnclaimListIndexButton(0);
                     if (unclaimListIndexButton) {
-                        console.log("unclaimText: ", rRewardScreen.getUnclaimListIndexButton(index)?.getText());
+                        console.log("unclaimText: ", await (await rRewardScreen.getUnclaimListIndexButton(index))?.getText());
                         unclaimListIndexButton.click();
                         
-                        let loginAgain = handleLoginRequireAgain();
+                        let loginAgain = await handleLoginRequireAgain();
                         if (loginAgain) {
                             return true;
                         }
-                        rRewardScreen.waitForGetPointDoneLabelIsShown();
-                        console.log("getPointDoneLabel: ", rRewardScreen.getPointDoneLabel.getText());
+                        await rRewardScreen.waitForGetPointDoneLabelIsShown();
+                        console.log("getPointDoneLabel: ", await rRewardScreen.getPointDoneLabel.getText());
 
-                        rRewardScreen.backButton.click();
+                        // @ts-ignore
+                        await (await rRewardScreen.backButton()).click();
                     }
                 }                
             }
         }
-        // rRewardScreen.closeButton.click();
-        driver.back();
+        // await (await rRewardScreen.closeButton()).click();
+        await driver.back();
         return false;
     }
 
-    function handleLoginRequireAgain () {
-        driver.pause(5000);
-        if (!rRewardScreen.requireLoginLabel.isDisplayed()) {
+    async function handleLoginRequireAgain () {
+        await driver.pause(5000);
+        if (! await rRewardScreen.requireLoginLabel.isDisplayed()) {
             return false;
         }
-        Gestures.swipeUp(0.7);
-        rRewardScreen.userid.setValue(config.RAKUTEN_USERNAME);
-        rRewardScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        rRewardScreen.loginButton.click();
-        rRewardScreen.waitForLoggedIn();
+        await Gestures.swipeUp(0.7);
+        await rRewardScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await rRewardScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await rRewardScreen.loginButton.click();
+        await rRewardScreen.waitForLoggedIn();
         console.log("logged in one again");
         return true;
     }
     
-    function openRewardGetPoint() {
-        let loggedIn = openRewardScreen();
+    async function openRewardGetPoint() {
+        let loggedIn = await openRewardScreen();
         let retryCount = 0;
         while (!loggedIn && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
-            loggedIn = openRewardScreen();
+            loggedIn = await openRewardScreen();
             retryCount++;
         }
         if (!loggedIn) {
             return;
         }
-        // rRewardScreen.closeButton.click();
-        driver.back();
+        // await rRewardScreen.closeButton.click();
+        await driver.back();
         for (let index = 0; index < 4; index++) {
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            if (!rMypageScreen.rewardButton.isDisplayed()) {
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            if (! await rMypageScreen.rewardButton.isDisplayed()) {
                 return false;
             }
-            rMypageScreen.rewardButton.click();
-            rRewardScreen.waitForIsShown();
-            // rRewardScreen.closeButton.click();
-            driver.back();
+            await rMypageScreen.rewardButton.click();
+            await rRewardScreen.waitForIsShown();
+            // await rRewardScreen.closeButton.click();
+            await driver.back();
         }
     }
 
-    function handleClickUnClaim() {
-        let loggedIn = openRewardScreen();
+    async function handleClickUnClaim() {
+        let loggedIn = await openRewardScreen();
         let retryCount = 0;
         while (!loggedIn && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
-            loggedIn = openRewardScreen();
+            loggedIn = await openRewardScreen();
             retryCount++;
         }
         if (!loggedIn) {
             return;
         }
-        let requireLoginAgain = clickUnclaimButton();
+        let requireLoginAgain = await clickUnclaimButton();
         if (requireLoginAgain) {
-            requireLoginAgain = clickUnclaimButton();
+            requireLoginAgain = await clickUnclaimButton();
         }
     }
 
-    function openHomeScreen() {
-        rTabBar.waitForTabBarShown();
-        rTabBar.openHome();
-        driver.pause(2000);
+    async function openHomeScreen() {
+        await rTabBar.waitForTabBarShown();
+        await rTabBar.openHome();
+        await driver.pause(2000);
     }
 
-    function handleClickReceipe() {
-        driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        handleCloseModal();
-        let firstReceipeImage = rHomeScreen.firstRecipeImage;
+    async function handleClickReceipe() {
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        await handleCloseModal();
+        let firstReceipeImage = await rHomeScreen.firstRecipeImage();
         if (firstReceipeImage) {
-            firstReceipeImage.click();
-            handleCloseModal();
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            if (rHomeScreen.swipeGuideImage.isDisplayed()) {
-                rHomeScreen.swipeGuideImage.click();
+            await firstReceipeImage.click();
+            await handleCloseModal();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            if (await rHomeScreen.swipeGuideImage.isDisplayed()) {
+                await rHomeScreen.swipeGuideImage.click();
             }
-            driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-            driver.back();
-            // rHomeScreen.waitForBackButtonIsShown();
-            // rHomeScreen.backButton.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await driver.back();
+            // await rHomeScreen.waitForBackButtonIsShown();
+            // await rHomeScreen.backButton.click();
         }
     }
 
-    it('r_first_login', () => {
-        driver.pause(7000);
+    it('r_first_login', async () => {
+        await driver.pause(7000);
         
-        handleFirstTimeEnterApp();
-        handleFirstTimeEnterAppNew();
-        handleOpenTabMyPageAndLogin();
+        await handleFirstTimeEnterApp();
+        await handleFirstTimeEnterAppNew();
+        await handleOpenTabMyPageAndLogin();
     });
 
-    it('r_click_recipe', () => {
-        handleCloseModal();
-        openHomeScreen();
-        handleCloseModal();
-        rHomeScreen.tabbarPopularLabel.click();
+    it('r_click_recipe', async () => {
+        await handleCloseModal();
+        await openHomeScreen();
+        await handleCloseModal();
+        await rHomeScreen.tabbarPopularLabel.click();
         for (let index = 0; index < config.RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT; index++) {
-            handleClickReceipe();
+            await handleClickReceipe();
         }
     });
 
-    it('r_open_reward', () => {
-        handleOpenTabMyPageAndLogin();
-        handleCloseModal();
-        Gestures.swipeUp(0.7);
-        openRewardGetPoint();
+    it('r_open_reward', async () => {
+        await handleOpenTabMyPageAndLogin();
+        await handleCloseModal();
+        await Gestures.swipeUp(0.7);
+        await openRewardGetPoint();
     });
 
-    it('r_claim_point', () => {
-        handleOpenTabMyPageAndLogin();
-        handleCloseModal();
-        handleClickUnClaim();
+    it('r_claim_point', async () => {
+        await handleOpenTabMyPageAndLogin();
+        await handleCloseModal();
+        await handleClickUnClaim();
     });
 
 });

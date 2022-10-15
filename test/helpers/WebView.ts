@@ -1,3 +1,4 @@
+
 export const CONTEXT_REF = {
     NATIVE: 'native',
     WEBVIEW: 'webview',
@@ -13,20 +14,26 @@ class WebView {
      * Wait for the webview context to be loaded
      *
      * By default you have `NATIVE_APP` as the current context. If a webview is loaded it will be
-     * added to the current contexts and will looks something like this
+     * added to the current contexts and will looks something like this for iOS
      * `["NATIVE_APP","WEBVIEW_28158.2"]`
-     * The number behind `WEBVIEW` can be any string
+     * The number behind `WEBVIEW` will be a random number in random order.
+     *
+     * For Android you can get something like
+     * ["NATIVE_APP","WEBVIEW_com.wdiodemoapp", "WEBVIEW_com.chrome"]`.
+     * The string behind `WEBVIEW` will the package name of the app that holds
+     * the webview
      */
-    waitForWebViewContextLoaded () {
-        driver.waitUntil(
-            // @ts-ignore
-            () => {
-                const currentContexts = this.getCurrentContexts();
+    async waitForWebViewContextLoaded () {
+        await driver.waitUntil(
+            async () => {
+                const currentContexts = await this.getCurrentContexts();
 
                 return currentContexts.length > 1 &&
-                    currentContexts.find(context => context.toLowerCase().includes(CONTEXT_REF.WEBVIEW));
+                    currentContexts.find(context => context.toLowerCase().includes(CONTEXT_REF.WEBVIEW)) !== 'undefined';
             }, {
-                timeout: 10000,
+                // Wait a max of 45 seconds. Reason for this high amount is that loading
+                // a webview for iOS might take longer
+                timeout: 45000,
                 timeoutMsg: 'Webview context not loaded',
                 interval: 100,
             },
@@ -35,36 +42,48 @@ class WebView {
 
     /**
      * Switch to native or webview context
-     *
-     * @param {string} context should be native of webview
      */
-    switchToContext (context: string) {
-        let currentContexts = this.getCurrentContexts();
+    async switchToContext (context:string) {
+        // The first context will always be the NATIVE_APP,
+        // the second one will always be the WebdriverIO web page
+        let currentContexts = await this.getCurrentContexts();
         if (context === CONTEXT_REF.NATIVE) {
-            driver.switchContext(currentContexts[0]);
+            await driver.switchContext(currentContexts[0]);
         } else if (currentContexts.indexOf(context) > -1){
-            driver.switchContext(context);
+            await driver.switchContext(context);
         } else {
-            driver.switchContext(currentContexts[currentContexts.length - 1]);
+            await driver.switchContext(currentContexts[currentContexts.length - 1]);
         }
-        // driver.switchContext(this.getCurrentContexts()[context === CONTEXT_REF.WEBVIEW ? (this.getCurrentContexts().length - 1) : 0]);
+        // await driver.switchContext((await this.getCurrentContexts())[context === CONTEXT_REF.WEBVIEW ? ((await this.getCurrentContexts()).length - 1) : 0]);
+        // await driver.switchContext((await this.getCurrentContexts())[context === CONTEXT_REF.NATIVE ? 0 : 1]);
     }
 
     /**
      * Returns an object with the list of all available contexts
-     *
-     * @return {string[]} An object containing the list of all available contexts
      */
-    getCurrentContexts (): string[] {
-        return driver.getContexts();
+    async getCurrentContexts ():Promise<string[]> {
+        let currentContexts: string[] = [];
+        let contexts = await driver.getContexts();
+        contexts.forEach(context => {
+            if (typeof context == 'string' ) {
+                currentContexts.push(context);
+            } else {
+                currentContexts.push(context.id);
+            }
+        })
+        return currentContexts;
     }
 
     /**
-     * Wait for the document to be full loaded
+     * Wait for the document to be fully loaded
      */
-    waitForDocumentFullyLoaded () {
-        driver.waitUntil(
-            () => driver.execute(() => document.readyState) === DOCUMENT_READY_STATE.COMPLETE,
+    async waitForDocumentFullyLoaded () {
+        await driver.waitUntil(
+            // A webpage can have multiple states, the ready state is the one we need to have.
+            // This looks like the same implementation as for the w3c implementation for `browser.url('https://webdriver.io')`
+            // That command also waits for the readiness of the page, see also the w3c specs
+            // https://www.w3.org/TR/webdriver/#dfn-waiting-for-the-navigation-to-complete
+            async() => (await driver.execute(() => document.readyState)) === DOCUMENT_READY_STATE.COMPLETE,
             {
                 timeout: 15000,
                 timeoutMsg: 'Website not loaded',
@@ -76,11 +95,11 @@ class WebView {
     /**
      * Wait for the website in the webview to be loaded
      */
-    waitForWebsiteLoaded () {
-        this.waitForWebViewContextLoaded();
-        this.switchToContext(CONTEXT_REF.WEBVIEW);
-        this.waitForDocumentFullyLoaded();
-        this.switchToContext(CONTEXT_REF.NATIVE);
+    async waitForWebsiteLoaded () {
+        await this.waitForWebViewContextLoaded();
+        await this.switchToContext(CONTEXT_REF.WEBVIEW);
+        await this.waitForDocumentFullyLoaded();
+        await this.switchToContext(CONTEXT_REF.NATIVE);
     }
 }
 
