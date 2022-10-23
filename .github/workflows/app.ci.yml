@@ -5,7 +5,7 @@ on:
     branches:
       - rakuten_apps
     paths:
-    - "test/**"
+    - "test/**.ts"
   workflow_dispatch:
 
 jobs:
