@@ -1,13 +1,12 @@
 import config from '../../../config';
-import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import { getByResouceId } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     FIRSTSTSRT_SCREEN: getByResouceId("android:id/content"),
-    WARNING_LABEL: getByText("警告"),
-    NEVER_DISPLAY_CHECKBOX: getByResouceId("never-display"),
-    CLOSE_LABEL: getByText("閉じる"),
-    SKIP_BUTTON: getByText("SKIP"),
+    WARNING_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/text_root_title"),
+    NEVER_DISPLAY_CHECKBOX: getByResouceId("jp.co.rakuten.pointclub.android:id/checkbox_root_detection_popup_never_ask_again"),
+    CLOSE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/text_close_dialog"),
 };
 
 class PC_FirstStartScreen extends AppScreen {
@@ -32,10 +31,6 @@ class PC_FirstStartScreen extends AppScreen {
 
     get closeLabel () {
         return $(SELECTORS.CLOSE_LABEL);
-    }
-
-    get skipButon () {
-        return $(SELECTORS.SKIP_BUTTON);
     }
 }
 

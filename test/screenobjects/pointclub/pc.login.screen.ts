@@ -3,19 +3,29 @@ import { getByResouceId } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
-    LOGIN_SCREEN: getByResouceId("jp.co.rakuten.pointclub.android:id/user__logo"),
-    INPUT: getByResouceId("jp.co.rakuten.pointclub.android:id/user__userid"),
-    PASSWORD: getByResouceId("jp.co.rakuten.pointclub.android:id/user__password"),
-    LOGIN_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/user__login"),
+    ENTER_LOGIN_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/btn_login"),
+    LOGIN_SCREEN: getByResouceId("omni-container"),
+    INPUT: getByResouceId("user_id"),
+    PASSWORD: getByResouceId("password_current"),
+    NEXT_BUTTON: getByResouceId("cta"),
+    LOGIN_WITH_OTHER_BUTTON: getByResouceId("terz_182"),
 };
 
 class PC_LoginScreen extends AppScreen {
     constructor () {
-        super(SELECTORS.LOGIN_SCREEN);
+        super(SELECTORS.ENTER_LOGIN_BUTTON);
     }
 
-    get loginButton () {
-        return $(SELECTORS.LOGIN_BUTTON);
+    get enterLoginButton () {
+        return $(SELECTORS.ENTER_LOGIN_BUTTON);
+    }
+
+    get nextButton () {
+        return $(SELECTORS.NEXT_BUTTON);
+    }
+
+    get loginWithOtherButton () {
+        return $(SELECTORS.LOGIN_WITH_OTHER_BUTTON);
     }
 
     get userid () {
@@ -26,8 +36,15 @@ class PC_LoginScreen extends AppScreen {
         return $(SELECTORS.PASSWORD);
     }
 
+    async waitForEnterLoginScreen () {
+        return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT,
+            reverse: false,
+        });
+    }
+
     async waitForLoggedIn () {
-        return $(SELECTORS.INPUT).waitForDisplayed({
+        return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });

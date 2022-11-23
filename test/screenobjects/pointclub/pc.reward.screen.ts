@@ -3,18 +3,20 @@ import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelec
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
-    REWARD_SCREEN: getByText("楽天リワード"),
+    REWARD_SCREEN: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_toobar"),
+    CLOSE_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_portalclose"),
     REQUIRE_LOGIN_LABEL: getByText("[Rakuten]Login"),
     LOGIN_INPUT: getByResouceId("username"),
     LOGIN_PASSWORD: getByResouceId("password"),
     LOGIN_BUTTON: getByText("Login"),
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByResouceId("signin-tile"),
     SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
-    UNCLAIM_BOX: getByResouceId("unclaim-box"),
-    UNCLAIM_LIST: getByResouceId("unclaimed-list"),
-    UNCLAIM_LIST_ITEMS: getByResouceId("unclaimed-list-items"),
+    UNCLAIM_BOX: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_unclaimsheet"),
+    UNCLAIM_LIST: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_unclaimlist"),
+    UNCLAIM_LIST_ITEMS: getByClassname("android.view.ViewGroup"),
     RETRY_LABEL: getByText("再試行"),
-    GET_POINT_DONE_LABEL: getByResouceId("claimads-claimend"),
+    GET_POINT_DONE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claim_title"),
+    UNCLAIM_ERROR_MESSAGE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_error_message"),
 };
 
 class PC_RewardScreen extends AppScreen {
@@ -53,13 +55,13 @@ class PC_RewardScreen extends AppScreen {
         return this.waitForElementIsShown(SELECTORS.UNCLAIM_LIST);
     }
 
-    get getUnclaimList () {
+    get unclaimList () {
         return $(SELECTORS.UNCLAIM_LIST);
     }
 
     async waitForUnclaimListItemsIsShown () {
-        if (await this.getUnclaimList.isExisting()) {
-            return this.getUnclaimList.$(SELECTORS.UNCLAIM_LIST_ITEMS).waitForDisplayed({
+        if (await this.unclaimList.isExisting()) {
+            return this.unclaimList.$(SELECTORS.UNCLAIM_LIST_ITEMS).waitForDisplayed({
                 timeout: config.DEFAULT_TIMEOUT,
                 reverse: false,
             });
@@ -67,8 +69,8 @@ class PC_RewardScreen extends AppScreen {
     }
 
     async getUnclaimListItems () {
-        if (await this.getUnclaimList.isExisting()) {
-            return this.getUnclaimList.$$(SELECTORS.UNCLAIM_LIST_ITEMS);
+        if (await this.unclaimList.isExisting()) {
+            return this.unclaimList.$$(SELECTORS.UNCLAIM_LIST_ITEMS);
         }
         return null;
     }
@@ -79,12 +81,12 @@ class PC_RewardScreen extends AppScreen {
             return null;
         }
         if (unclaimListItems.length > index) {
-            return unclaimListItems[index].$(getByClassname("android.widget.Button"));
+            return unclaimListItems[index].$(getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claimbutton"));
         }
     }
 
     async getButtonCountInHeader () {
-        let parent = (await $(SELECTORS.REWARD_SCREEN).parent);
+        let parent = $(SELECTORS.REWARD_SCREEN);
         return parent.$$(getByClassname("android.widget.ImageButton")).length;
     }
 
@@ -100,9 +102,12 @@ class PC_RewardScreen extends AppScreen {
         return $(SELECTORS.GET_POINT_DONE_LABEL);
     }
 
-    async closeButton () {
-        let parent = (await $(SELECTORS.REWARD_SCREEN).parent);
-        return parent.$(getByClassname("android.widget.ImageButton", (await this.getButtonCountInHeader()) - 1));
+    get unclaimErrorMessageLabel () {
+        return $(SELECTORS.UNCLAIM_ERROR_MESSAGE_LABEL);
+    }
+
+    get closeButton () {
+        return $(SELECTORS.CLOSE_BUTTON);
     }
 
     async backButton () {
