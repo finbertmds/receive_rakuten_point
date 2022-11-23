@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -41,7 +41,7 @@ jobs:
   ##################################
   restart_when_failed:
     name: Restarts the scheduled run when it failed
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
     needs: [build]
     steps:
