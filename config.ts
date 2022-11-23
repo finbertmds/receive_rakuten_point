@@ -9,6 +9,7 @@ export default {
     RAKUTEN_POINT_CLUB_APK_NAME: 'R_PointClub.apk',
     RAKUTEN_POINT_CLUB_APP_ID: 'jp.co.rakuten.pointclub.android',
     RAKUTEN_POINT_CLUB_WEBVIEW_CONTEXT: 'WEBVIEW_jp.co.rakuten.pointclub.android',
+    CHROME_APP_ID: 'com.android.chrome',
     RAKUTEN_RECIPE_APK_VERSION: 'v4.0.1',
     RAKUTEN_RECIPE_APK_NAME: 'R_Recipe.apk',
     RAKUTEN_RECIPE_APP_ID: 'jp.co.rakuten.recipe',

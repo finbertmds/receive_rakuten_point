@@ -36,6 +36,10 @@ class PC_LoginScreen extends AppScreen {
         return $(SELECTORS.PASSWORD);
     }
 
+    get loginScreen () {
+        return $(SELECTORS.LOGIN_SCREEN);
+    }
+
     async waitForEnterLoginScreen () {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,

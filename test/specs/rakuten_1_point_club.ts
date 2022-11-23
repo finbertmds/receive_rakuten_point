@@ -1,11 +1,16 @@
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
+import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
 import pcFirststartScreen from "../screenobjects/pointclub/pc.firststart.screen";
 import pcHomeScreen from '../screenobjects/pointclub/pc.home.screen';
 import pcLoginScreen from "../screenobjects/pointclub/pc.login.screen";
 import pcRewardScreen from '../screenobjects/pointclub/pc.reward.screen';
 
 describe('rakuten_point_club', async () => {
+    before(async () => {
+        await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.pause(5000);
+    })
 
     async function handleFirstTimeCloseWarning () {
         await pcFirststartScreen.waitForIsShown();
@@ -26,7 +31,15 @@ describe('rakuten_point_club', async () => {
         // await webviewScreen.switchToContext(CONTEXT_REF.NATIVE);
         await pcLoginScreen.waitForIsShown();
         await pcLoginScreen.enterLoginButton.click();
-        await pcLoginScreen.waitForEnterLoginScreen();
+        await driver.pause(5000);
+
+        if (! await pcLoginScreen.loginScreen.isExisting()) {
+            await handleChromeAction();
+            // return app and click enter login button again
+            await pcLoginScreen.enterLoginButton.click();
+            await driver.pause(5000);
+        }
+
         if (await (await pcLoginScreen.loginWithOtherButton).isDisplayed()) {
             await pcLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
@@ -36,6 +49,21 @@ describe('rakuten_point_club', async () => {
         await pcLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
         await pcLoginScreen.nextButton.click();
         await pcLoginScreen.waitForLoggedIn();
+    }
+
+    async function handleChromeAction() {
+        await driver.activateApp(config.CHROME_APP_ID);
+        await driver.pause(5000);
+
+        await cFirststartScreen.waitForIsShown();
+        if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
+            await (await cFirststartScreen.acceptContinueButton).click();
+            await (await cFirststartScreen.noThanksButton).click();
+            await driver.pause(5000);
+        }
+
+        await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.pause(5000);
     }
 
     async function handleFirstTimeCloseNotification () {
