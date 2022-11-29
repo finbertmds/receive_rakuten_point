@@ -2,7 +2,7 @@ name: Daily App Kuji
 
 on:
   schedule:
-    - cron: '0 0,7 * * *'
+    - cron: '0 0,7,14 * * *'
   workflow_dispatch:
 
 jobs:
