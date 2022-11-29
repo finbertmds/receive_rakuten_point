@@ -42,14 +42,14 @@ class PC_LoginScreen extends AppScreen {
 
     async waitForEnterLoginScreen () {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
+            timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
 
     async waitForLoggedIn () {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
+            timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });
     }

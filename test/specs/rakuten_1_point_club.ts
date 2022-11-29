@@ -45,9 +45,13 @@ describe('rakuten_point_club', async () => {
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
         await pcLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.pause(3000);
         await pcLoginScreen.nextButton.click();
+        await driver.pause(3000);
         await pcLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await driver.pause(3000);
         await pcLoginScreen.nextButton.click();
+        await driver.pause(3000);
         await pcLoginScreen.waitForLoggedIn();
     }
 
@@ -220,14 +224,14 @@ describe('rakuten_point_club', async () => {
                 }
                 let unclaimListIndexButton = await pcRewardScreen.getUnclaimListIndexButton(0);
                 if (unclaimListIndexButton) {
-                    console.log("unclaimText: ", await (await pcRewardScreen.getUnclaimListIndexButton(index))?.getText());
+                    // console.log("unclaimText: ", await (await pcRewardScreen.getUnclaimListIndexButton(0))?.getText());
                     await unclaimListIndexButton.click();
                     let loginAgain = await handleLoginRequireAgain();
                     if (loginAgain) {
                         return true;
                     }
                     await pcRewardScreen.waitForGetPointDoneLabelIsShown();
-                    console.log("getPointDoneLabel: ", (await pcRewardScreen.getPointDoneLabel)?.getText());
+                    // console.log("getPointDoneLabel: ", await (await pcRewardScreen.getPointDoneLabel)?.getText());
 
                     await driver.back();
                 }
