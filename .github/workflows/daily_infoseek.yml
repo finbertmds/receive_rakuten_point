@@ -51,5 +51,5 @@ jobs:
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.ACTIONS_PAT }}" \
-          https://api.github.com/repos/FinbertMDS/receive_rakuten_point/actions/workflows/13534273/dispatches \
+          https://api.github.com/repos/FinbertMDS/receive_rakuten_point/actions/workflows/43004264/dispatches \
           -d '{"ref": "${{ github.ref }}" }'
