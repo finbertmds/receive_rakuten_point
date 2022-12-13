@@ -1,0 +1,50 @@
+import config from '../../config';
+import infoseekPage from '../pageobjects/infoseek.page';
+
+describe('Infoseek', () => {
+    beforeEach(async function() {
+      const windows = await browser.getWindowHandles();
+      await browser.switchToWindow(windows[0]);
+    })
+
+    async function credentials() {
+        await infoseekPage.open();
+        await browser.pause(config.DEFAULT_TIMEOUT);
+        if (await infoseekPage.isNeedLogin()) {
+            await infoseekPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
+        }
+    }
+
+    it('join_mission', async () => {
+        await credentials();
+        await browser.pause(2000);
+        
+        await infoseekPage.joinMission();
+    });
+
+    it('read_articles', async () => {
+        await credentials();
+        await browser.pause(2000);
+        
+        for (let index = 0; index < config.INFO_SEEK_TAB_NAME.length; index++) {
+            const tabName = config.INFO_SEEK_TAB_NAME[index];
+            await infoseekPage.readArticle(tabName);
+        }
+    });
+
+    it('visit_mission', async () => {
+        await credentials();
+        await browser.pause(2000);
+        
+        await infoseekPage.visitMissionPage();
+    });
+
+    it('get_point', async () => {
+        await credentials();
+        await browser.pause(2000);
+        
+        await infoseekPage.handleClickGetPoint();
+    });
+});
+
+

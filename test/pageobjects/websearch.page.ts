@@ -144,7 +144,7 @@ class WebSearchPage extends Page {
     }
 
     async entryCampaign (): Promise<void> {
-        super.open(config.WEBSEARCH_SEARCH_HOME_PAGE);
+        await super.open(config.WEBSEARCH_SEARCH_HOME_PAGE);
         await browser.pause(5000);
         await (await this.btnEarnPoint).click();
         let earnPointLinkCount = await this.earnPointLinkCount;

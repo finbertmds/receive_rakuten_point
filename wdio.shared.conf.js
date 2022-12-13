@@ -102,7 +102,8 @@ exports.config = {
         'geckodriver',
         ['firefox-profile', {
             extensions: [
-                path.resolve(__dirname, './ffextension.xpi')
+                path.resolve(__dirname, './websearch_extension.xpi'),
+                path.resolve(__dirname, './adblock_plus.xpi'),
             ],
             'xpinstall.signatures.required': false,
         }]
