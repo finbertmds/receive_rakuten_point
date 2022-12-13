@@ -1,0 +1,55 @@
+name: Daily Infoseek
+
+on:
+  schedule:
+    - cron: '0 1,10 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: 'developer'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Test
+      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || yarn test --spec ./test/specs/infoseek.point.e2e.ts)
+      env:
+        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+    - name: upload-artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: upload-screenshots
+        path: screenshots
+    - name: remove-screenshots
+      if: ${{ failure() }}
+      run: rm -rf ./screenshots
+
+  ##################################
+  ### Run when a schedule failed ###
+  ##################################
+  restart_when_failed:
+    name: Restarts the scheduled run when it failed
+    runs-on: macos-latest
+    if: github.event_name == 'schedule' && failure()
+    needs: [build]
+    steps:
+      - name: Retry the workflow
+        run: |
+          curl -i \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.ACTIONS_PAT }}" \
+          https://api.github.com/repos/FinbertMDS/receive_rakuten_point/actions/workflows/13534273/dispatches \
+          -d '{"ref": "${{ github.ref }}" }'
