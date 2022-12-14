@@ -26,9 +26,9 @@ describe('Infoseek', () => {
         await credentials();
         await browser.pause(2000);
         
-        for (let index = 0; index < config.INFO_SEEK_TAB_NAME.length; index++) {
-            const tabName = config.INFO_SEEK_TAB_NAME[index];
-            await infoseekPage.readArticle(tabName);
+        for (let index = 0; index < config.INFO_SEEK_RANKING_PAGE.length; index++) {
+            const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
+            await infoseekPage.readArticleAtRankingPage(rankingPage);
         }
     });
 

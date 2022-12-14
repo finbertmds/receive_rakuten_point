@@ -37,7 +37,7 @@ class InfoseekPage extends Page {
     /**
      * ranking list link
      */
-    get sectionBox () { return $('section.section-box.js-tab') }
+    get sectionBox () { return $('section.section-box') }
     async rankingListTextLink () { 
         let rankingListTextLinkList = await $$('.ranking-list__text-link');
         let visibleList = [];
@@ -144,7 +144,6 @@ class InfoseekPage extends Page {
         }
     }
 
-
     async handleOpenHomePageAndClickTab(tabName?: string) {
         await super.open(config.INFO_SEEK_PAGE);
         await (await this.sectionBox).scrollIntoView();
@@ -180,6 +179,31 @@ class InfoseekPage extends Page {
             }
             
             await this.handleOpenHomePageAndClickTab(tabName);
+        }
+    }
+
+    async handleOpenRankingPage(rankingPage: string) {
+        await super.open(rankingPage);
+        await (await this.sectionBox).scrollIntoView();
+    }
+
+    async readArticleAtRankingPage(rankingPage: string) {
+        await this.handleOpenRankingPage(rankingPage);
+
+        for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
+            let rankingListTextLink = await this.rankingListTextLink();
+            if (rankingListTextLink.length > 0 && index < rankingListTextLink.length) {
+                const link = $(rankingListTextLink[index]);
+                if (await link.isDisplayed()) {
+                    await (await link).scrollIntoView();
+                    await (await link).click();
+                    await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+                    await (await this.footerContainer).scrollIntoView();
+                    await browser.pause(5000);
+                }
+            }
+            
+            await this.handleOpenRankingPage(rankingPage);
         }
     }
 
