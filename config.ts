@@ -37,7 +37,7 @@ export default {
     INFO_SEEK_PAGE: 'https://www.infoseek.co.jp',
     INFO_SEEK_MISSION_PAGE: 'https://www.infoseek.co.jp/mission/list/',
     DEFAULT_READ_ARTICLE_TIME: 10000,
-    READ_ARTICLE_MAX_COUNT: 20,
+    READ_ARTICLE_MAX_COUNT: 10,
     INFO_SEEK_TAB_NAME: [
         'genre-tab__category-all',
         'genre-tab__category-entertainment',
