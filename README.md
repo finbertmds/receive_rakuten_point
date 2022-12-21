@@ -7,6 +7,7 @@
 [![Daily App Recipe](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20Recipe/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_recipe.yml)
 [![Daily App SPS](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20SPS/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_sps.yml)
 [![Daily App Kuji](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20Kuji/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_kuji.yml)
+[![Daily App Toshiru](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20Toshiru/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_toshiru.yml)
 ## Technologies
 - Branch: [master](https://github.com/FinbertMDS/receive_rakuten_point/tree/master)
   - Selenium IDE
