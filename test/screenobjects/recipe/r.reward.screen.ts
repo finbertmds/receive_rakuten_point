@@ -122,7 +122,7 @@ class R_RewardScreen extends AppScreen {
 
     async waitForLoggedIn () {
         return $(SELECTORS.LOGIN_INPUT).waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
+            timeout: 15 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });
     }

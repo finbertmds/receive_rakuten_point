@@ -49,7 +49,7 @@ class PC_LoginScreen extends AppScreen {
 
     async waitForLoggedIn () {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
-            timeout: 3 * config.DEFAULT_TIMEOUT,
+            timeout: 15 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });
     }
