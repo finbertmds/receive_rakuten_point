@@ -28,7 +28,7 @@ const SELECTORS = {
     FOOTER_DISCLAIMER: getByResouceId("footer-disclaimer"),
     COMMON_PREV_BUTTON: getByResouceId("jp.co.rakutensec.toshiru:id/commonPrevButton"),
     
-    GET_POINT_DONE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claim_title"),
+    GET_POINT_DONE_LABEL: getByResouceId("jp.co.rakutensec.toshiru:id/rakutenreward_claim_title"),
 };
 
 class T_HomeScreen extends AppScreen {
