@@ -9,7 +9,7 @@
     "test:recipe": "npx wdio run wdio.apps.recipe.conf.js",
     "test:superpointscreen": "npx wdio run wdio.apps.superpointscreen.conf.js",
     "test:toshiru": "npx wdio run wdio.apps.toshiru.conf.js",
-    "test:pointclub_toshiru": "npx wdio run wdio.apps.pointclub_toshiru.conf",
+    "test:pointclub_toshiru": "npx wdio run wdio.apps.pointclub_toshiru.conf.js",
     "test": "npx wdio run wdio.conf.js"
   },
   "dependencies": {
