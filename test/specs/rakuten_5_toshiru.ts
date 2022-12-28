@@ -114,6 +114,9 @@ describe('rakuten_toshiru', async () => {
 
     async function checkSwipeUntilNextArticle(groupId: string, articleTitleReadList: string[]) {
         let articleImageListNew = await tHomeScreen.articleImageList(groupId);
+        if (articleImageListNew == null) {
+            return true;
+        }
         for (let index = 0; index < articleImageListNew.length; index++) {
             let articleImage = articleImageListNew[index];
             let articleTitle = await (await tHomeScreen.articleTitle(articleImage)).getText();
@@ -139,12 +142,12 @@ describe('rakuten_toshiru', async () => {
                 break;
             }
             if (await (await tHomeScreen.rankingSectionFooterButton).isDisplayed()) {
-                await (await tHomeScreen.recommendSectionFooterTitle).click();
+                await (await tHomeScreen.rankingSectionFooterButton).click();
                 groupId = 'jp.co.rakutensec.toshiru:id/rankingListContentsView';
                 break;
             }
             if (await (await tHomeScreen.sectionFooterButton).isDisplayed()) {
-                await (await tHomeScreen.recommendSectionFooterTitle).click();
+                await (await tHomeScreen.sectionFooterButton).click();
                 groupId = 'jp.co.rakutensec.toshiru:id/simpleArticleListView';
                 break;
             }
@@ -155,9 +158,12 @@ describe('rakuten_toshiru', async () => {
         if (groupId == '') {
             return;
         }
-        await tHomeScreen.waitForHeaderTitleLabelIsShown();
-        await driver.pause(5000);
+        // await tHomeScreen.waitForHeaderTitleLabelIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
         let articleImageList = await tHomeScreen.articleImageList(groupId);
+        if (articleImageList == null) {
+            return;
+        }
         console.log("articleImageList count: " + articleImageList.length);
         
         let articleTitleReadList = [];
@@ -175,6 +181,9 @@ describe('rakuten_toshiru', async () => {
             }
             console.log('read article ' + i);
             let articleImageListNew = await tHomeScreen.articleImageList(groupId);
+            if (articleImageListNew == null) {
+                return;
+            }
             let articleImage = articleImageListNew[i];
             let articleTitle = await (await tHomeScreen.articleTitle(articleImage)).getText();
             console.log('articleTitle: ' + articleTitle);
@@ -185,11 +194,13 @@ describe('rakuten_toshiru', async () => {
             await tHomeScreen.waitForContentsIsShown();
 
             for (let j = 0; j < config.RAKUTEN_TOSHIRU_SCROLL_ARTICLE_COUNT; j++) {
-                console.log('scroll article ' + j);
+                console.log('read article ' + i + ' -- scroll article ' + j);
                 await Gestures.swipeUp();
                 let isClaim = await handleClaimPoint();
                 if (isClaim) {
-                    break;
+                    await driver.back();
+                    await driver.back();
+                    return;
                 }
             }
             await driver.back();

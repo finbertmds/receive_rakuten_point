@@ -124,6 +124,10 @@ class T_HomeScreen extends AppScreen {
     }
     
     async articleImageList (groupId: string) {
+        let groupIsDisplayed = await (await $(getByResouceId(groupId))).isDisplayed();
+        if (!groupIsDisplayed) {
+            return null;
+        }
         return $(getByResouceId(groupId)).$$(SELECTORS.ARTICLE_IMAGE_LIST);
     }
 
