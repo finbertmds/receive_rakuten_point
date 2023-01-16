@@ -10,7 +10,7 @@ const SELECTORS = {
     LOGIN_BUTTON: getByText("Login"),
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByText("ログインする"),
     RETRY_LABEL: getByText("再試行"),
-    SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
+    SUGGEST_PRODUCT_LABEL: getByText("あなたにおすすめの商品"),
     UNCLAIM_BOX: getByResouceId("unclaim-box"),
     UNCLAIM_LIST: getByResouceId("unclaimed-list"),
     UNCLAIM_LIST_ITEMS: getByResouceId("unclaimed-list-items"),

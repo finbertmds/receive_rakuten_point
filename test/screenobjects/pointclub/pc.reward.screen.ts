@@ -10,7 +10,7 @@ const SELECTORS = {
     LOGIN_PASSWORD: getByResouceId("password"),
     LOGIN_BUTTON: getByText("Login"),
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByResouceId("signin-tile"),
-    SUGGEST_PRODUCT_LABEL: getByText("おすすめ商品とおトク情報"),
+    SUGGEST_PRODUCT_LABEL: getByText("あなたにおすすめの商品"),
     UNCLAIM_BOX: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_unclaimsheet"),
     UNCLAIM_LIST: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_unclaimlist"),
     UNCLAIM_LIST_ITEMS: getByClassname("android.view.ViewGroup"),
