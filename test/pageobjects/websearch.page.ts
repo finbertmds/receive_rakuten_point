@@ -36,7 +36,7 @@ class WebSearchPage extends Page {
      */
     get inputUsernameV2 () { return $('#user_id') }
     get inputPasswordV2 () { return $('#password_current') }
-    get btnNextV2 () { return $$('.omni-e2e-button__submit') }
+    get btnNextV2 () { return $$('.h4k5-e2e-button__submit') }
     get btnLoginConfirmV2 () { return $('#prim_continue') }
 
     get btnEarnPoint () { return $('//*[contains(text(),\'ポイントを貯める\')]') }
