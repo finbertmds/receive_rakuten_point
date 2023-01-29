@@ -4,11 +4,12 @@ import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     ENTER_LOGIN_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/btn_login"),
-    LOGIN_SCREEN: getByResouceId("omni-container"),
+    LOGIN_SCREEN: getByResouceId("h4k5-container"),
     INPUT: getByResouceId("user_id"),
     PASSWORD: getByResouceId("password_current"),
     NEXT_BUTTON: getByResouceId("cta"),
-    LOGIN_WITH_OTHER_BUTTON: getByResouceId("terz_182"),
+    LOGIN_CONTINUE_BUTTON: getByResouceId("form_81"),
+    LOGIN_WITH_OTHER_BUTTON: getByResouceId("textl_182"),
 };
 
 class PC_LoginScreen extends AppScreen {
@@ -22,6 +23,10 @@ class PC_LoginScreen extends AppScreen {
 
     get nextButton () {
         return $(SELECTORS.NEXT_BUTTON);
+    }
+
+    get loginContinueButton () {
+        return $(SELECTORS.LOGIN_CONTINUE_BUTTON);
     }
 
     get loginWithOtherButton () {
