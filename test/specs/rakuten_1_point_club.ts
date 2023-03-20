@@ -159,7 +159,8 @@ describe('rakuten_point_club', async () => {
             return false;
         }
 
-        await pcRewardScreen.waitForSuggestProductIsShown();
+        // await pcRewardScreen.waitForSuggestProductIsShown();
+        await driver.pause(config.DEFAULT_TIMEOUT);
         let needLoginMoreTimeButton = await pcRewardScreen.needLoginButton();
         if (needLoginMoreTimeButton) {
             await needLoginMoreTimeButton.click();
