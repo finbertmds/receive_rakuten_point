@@ -12,7 +12,7 @@ class RakutenCardPage extends Page {
     get inputPassword () { return $('#p') }
     get btnLogin () { return $('.loginButton') }
     
-    get labelClickPointCountTxt () { return $('.sprite-ico_rc_enavi_point_01 > .rce-number') }
+    get labelClickPointCountTxt () { return $('.sprite-ico_rc_enavi_point_01 > .top-edit-total-click-point') }
     get btnClickPointCountLink () { return $('.sprite-ico_rc_enavi_point_01') }
     get clickPointList () { return $$('.topArea') }
 
