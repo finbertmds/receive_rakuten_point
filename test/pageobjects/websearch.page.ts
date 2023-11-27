@@ -15,12 +15,12 @@ class WebSearchPage extends Page {
     get inputSearchBtn () { return $('#searchBtn') }
     get labelCurrentSearchCount () {
         return (async () => {
-            let searchCountContainerList = await $$('//span[text() = \'口\' ]')
-            if (searchCountContainerList.length > 0) {
-                let searchCountContainer = searchCountContainerList[0];
-                return searchCountContainer.$('../em');
-            }
-            return $('.sc-fzoyAV')
+            // let searchCountContainerList = await $$('//span[text() = \'口\' ]')
+            // if (searchCountContainerList.length > 0) {
+            //     let searchCountContainer = searchCountContainerList[0];
+            //     return searchCountContainer.$('../em');
+            // }
+            return $('.progressCounter1')
         })();
      }
 
