@@ -9,7 +9,7 @@ class WebSearchPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get btnLogin () { return $('//a[contains(text(),\'ログイン\')]') }
+    get btnLogin () { return $('//span[contains(text(),\'ログイン\')]') }
 
     get inputSearchFormTxt () { return $('#srchformtxt_qt') }
     get inputSearchBtn () { return $('#searchBtn') }

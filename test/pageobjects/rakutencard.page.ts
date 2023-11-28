@@ -14,7 +14,7 @@ class RakutenCardPage extends Page {
     
     get labelClickPointCountTxt () { return $('.sprite-ico_rc_enavi_point_01 > .top-edit-total-click-point') }
     get btnClickPointCountLink () { return $('.sprite-ico_rc_enavi_point_01') }
-    get clickPointList () { return $$('.topArea') }
+    get clickPointList () { return $$('.click-point-banner') }
 
     get videoBtn () { return $('#vjs_video_3 > button') }
     get videoGetPointImg () { return $('.js-movie-point-finish') }
@@ -55,11 +55,11 @@ class RakutenCardPage extends Page {
     }
 
     async canClickPointNewIndex (index: number): Promise<boolean> {
-        return await (await (await this.clickPointList)[index].$('./div[1]/p/img')).isExisting();
+        return await (await (await this.clickPointList)[index]).isExisting();
     }
 
     async handleClickPointNewIndex (index: number): Promise<void> {
-        await (await (await this.clickPointList)[index].$('./div[2]/div[1]/a[1]')).click();
+        await (await (await this.clickPointList)[index]).click();
     }
 
     async handleClickShoppingLink (): Promise<void> {
