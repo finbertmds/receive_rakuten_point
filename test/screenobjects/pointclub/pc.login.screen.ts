@@ -7,7 +7,7 @@ const SELECTORS = {
     LOGIN_SCREEN: getByResouceId("h4k5-container"),
     INPUT: getByResouceId("user_id"),
     PASSWORD: getByResouceId("password_current"),
-    NEXT_BUTTON: getByResouceId("cta"),
+    NEXT_BUTTON: getByResouceId("cta001"),
     LOGIN_CONTINUE_BUTTON: getByResouceId("form_81"),
     LOGIN_WITH_OTHER_BUTTON: getByResouceId("textl_182"),
 };

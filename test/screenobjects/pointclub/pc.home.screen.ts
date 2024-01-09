@@ -10,16 +10,18 @@ const SELECTORS = {
     NOTIFICATION_NO_BUTTON: getByResouceId("android:id/button2"),
 
     CUSTOM_PANEL: getByResouceId("android:id/customPanel"),
-    CLOSE_CUSTOM_PANEL: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_cross"),
+    CLOSE_CUSTOM_PANEL: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_close"),
 
     RAKUTEN_NAME_LABLEL: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_mem_name"),
     MENU_NAVIGATION_BUTTON: getByClassname("android.widget.ImageButton"),
     // RAKUTEN_REWARD_LABEL: getByClassnameAndText("android.widget.Image", "ic_rakutenreward"),
-    RAKUTEN_REWARD_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/menu_rank_reward"),
+    /** Point Mission */
+    RAKUTEN_REWARD_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/menu_point_mission"),
+    /** Point History Report Button */
+    POINT_HISTORY_ICON: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_point_history"),
 
-    POINT_HISTORY_ICON: getByResouceId("jp.co.rakuten.pointclub.android:id/point_history_view"),
-
-    AD_BANNER: getByResouceId("jp.co.rakuten.pointclub.android:id/triple_campaign_success_view"),
+    AD_BANNER_GROUP: getByResouceId("jp.co.rakuten.pointclub.android:id/evolve_discover_main_view"),
+    AD_BANNER_1: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_banner"),
 };
 
 class PC_HomeScreen extends AppScreen {
@@ -94,15 +96,15 @@ class PC_HomeScreen extends AppScreen {
     }
 
     async firstAdBanner () {
-        let adBannerList = $(SELECTORS.AD_BANNER);
+        let adBannerList = $(SELECTORS.AD_BANNER_GROUP);
         if (await adBannerList.isDisplayed()) {
-            return adBannerList.$(getByResouceId("jp.co.rakuten.pointclub.android:id/imageView1"));
+            return adBannerList.$(SELECTORS.AD_BANNER_1);
         }
         return null;
     }
 
     async waitForAdBannerIsShown () {
-        return this.waitForElementIsShown(SELECTORS.AD_BANNER);
+        return this.waitForElementIsShown(SELECTORS.AD_BANNER_GROUP);
     }
 
 }

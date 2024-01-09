@@ -81,7 +81,7 @@ describe('rakuten_point_club', async () => {
         if (isUpdateVersion) {
             await pcHomeScreen.notificationNoButon.click();
         }
-        await pcHomeScreen.waitForNotificationSettingLabelIsShown();
+        // await pcHomeScreen.waitForNotificationSettingLabelIsShown();
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let isDiplayedNotification = await pcHomeScreen.notificationSettingLabel.isDisplayed()
         if (isDiplayedNotification) {
@@ -97,6 +97,11 @@ describe('rakuten_point_club', async () => {
     async function checkIsLoggedIn () {
         let rakutenNameLabel = pcHomeScreen.rakutenNameLabel
         if (await rakutenNameLabel.isDisplayed()) {
+            return true;
+        }
+        let isDiplayedCustomPanel = await pcHomeScreen.customPanel.isDisplayed()
+        if (isDiplayedCustomPanel) {
+            await handleFirstTimeCloseNotification();
             return true;
         }
         return false;
