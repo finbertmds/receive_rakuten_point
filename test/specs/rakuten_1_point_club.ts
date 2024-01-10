@@ -92,6 +92,11 @@ describe('rakuten_point_club', async () => {
         if (isDiplayedCustomPanel) {
             await pcHomeScreen.closeCustomPanelButon.click();
         }
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        let isDiplayedCustomPanel2 = await pcHomeScreen.customPanel.isDisplayed()
+        if (isDiplayedCustomPanel2) {
+            await pcHomeScreen.closeCustomPanel2Buton.click();
+        }
     }
 
     async function checkIsLoggedIn () {

@@ -11,6 +11,7 @@ const SELECTORS = {
 
     CUSTOM_PANEL: getByResouceId("android:id/customPanel"),
     CLOSE_CUSTOM_PANEL: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_close"),
+    CLOSE_CUSTOM_PANEL2: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_cross"),
 
     RAKUTEN_NAME_LABLEL: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_mem_name"),
     MENU_NAVIGATION_BUTTON: getByClassname("android.widget.ImageButton"),
@@ -58,6 +59,10 @@ class PC_HomeScreen extends AppScreen {
 
     get closeCustomPanelButon () {
         return $(SELECTORS.CLOSE_CUSTOM_PANEL);
+    }
+
+    get closeCustomPanel2Buton () {
+        return $(SELECTORS.CLOSE_CUSTOM_PANEL2);
     }
 
     get rakutenNameLabel () {
