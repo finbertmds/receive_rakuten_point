@@ -6,6 +6,9 @@ const SELECTORS = {
     DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.recipe:id/action_bar_root"),
     START_LABEL: getByText("今すぐはじめる"),
     CANCEL_UPGRADE_LABEL: getByText("キャンセル"),
+    /** 楽天会員ログイン */
+    WELCOME_LOGIN_BUTTON: getByResouceId("jp.co.rakuten.recipe:id/welcome_reg_button_login"),
+    /** ログインせずに始める */
     WELCOME_SKIP_BUTTON: getByResouceId("jp.co.rakuten.recipe:id/welcome_reg_button_skip"),
     SURVEY_CANCEL_BUTTON: getByResouceId("jp.co.rakuten.recipe:id/survey_cancel_button"),
 };
@@ -28,6 +31,10 @@ class R_FirstStartScreen extends AppScreen {
 
     get cancelUpgradeLabel () {
         return $(SELECTORS.CANCEL_UPGRADE_LABEL);
+    }
+
+    get welcomeLoginButton () {
+        return $(SELECTORS.WELCOME_LOGIN_BUTTON);
     }
 
     get welcomeSkipButton () {

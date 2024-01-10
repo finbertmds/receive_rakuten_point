@@ -10,20 +10,8 @@ export default class R_TabBar {
         await $$(SELECTORS.BOTTOM_ICON)[0].click();
     }
 
-    static async openSearch () {
-        await $$(SELECTORS.BOTTOM_ICON)[1].click();
-    }
-
-    static async openHistory () {
-        await $$(SELECTORS.BOTTOM_ICON)[2].click();
-    }
-
-    static async openBookmark () {
-        await $$(SELECTORS.BOTTOM_ICON)[3].click();
-    }
-
     static async openMyPage () {
-        await $$(SELECTORS.BOTTOM_ICON)[4].click();
+        await $$(SELECTORS.BOTTOM_ICON)[5].click();
     }
 
     static async waitForTabBarShown () {

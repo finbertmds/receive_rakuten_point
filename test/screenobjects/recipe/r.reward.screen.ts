@@ -3,7 +3,7 @@ import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelec
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
-    REWARD_SCREEN: getByText("楽天リワード"),
+    REWARD_SCREEN: getByText("Home"),
     REQUIRE_LOGIN_LABEL: getByText("[Rakuten]Login"),
     LOGIN_INPUT: getByResouceId("username"),
     LOGIN_PASSWORD: getByResouceId("password"),
@@ -11,7 +11,9 @@ const SELECTORS = {
     NEED_ONE_MORE_TIME_LOGIN_BUTTON: getByText("ログインする"),
     RETRY_LABEL: getByText("再試行"),
     SUGGEST_PRODUCT_LABEL: getByText("あなたにおすすめの商品"),
-    UNCLAIM_BOX: getByResouceId("unclaim-box"),
+    /** Unclaimed Points tabbar */
+    UNCLAIM_BOX: getByText("Unclaimed Points"),
+    // UNCLAIM_BOX: getByResouceId("unclaim-box"),
     UNCLAIM_LIST: getByResouceId("unclaimed-list"),
     UNCLAIM_LIST_ITEMS: getByResouceId("unclaimed-list-items"),
 

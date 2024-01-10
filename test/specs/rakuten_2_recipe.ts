@@ -1,10 +1,12 @@
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
+import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
 import rFirststartScreen from '../screenobjects/recipe/r.firststart.screen';
 import sHomeModalScreen from '../screenobjects/recipe/r.home.modal.screen';
 import rHomeScreen from '../screenobjects/recipe/r.home.screen';
 import rHomeSettingScreen from '../screenobjects/recipe/r.home.setting.screen';
 import rLoginScreen from '../screenobjects/recipe/r.login.screen';
+import rLoginBrowserScreen from '../screenobjects/recipe/r.loginBrowser.screen';
 import rMypageScreen from '../screenobjects/recipe/r.mypage.screen';
 import rRewardScreen from '../screenobjects/recipe/r.reward.screen';
 import rTabBar from '../screenobjects/recipe/r.tab.bar';
@@ -53,14 +55,57 @@ describe('rakuten_recipe', async () => {
     }
 
     async function handleFirstTimeEnterAppNew () {
-        if (await rFirststartScreen.welcomeSkipButton.isDisplayed()) {
-            await rFirststartScreen.welcomeSkipButton.click();
+        if (await rFirststartScreen.welcomeLoginButton.isDisplayed()) {
+            await rFirststartScreen.welcomeLoginButton.click();
+            await handleFirstTimeLoginBrowser();
         }
-        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        // if (await rFirststartScreen.welcomeSkipButton.isDisplayed()) {
+        //     await rFirststartScreen.welcomeSkipButton.click();
+        // }
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT)));
         if (await rFirststartScreen.surveyCancelButton.isDisplayed()) {
             await rFirststartScreen.surveyCancelButton.click();
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+    }
+
+    async function handleFirstTimeLoginBrowser () {
+        await handleChromeAction();
+        await rLoginBrowserScreen.waitForEnterLoginScreen();
+        if (await (await rLoginBrowserScreen.loginContinueButton).isDisplayed()) {
+            await rLoginBrowserScreen.loginContinueButton.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await rLoginBrowserScreen.waitForLoggedIn();
+            return;
+        }
+        if (await (await rLoginBrowserScreen.loginWithOtherButton).isDisplayed()) {
+            await rLoginBrowserScreen.loginWithOtherButton.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        }
+        await rLoginBrowserScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.pause(3000);
+        await rLoginBrowserScreen.nextButton.click();
+        await driver.pause(3000);
+        await rLoginBrowserScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await driver.pause(3000);
+        await rLoginBrowserScreen.nextButton.click();
+        await driver.pause(3000);
+        await rLoginBrowserScreen.waitForLoggedIn();
+    }
+
+    async function handleChromeAction() {
+        await driver.activateApp(config.CHROME_APP_ID);
+        await driver.pause(5000);
+
+        await cFirststartScreen.waitForIsShown();
+        if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
+            await (await cFirststartScreen.acceptContinueButton).click();
+            await (await cFirststartScreen.noThanksButton).click();
+            await driver.pause(5000);
+        }
+
+        await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
+        await driver.pause(5000);
     }
 
     async function handleOpenTabMyPageAndLogin () {
@@ -95,12 +140,20 @@ describe('rakuten_recipe', async () => {
 
     async function openRewardScreen () {
         // await Gestures.swipeUp(0.7);
+        var scrollCount = 0
+        while (scrollCount < 3) {
+            if (await rMypageScreen.rewardButton.isDisplayed()) {
+                break;
+            }
+            await Gestures.swipeUp(0.7);
+            scrollCount++;
+        }
         if (! await rMypageScreen.rewardButton.isDisplayed()) {
             return false;
         }
         await rMypageScreen.rewardButton.click();
 
-        await rRewardScreen.waitForIsShown();
+        // await rRewardScreen.waitForIsShown();
         // await rRewardScreen.waitForSuggestProductIsShown();
         await driver.pause(config.DEFAULT_TIMEOUT);
         let retryLableIsShown = await rRewardScreen.retryLabel.isDisplayed();
@@ -130,8 +183,8 @@ describe('rakuten_recipe', async () => {
         if (await unclaimBox.isDisplayed()) {
             await unclaimBox.click();
 
-            await rRewardScreen.waitForUnclaimListIsShown();
-            await rRewardScreen.waitForUnclaimListItemsIsShown();
+            // await rRewardScreen.waitForUnclaimListIsShown();
+            // await rRewardScreen.waitForUnclaimListItemsIsShown();
             let unclaimListCount = (await rRewardScreen.getUnclaimListItems())?.length
             console.log("unclaimListCount: ", unclaimListCount);
             
@@ -236,6 +289,10 @@ describe('rakuten_recipe', async () => {
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (await rHomeScreen.swipeGuideImage.isDisplayed()) {
                 await rHomeScreen.swipeGuideImage.click();
+            }
+            for (let index = 0; index < 5; index++) {
+                await driver.pause(2000);
+                await Gestures.swipeUp(0.7);
             }
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             await driver.back();
