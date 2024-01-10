@@ -121,7 +121,7 @@ describe('rakuten_point_club', async () => {
     }
 
     async function handleClickFirstAdBanner () {
-        await pcHomeScreen.waitForAdBannerIsShown();
+        // await pcHomeScreen.waitForAdBannerIsShown();
         let firstAdBanner = await pcHomeScreen.firstAdBanner()
         if (firstAdBanner === null) {
             return;
@@ -292,12 +292,21 @@ describe('rakuten_point_club', async () => {
             return;
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-        await Gestures.swipeUp(0.7);
+        var scrollCount = 0
+        while (scrollCount < 3) {
+            if (await pcHomeScreen.adBannerGroup.isDisplayed()) {
+                break;
+            }
+            await Gestures.swipeUp(0.7);
+            scrollCount++;
+        }
         for (let index = 0; index < 5; index++) {
             await handleClickFirstAdBanner();
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-        await Gestures.swipeDown();
+        for (let index = 0; index < scrollCount; index++) {
+            await Gestures.swipeDown();
+        }
     });
 
     it('pc_get_point_from_reward', async () => {

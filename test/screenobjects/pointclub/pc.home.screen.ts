@@ -95,6 +95,10 @@ class PC_HomeScreen extends AppScreen {
         return this.waitForElementIsShown(SELECTORS.POINT_HISTORY_ICON);
     }
 
+    get adBannerGroup () {
+        return $(SELECTORS.AD_BANNER_GROUP);
+    }
+
     async firstAdBanner () {
         let adBannerList = $(SELECTORS.AD_BANNER_GROUP);
         if (await adBannerList.isDisplayed()) {

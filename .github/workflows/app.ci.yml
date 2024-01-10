@@ -6,6 +6,7 @@ on:
       - rakuten_apps
     paths:
     - "test/**.ts"
+    - "apps/**.apk"
   workflow_dispatch:
 
 jobs:
