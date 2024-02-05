@@ -13,6 +13,7 @@ describe('rakuten_toshiru', async () => {
 
     async function handleFirstTimeLogin () {
         await tFirststartScreen.waitForIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
             await tFirststartScreen.enterLoginButton.click();
             await driver.pause(5000);
@@ -48,7 +49,7 @@ describe('rakuten_toshiru', async () => {
             await driver.pause(3000);
             await tLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
             await driver.pause(3000);
-            await tLoginScreen.nextButton.click();
+            await tLoginScreen.signInButton.click();
             await driver.pause(3000);
             await tLoginScreen.waitForLoggedIn();
         }

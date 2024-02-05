@@ -7,6 +7,7 @@ const SELECTORS = {
     INPUT: getByResouceId("user_id"),
     PASSWORD: getByResouceId("password_current"),
     NEXT_BUTTON: getByResouceId("cta001"),
+    SIGNIN_BUTTON: getByResouceId("cta011"),
     LOGIN_CONTINUE_BUTTON: getByResouceId("form_81"),
     LOGIN_WITH_OTHER_BUTTON: getByResouceId("textl_182"),
 };
@@ -18,6 +19,10 @@ class T_LoginScreen extends AppScreen {
 
     get nextButton () {
         return $(SELECTORS.NEXT_BUTTON);
+    }
+
+    get signInButton () {
+        return $(SELECTORS.SIGNIN_BUTTON);
     }
 
     get loginContinueButton () {
