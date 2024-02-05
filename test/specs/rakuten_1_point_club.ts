@@ -55,7 +55,7 @@ describe('rakuten_point_club', async () => {
         await driver.pause(3000);
         await pcLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
         await driver.pause(3000);
-        await pcLoginScreen.nextButton.click();
+        await pcLoginScreen.signInButton.click();
         await driver.pause(3000);
         await pcLoginScreen.waitForLoggedIn();
     }
