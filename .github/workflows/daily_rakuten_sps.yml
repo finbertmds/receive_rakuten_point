@@ -11,10 +11,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: 'rakuten_apps'
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 16
         cache: 'yarn'
@@ -34,7 +34,6 @@ jobs:
       with:
         api-level: 28
         target: google_apis
-        emulator-build: 7425822
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:superpointscreen)"
     - name: upload-artifact
       if: ${{ failure() }}
