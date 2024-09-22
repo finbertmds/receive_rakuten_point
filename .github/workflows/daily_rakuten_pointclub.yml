@@ -11,10 +11,10 @@ jobs:
     runs-on: macos-11
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: 'rakuten_apps'
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 16
         cache: 'yarn'
@@ -38,7 +38,7 @@ jobs:
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:pointclub)"
     - name: upload-artifact
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: upload-screenshots
         path: screenshots

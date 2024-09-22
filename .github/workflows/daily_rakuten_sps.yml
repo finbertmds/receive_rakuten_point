@@ -37,7 +37,7 @@ jobs:
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:superpointscreen)"
     - name: upload-artifact
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: upload-screenshots
         path: screenshots
