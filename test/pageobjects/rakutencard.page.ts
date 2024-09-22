@@ -74,7 +74,11 @@ class RakutenCardPage extends Page {
         if (await (await this.inputPasswordV2).isDisplayed()) {
             await (await this.inputPasswordV2).setValue(password);
             let btnNextList = await this.btnNextV2;
-            await (btnNextList[1]).click();
+            if (btnNextList.length > 1) {
+                await (btnNextList[1]).click();
+            } else if (btnNextList.length > 0) {
+                await (btnNextList[0]).click();
+            }
             await browser.pause(2000);
         }
         if (await (await this.btnLoginConfirmV2).isDisplayed()) {

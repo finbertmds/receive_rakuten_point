@@ -14,12 +14,8 @@ describe('Rakuten', () => {
     async function credentials() {
         await loginPage.open();
         await loginPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
-        
-        // await websearchPage.open();
-        // await browser.pause(config.DEFAULT_TIMEOUT);
-        // if (await websearchPage.isNeedLogin()) {
-        //     await websearchPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
-        // }
+
+        // await credentialsForWebSearch();
 
         await rakutencardPage.open();
         await browser.pause(5000);
@@ -28,8 +24,17 @@ describe('Rakuten', () => {
         }
     }
 
+    async function credentialsForWebSearch() {
+        await websearchPage.open();
+        await browser.pause(config.DEFAULT_TIMEOUT);
+        if (await websearchPage.isNeedLogin()) {
+            await websearchPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
+        }
+    }
+
     // it('search_get_point', async () => {
     //     await credentials();
+    //     await credentialsForWebSearch();
     //     await websearchPage.open();
     //     await websearchPage.search();
     //     await browser.pause(2000)
@@ -114,6 +119,7 @@ describe('Rakuten', () => {
     
     it('websearch_entry_get_point', async () => {
         await credentials();
+        await credentialsForWebSearch();
         await websearchPage.entryCampaign();
         await browser.pause(2000)
     });
