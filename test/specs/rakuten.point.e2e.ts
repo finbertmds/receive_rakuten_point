@@ -15,25 +15,25 @@ describe('Rakuten', () => {
         await loginPage.open();
         await loginPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
         
-        await websearchPage.open();
-        await browser.pause(config.DEFAULT_TIMEOUT);
-        if (await websearchPage.isNeedLogin()) {
-            await websearchPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
-        }
+        // await websearchPage.open();
+        // await browser.pause(config.DEFAULT_TIMEOUT);
+        // if (await websearchPage.isNeedLogin()) {
+        //     await websearchPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
+        // }
 
         await rakutencardPage.open();
         await browser.pause(5000);
         if (await rakutencardPage.isNeedLogin()) {
-            await rakutencardPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
+            await rakutencardPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
         }
     }
 
-    it('search_get_point', async () => {
-        await credentials();
-        await websearchPage.open();
-        await websearchPage.search();
-        await browser.pause(2000)
-    });
+    // it('search_get_point', async () => {
+    //     await credentials();
+    //     await websearchPage.open();
+    //     await websearchPage.search();
+    //     await browser.pause(2000)
+    // });
     
     it('click_link_get_point', async () => {
         await credentials();
