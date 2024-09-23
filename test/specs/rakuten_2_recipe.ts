@@ -13,8 +13,8 @@ import rTabBar from '../screenobjects/recipe/r.tab.bar';
 
 describe('rakuten_recipe', async () => {
     before(async () => {
-        await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
-        await driver.pause(5000);
+        // await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
+        // await driver.pause(5000);
     })
 
     async function handleFirstTimeEnterApp (completeServey: boolean = false) {
@@ -301,36 +301,40 @@ describe('rakuten_recipe', async () => {
         }
     }
 
-    it('r_first_login', async () => {
-        await driver.pause(7000);
+    it('r_skip', async () => {
+        console.log("Skip recipe");
+    });
+
+    // it('r_first_login', async () => {
+    //     await driver.pause(7000);
         
-        await handleFirstTimeEnterApp();
-        await handleFirstTimeEnterAppNew();
-        await handleOpenTabMyPageAndLogin();
-    });
+    //     await handleFirstTimeEnterApp();
+    //     await handleFirstTimeEnterAppNew();
+    //     await handleOpenTabMyPageAndLogin();
+    // });
 
-    it('r_click_recipe', async () => {
-        await handleCloseModal();
-        await openHomeScreen();
-        await handleCloseModal();
-        await rHomeScreen.tabbarPopularLabel.click();
-        for (let index = 0; index < config.RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT; index++) {
-            await handleClickReceipe();
-        }
-    });
+    // it('r_click_recipe', async () => {
+    //     await handleCloseModal();
+    //     await openHomeScreen();
+    //     await handleCloseModal();
+    //     await rHomeScreen.tabbarPopularLabel.click();
+    //     for (let index = 0; index < config.RAKUTEN_RECIPE_CLICK_RECEIPE_COUNT; index++) {
+    //         await handleClickReceipe();
+    //     }
+    // });
 
-    it('r_open_reward', async () => {
-        await handleOpenTabMyPageAndLogin();
-        await handleCloseModal();
-        await Gestures.swipeUp(0.7);
-        await openRewardGetPoint();
-    });
+    // it('r_open_reward', async () => {
+    //     await handleOpenTabMyPageAndLogin();
+    //     await handleCloseModal();
+    //     await Gestures.swipeUp(0.7);
+    //     await openRewardGetPoint();
+    // });
 
-    it('r_claim_point', async () => {
-        await handleOpenTabMyPageAndLogin();
-        await handleCloseModal();
-        await handleClickUnClaim();
-    });
+    // it('r_claim_point', async () => {
+    //     await handleOpenTabMyPageAndLogin();
+    //     await handleCloseModal();
+    //     await handleClickUnClaim();
+    // });
 
 });
 

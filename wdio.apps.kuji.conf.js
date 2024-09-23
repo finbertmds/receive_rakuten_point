@@ -16,10 +16,9 @@ config.specs = [
 let capabilities = [
     {
         ...config.capabilities[0],
-        'appium:app': getAppPath(configConst.default.RAKUTEN_KUJI_APK_NAME),
     }
 ];
-delete capabilities[0]['appium:otherApps'];
+// delete capabilities[0]['appium:otherApps'];
 config.capabilities = capabilities;
 
 exports.config = config;
