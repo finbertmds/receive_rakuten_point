@@ -8,26 +8,26 @@ class BankLoginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get gotoLoginPageBtn () { return $('.open-w') }
+    get gotoLoginPageBtn() { return $('.open-w') }
 
-    get inputUsername () { return $('[name="LOGIN\:USER_ID"]') }
-    get inputPassword () { return $('[name="LOGIN\:LOGIN_PASSWORD"]') }
-    get btnSubmit () { return $('.btn-login-01') }
+    get inputUsername() { return $('[name="LOGIN\:USER_ID"]') }
+    get inputPassword() { return $('[name="LOGIN\:LOGIN_PASSWORD"]') }
+    get btnSubmit() { return $('.btn-login-01') }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
 
-    async isNotLoggedIn (): Promise<boolean> {
+    async isNotLoggedIn(): Promise<boolean> {
         return await (await this.inputUsername).isDisplayed();
     }
 
-    async login (username: string, password: string): Promise<void> {
+    async login(username: string, password: string): Promise<void> {
         const windows = await browser.getWindowHandles();
         const window = windows[windows.length - 1];
         await browser.switchToWindow(window);
-        
+
         if (!await this.isNotLoggedIn()) {
             return;
         }
@@ -40,7 +40,7 @@ class BankLoginPage extends Page {
     /**
      * overwrite specifc options to adapt it to page object
      */
-    open () {
+    open() {
         return super.open(config.BANK_LOGIN_PAGE);
     }
 }

@@ -8,38 +8,52 @@ class InfoseekPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get btnLogin () { return $('.button.login') }
+    get btnLogin() { return $('.button.login') }
 
     /**
      * login page require
      */
-    get inputUsername () { return $('#loginInner_u') }
-    get inputPassword () { return $('#loginInner_p') }
-    get btnSubmit () { return $('[name="submit"]') }
+    get inputUsername() { return $('#loginInner_u') }
+    get inputPassword() { return $('#loginInner_p') }
+    get btnSubmit() { return $('[name="submit"]') }
 
     /**
      * new login page require
      */
-    get inputUsernameV2 () { return $('#user_id') }
-    get inputPasswordV2 () { return $('#password_current') }
-    get btnNextV2 () { return $$('.h4k5-e2e-button__submit') }
-    get btnLoginConfirmV2 () { return $('#prim_continue') }
+    get inputUsernameV2() { return $('#user_id') }
+    get inputPasswordV2() { return $('#password_current') }
+    get btnNextV2() { return $$('.h4k5-e2e-button__submit') }
+    get btnLoginConfirmV2() { return $('#prim_continue') }
+
+    /**
+     * notification modal
+     * notification_close_button
+     */
+    get notificationModal() { return $('#notification_banner_modal') }
+    get notificationCloseButton() { return $('#notification_close_button') }
+
+    /**
+     * modal contents
+     * 
+     */
+    get modalContents() { return $('.modalClick_contents') }
+    get modalContentsCloseButton() { return $('.modalClick_close') }
 
     /**
      * mission page
      */
-    get btnMissionJoinList () { return $$('.list-join .btn') }
-    get btnMissionJoin () { return $('.list-join .btn') }
-    get btnMissionAgree () { return $('//a[contains(text(),\'同意する\')]') }
-    get btnGetPointList () { return $$('.list-acquired .btn') }
-    get btnGetPoint () { return $('.list-acquired .btn') }
+    get btnMissionJoinList() { return $$('.list-challenge .btn') }
+    get btnMissionJoin() { return $('.list-challenge .btn') }
+    get btnMissionAgree() { return $('//a[contains(text(),\'同意する\')]') }
+    get btnGetPointList() { return $$('.list-acquired .btn') }
+    get btnGetPoint() { return $('.list-acquired .btn') }
 
     /**
      * ranking list link
      */
-    get sectionBox () { return $('section.section-box') }
-    async rankingListTextLink () { 
-        let rankingListTextLinkList = await $$('.ranking-list__text-link');
+    get sectionBox() { return $('section.section-box') }
+    async rankingListTextLink() {
+        let rankingListTextLinkList = await $$('.ranking-list__text-title');
         let visibleList = [];
         for (let index = 0; index < rankingListTextLinkList.length; index++) {
             const link = rankingListTextLinkList[index];
@@ -49,35 +63,62 @@ class InfoseekPage extends Page {
         }
         return visibleList;
     }
-    get footerContainer () { return $('.footer-container') }
+    get footerContainer() { return $('.footer-container') }
 
     /**
      * mission visit page
      */
-    get getButton () { return $('.get-button') }
+    get getButton() { return $('.get-button') }
+
+    /**
+     * reaction
+     */
+    get reactionIconIine() { return $('.reaction-icon.-iine') }
 
     /**
      * mission point page
      */
-    get pointGet () { return $('.point_get') }
+    get pointGet() { return $('.point_get') }
+
+    async closeNotificationModal() {
+        await browser.pause(5000);
+        if (await (await this.notificationModal).isExisting()) {
+            if (await (await this.notificationModal).isDisplayed()) {
+                if (await (await this.notificationCloseButton).isClickable()) {
+                    await (await this.notificationCloseButton).click();
+                }
+            }
+        }
+    }
+
+    async closeModalContents() {
+        await browser.pause(5000);
+        if (await (await this.modalContents).isExisting()) {
+            if (await (await this.modalContents).isDisplayed()) {
+                if (await (await this.modalContentsCloseButton).isClickable()) {
+                    await (await this.modalContentsCloseButton).click();
+                }
+            }
+        }
+    }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async isNeedLogin (): Promise<boolean> {
+    async isNeedLogin(): Promise<boolean> {
         return await (await this.btnLogin).isDisplayed();
     }
 
-    async clickBtnLogin (): Promise<void> {
+    async clickBtnLogin(): Promise<void> {
         await (await this.btnLogin).click();
     }
 
-    async isNotLoggedIn (): Promise<boolean> {
+    async isNotLoggedIn(): Promise<boolean> {
         return await (await this.inputUsername).isDisplayed();
     }
 
-    async login (username: string, password: string): Promise<void> {
+    async login(username: string, password: string): Promise<void> {
         await this.clickBtnLogin();
         await browser.pause(config.DEFAULT_TIMEOUT)
         if (!await this.isNotLoggedIn()) {
@@ -89,13 +130,13 @@ class InfoseekPage extends Page {
         await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
-    async isNotLoggedInV2 (): Promise<boolean> {
+    async isNotLoggedInV2(): Promise<boolean> {
         let inputUsernameIsDisplayed = await (await this.inputUsernameV2).isDisplayed();
         let inputPasswordIsDisplayed = await (await this.inputPasswordV2).isDisplayed();
         return inputUsernameIsDisplayed || inputPasswordIsDisplayed
     }
 
-    async loginV2 (username: string, password: string): Promise<void> {
+    async loginV2(username: string, password: string): Promise<void> {
         await this.clickBtnLogin();
         await browser.pause(config.DEFAULT_TIMEOUT)
         if (!await this.isNotLoggedInV2()) {
@@ -110,7 +151,11 @@ class InfoseekPage extends Page {
         if (await (await this.inputPasswordV2).isDisplayed()) {
             await (await this.inputPasswordV2).setValue(password);
             let btnNextList = await this.btnNextV2;
-            await (btnNextList[1]).click();
+            if (btnNextList.length > 1) {
+                await (btnNextList[1]).click();
+            } else if (btnNextList.length > 0) {
+                await (btnNextList[0]).click();
+            }
             await browser.pause(2000);
         }
         if (await (await this.btnLoginConfirmV2).isDisplayed()) {
@@ -119,7 +164,7 @@ class InfoseekPage extends Page {
         await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
-    async canClickJoinMission (): Promise<boolean> {
+    async canClickJoinMission(): Promise<boolean> {
         return (await this.btnMissionJoinList).length > 0;
     }
 
@@ -147,7 +192,7 @@ class InfoseekPage extends Page {
     async handleOpenHomePageAndClickTab(tabName?: string) {
         await super.open(config.INFO_SEEK_PAGE);
         await (await this.sectionBox).scrollIntoView();
-        
+
         if (tabName) {
             let tabNameElement = await $('.' + tabName);
             if (await tabNameElement.isDisplayed()) {
@@ -159,6 +204,15 @@ class InfoseekPage extends Page {
                 if (await tabNameContentsElement.isDisplayed()) {
                     await tabNameContentsElement.scrollIntoView();
                 }
+            }
+        }
+    }
+
+    async handleReactionIine() {
+        if (await (await this.reactionIconIine).isDisplayed()) {
+            if (await (await this.reactionIconIine).isClickable()) {
+                await (await this.reactionIconIine).click()
+                await browser.pause(2000);
             }
         }
     }
@@ -175,16 +229,17 @@ class InfoseekPage extends Page {
                     await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
                     await (await this.footerContainer).scrollIntoView();
                     await browser.pause(5000);
+                    await this.handleReactionIine();
                 }
             }
-            
+
             await this.handleOpenHomePageAndClickTab(tabName);
         }
     }
 
     async handleOpenRankingPage(rankingPage: string) {
         await super.open(rankingPage);
-        await (await this.sectionBox).scrollIntoView();
+        // await (await this.sectionBox).scrollIntoView();
     }
 
     async readArticleAtRankingPage(rankingPage: string) {
@@ -200,9 +255,10 @@ class InfoseekPage extends Page {
                     await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
                     await (await this.footerContainer).scrollIntoView();
                     await browser.pause(5000);
+                    await this.handleReactionIine();
                 }
             }
-            
+
             await this.handleOpenRankingPage(rankingPage);
         }
     }
@@ -212,7 +268,7 @@ class InfoseekPage extends Page {
         await browser.pause(2000);
     }
 
-    async canClickGetPoint (): Promise<boolean> {
+    async canClickGetPoint(): Promise<boolean> {
         return (await this.btnGetPointList).length > 0;
     }
 
@@ -228,7 +284,7 @@ class InfoseekPage extends Page {
             await getPoint.click();
             await browser.pause(5000);
             await (await this.pointGet).waitForDisplayed();
-            
+
             await super.open(config.INFO_SEEK_MISSION_PAGE);
         }
     }
@@ -236,7 +292,7 @@ class InfoseekPage extends Page {
     /**
      * overwrite specifc options to adapt it to page object
      */
-    open () {
+    open() {
         return super.open(config.INFO_SEEK_PAGE);
     }
 }

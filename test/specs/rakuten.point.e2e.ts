@@ -6,9 +6,9 @@ import rakutencardPage from '../pageobjects/rakutencard.page';
 import websearchPage from '../pageobjects/websearch.page';
 
 describe('Rakuten', () => {
-    beforeEach(async function() {
-      const windows = await browser.getWindowHandles();
-      await browser.switchToWindow(windows[0]);
+    beforeEach(async function () {
+        const windows = await browser.getWindowHandles();
+        await browser.switchToWindow(windows[0]);
     })
 
     async function credentials() {
@@ -32,15 +32,15 @@ describe('Rakuten', () => {
         }
     }
 
-    // it('search_get_point', async () => {
+    // it('rakuten:search_get_point', async () => {
     //     await credentials();
     //     await credentialsForWebSearch();
     //     await websearchPage.open();
     //     await websearchPage.search();
     //     await browser.pause(2000)
     // });
-    
-    it('click_link_get_point', async () => {
+
+    it('rakuten:click_link_get_point', async () => {
         await credentials();
         await rakutencardPage.open();
         await browser.pause(5000);
@@ -51,7 +51,7 @@ describe('Rakuten', () => {
             // let clickPointListCount = await rakutencardPage.getClickPointListCount();
             // console.log("getClickPointListCount: ", clickPointListCount);
             let canClickNew = await rakutencardPage.canClickPointNewIndex(index);
-            console.log("canClickNew--- "+index+": ", canClickNew);
+            console.log("canClickNew--- " + index + ": ", canClickNew);
             if (canClickNew) {
                 const currentWindows = await browser.getWindowHandle();
                 await rakutencardPage.handleClickPointNewIndex(index);
@@ -69,8 +69,8 @@ describe('Rakuten', () => {
         }
         await browser.pause(2000)
     });
-    
-    it('kuji_default_get_point', async () => {
+
+    it('rakuten:kuji_default_get_point', async () => {
         await credentials();
         for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
             await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
@@ -79,7 +79,7 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
 
-    it('kuji_get_point', async () => {
+    it('rakuten:kuji_get_point', async () => {
         await credentials();
         await kujiPage.open();
         let kujiCount = await kujiPage.getKujiCount()
@@ -94,8 +94,8 @@ describe('Rakuten', () => {
         }
         await browser.pause(2000)
     });
-    
-    // it('view_video_get_point_one_day_monthly', async () => {
+
+    // it('rakuten:view_video_get_point_one_day_monthly', async () => {
     //     let currentDate = new Date().getDate();
     //     if (currentDate !== config.DAY_VIEW_VIDEO_GET_POINT) {
     //         console.log(`only view video in day ${config.DAY_VIEW_VIDEO_GET_POINT}`);
@@ -111,13 +111,13 @@ describe('Rakuten', () => {
 
     //     await rakutencardPage.handlClickVideo();
     // });
-    
-    it('entry_campaign', async () => {
+
+    it('rakuten:entry_campaign', async () => {
         await credentials();
         await campaignPage.entryCampaign();
     });
-    
-    it('websearch_entry_get_point', async () => {
+
+    it('rakuten:websearch_entry_get_point', async () => {
         await credentials();
         await credentialsForWebSearch();
         await websearchPage.entryCampaign();

@@ -7,18 +7,18 @@ class BankCampaignPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get cashGiftBtn () { return $$('table.marginleft15 tr td input[name*="FORM_CASH_GIFT_SERVICE:"]') }
+    get cashGiftBtn() { return $$('table.marginleft15 tr td input[name*="FORM_CASH_GIFT_SERVICE:"]') }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
 
-    async canClickCampaign (): Promise<boolean> {
+    async canClickCampaign(): Promise<boolean> {
         return (await this.cashGiftBtn).length > 0;
     }
 
-    async handleClickCampaign (): Promise<void> {
+    async handleClickCampaign(): Promise<void> {
         if (!await this.canClickCampaign()) {
             return;
         }

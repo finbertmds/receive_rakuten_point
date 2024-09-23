@@ -9,11 +9,11 @@ class WebSearchPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get btnLogin () { return $('//span[contains(text(),\'ログイン\')]') }
+    get btnLogin() { return $('//span[contains(text(),\'ログイン\')]') }
 
-    get inputSearchFormTxt () { return $('#srchformtxt_qt') }
-    get inputSearchBtn () { return $('#searchBtn') }
-    get labelCurrentSearchCount () {
+    get inputSearchFormTxt() { return $('#srchformtxt_qt') }
+    get inputSearchBtn() { return $('#searchBtn') }
+    get labelCurrentSearchCount() {
         return (async () => {
             // let searchCountContainerList = await $$('//span[text() = \'口\' ]')
             // if (searchCountContainerList.length > 0) {
@@ -22,25 +22,25 @@ class WebSearchPage extends Page {
             // }
             return $('.progressCounter1')
         })();
-     }
+    }
 
     /**
      * login page require
      */
-    get inputUsername () { return $('#loginInner_u') }
-    get inputPassword () { return $('#loginInner_p') }
-    get btnSubmit () { return $('[name="submit"]') }
+    get inputUsername() { return $('#loginInner_u') }
+    get inputPassword() { return $('#loginInner_p') }
+    get btnSubmit() { return $('[name="submit"]') }
 
     /**
      * new login page require
      */
-    get inputUsernameV2 () { return $('#user_id') }
-    get inputPasswordV2 () { return $('#password_current') }
-    get btnNextV2 () { return $$('.h4k5-e2e-button__submit') }
-    get btnLoginConfirmV2 () { return $('#prim_continue') }
+    get inputUsernameV2() { return $('#user_id') }
+    get inputPasswordV2() { return $('#password_current') }
+    get btnNextV2() { return $$('.h4k5-e2e-button__submit') }
+    get btnLoginConfirmV2() { return $('#prim_continue') }
 
-    get btnEarnPoint () { return $('//*[contains(text(),\'ポイントを貯める\')]') }
-    get earnPointLinkCount (): Promise<number> {
+    get btnEarnPoint() { return $('//*[contains(text(),\'ポイントを貯める\')]') }
+    get earnPointLinkCount(): Promise<number> {
         return (async () => {
             let pointsListContainer = await $('.points-list2')
             if (pointsListContainer) {
@@ -51,7 +51,7 @@ class WebSearchPage extends Page {
         })();
     }
 
-    getEarnPointLink (index: number) {
+    getEarnPointLink(index: number) {
         return (async () => {
             let pointsListContainer = await $('.points-list2')
             if (pointsListContainer) {
@@ -69,19 +69,19 @@ class WebSearchPage extends Page {
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async isNeedLogin (): Promise<boolean> {
+    async isNeedLogin(): Promise<boolean> {
         return await (await this.btnLogin).isDisplayed();
     }
 
-    async clickBtnLogin (): Promise<void> {
+    async clickBtnLogin(): Promise<void> {
         await (await this.btnLogin).click();
     }
 
-    async isNotLoggedIn (): Promise<boolean> {
+    async isNotLoggedIn(): Promise<boolean> {
         return await (await this.inputUsername).isDisplayed();
     }
 
-    async login (username: string, password: string): Promise<void> {
+    async login(username: string, password: string): Promise<void> {
         await this.clickBtnLogin();
         await browser.pause(config.DEFAULT_TIMEOUT)
         if (!await this.isNotLoggedIn()) {
@@ -93,13 +93,13 @@ class WebSearchPage extends Page {
         await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
-    async isNotLoggedInV2 (): Promise<boolean> {
+    async isNotLoggedInV2(): Promise<boolean> {
         let inputUsernameIsDisplayed = await (await this.inputUsernameV2).isDisplayed();
         let inputPasswordIsDisplayed = await (await this.inputPasswordV2).isDisplayed();
         return inputUsernameIsDisplayed || inputPasswordIsDisplayed
     }
 
-    async loginV2 (username: string, password: string): Promise<void> {
+    async loginV2(username: string, password: string): Promise<void> {
         await this.clickBtnLogin();
         await browser.pause(config.DEFAULT_TIMEOUT)
         if (!await this.isNotLoggedInV2()) {
@@ -127,7 +127,7 @@ class WebSearchPage extends Page {
         await browser.pause(config.DEFAULT_TIMEOUT)
     }
 
-    async search (): Promise<void> {
+    async search(): Promise<void> {
         let currentSearchCountLabel = await (await this.labelCurrentSearchCount).getText();
         console.log("currentSearchCount: ", currentSearchCountLabel);
         let currentSearchCount = "0";
@@ -147,7 +147,7 @@ class WebSearchPage extends Page {
         }
     }
 
-    async entryCampaign (): Promise<void> {
+    async entryCampaign(): Promise<void> {
         await super.open(config.WEBSEARCH_SEARCH_HOME_PAGE);
         await browser.pause(5000);
         await (await this.btnEarnPoint).click();
@@ -168,7 +168,7 @@ class WebSearchPage extends Page {
     /**
      * overwrite specifc options to adapt it to page object
      */
-    open () {
+    open() {
         return super.open(config.WEBSEARCH_SEARCH_PAGE);
     }
 }
