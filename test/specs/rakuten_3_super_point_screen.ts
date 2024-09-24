@@ -15,68 +15,159 @@ describe('rakuten_super_point_screen', async () => {
         await await driver.pause(5000);
     })
 
-    async function handleMaintenance () {
+    async function handleMaintenance() {
         return sFirststartScreen.maintenanceContainer.isDisplayed();
     }
 
-    async function handleSkipButton () {
+    async function handleSkipButton() {
         await sFirststartScreen.waitForIsShown();
         if (await sFirststartScreen.skipButon.isExisting()) {
             await sFirststartScreen.skipButon.click();
         }
     }
-    async function handleFirstLogin () {
-        sHomeScreen.waitForLoginButtonIsShown();
+    async function handleFirstLogin() {
+        await driver.pause(5000);
+        // sHomeScreen.waitForLoginButtonIsShown();
         let loginButton = sHomeScreen.loginButton
         if (await loginButton.isDisplayed()) {
             await loginButton.click();
-            
-            await sLoginScreen.waitForIsShown();
-            await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
-            await sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-            await sLoginScreen.loginButton.click();
-            await sLoginScreen.waitForLoggedIn();
-        }
-    }
-
-    async function handleCloseAlert () {
-        await driver.pause(2000);
-        if (! await sHomeAlertScreen.alertContainer.isExisting()) {
+        } else {
+            console.log("logged in");
             return;
         }
-        let message1 = await sHomeAlertScreen.alertContainerMessage.getText();
-        await sHomeAlertScreen.alertContainerOkButton.click();
-        await sHomeAlertScreen.waitForMessageIsChanged(message1);
-        await sHomeAlertScreen.alertContainerOkButton.click();
-        
+
+        await driver.pause(10000);
+        // await sLoginScreen.waitForEnterLoginScreen();
+        if (await (await sLoginScreen.loginContinueButton).isDisplayed()) {
+            await sLoginScreen.loginContinueButton.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await sLoginScreen.waitForLoggedIn();
+            return;
+        }
+        if (await (await sLoginScreen.loginWithOtherButton).isDisplayed()) {
+            await sLoginScreen.loginWithOtherButton.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        }
+        await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.pause(3000);
+        await sLoginScreen.nextButton.click();
+        await driver.pause(3000);
+        await sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        await driver.pause(3000);
+        await sLoginScreen.signInButton.click();
+        await driver.pause(3000);
+        await sLoginScreen.waitForLoggedIn();
+    }
+
+    async function handleCloseAlert() {
+        await driver.pause(2000);
+        // if (! await sHomeAlertScreen.alertContainer.isExisting()) {
+        //     return;
+        // }
+        // let message1 = await sHomeAlertScreen.alertContainerMessage.getText();
+        // await sHomeAlertScreen.alertContainerOkButton.click();
+        // await sHomeAlertScreen.waitForMessageIsChanged(message1);
+        // await sHomeAlertScreen.alertContainerOkButton.click();
+
+        let needAllow = false;
+        if (await (await sHomeGetpointScreen.nextButton).isExisting()) {
+            if (await (await sHomeGetpointScreen.nextButton).isDisplayed()) {
+                await (await sHomeGetpointScreen.nextButton).click();
+                await browser.pause(5000);
+                needAllow = true;
+            }
+        }
+        if (!needAllow) {
+            console.log("permission is permitted");
+            return;
+        }
         // await permission.waitForIsShown();
         await driver.pause(3000);
         await permission.allowButton.click();
-        
-        await sHomeAlertScreen.waitForIsShown();
-        await sHomeAlertScreen.alertContainerOkButton.click();
+        await driver.pause(3000);
+        await handleOkAlert();
+        await handleOkAlert();
+        // await sHomeAlertScreen.waitForIsShown();
+        // await sHomeAlertScreen.alertContainerOkButton.click();
     }
 
-    async function handleClosePermissionRequestAlert () {
-        await driver.pause(2000);
-        if (! await sHomeAlertScreen.alertContainer.isExisting()) {
-            return false;
+    async function handleClosePermissionRequestAlert() {
+        // await driver.pause(2000);
+        // if (! await sHomeAlertScreen.alertContainer.isExisting()) {
+        //     return false;
+        // }
+        // let permissionRequestAlertText = await sHomeAlertScreen.alertContainerMessage.getText();
+        // console.log("permissionRequestAlertText: ", permissionRequestAlertText);
+        // await sHomeAlertScreen.alertContainerOkButton.click();
+        // await driver.pause(2000);
+        if (await (await sHomeScreen.goSettingButton).isExisting()) {
+            if (await (await sHomeScreen.goSettingButton).isDisplayed()) {
+                await (await sHomeScreen.goSettingButton).click();
+                await driver.pause(5000);
+            }
         }
-        let permissionRequestAlertText = await sHomeAlertScreen.alertContainerMessage.getText();
-        console.log("permissionRequestAlertText: ", permissionRequestAlertText);
-        await sHomeAlertScreen.alertContainerOkButton.click();
-        await driver.pause(2000);
 
+        await handleDisplayOverOtherApps();
+        return true;
+    }
+
+    async function handleOkAlert() {
+        if (await (await sHomeScreen.okButton).isExisting()) {
+            if (await (await sHomeScreen.okButton).isDisplayed()) {
+                await (await sHomeScreen.okButton).click();
+                await driver.pause(5000);
+            }
+        }
+    }
+
+    async function handleDisplayOverOtherApps() {
         if (await permission.settingsContainer.isExisting()) {
             await permission.settingsSwitchRadio.click();
             await driver.back();
             await driver.pause(2000);
         }
-        return true;
+        if (await sHomeScreen.okUnderStoodButton.isExisting()) {
+            if (await (await sHomeScreen.okUnderStoodButton).isDisplayed()) {
+                await (await sHomeScreen.okUnderStoodButton).click();
+                await driver.pause(2000);
+            }
+        }
     }
 
-    async function handleClickPointNumber () {
-        await sHomeScreen.waitForIsShown();
+    async function handleGuideSetting() {
+        if (await (await sHomeScreen.cardAdImage).isDisplayed()) {
+            if (await (await sHomeScreen.prMark).isDisplayed()) {
+                await (await sHomeScreen.prMark).click();
+                await driver.pause(5000);
+            }
+        }
+        if (await (await sHomeScreen.goSettingButton).isExisting()) {
+            if (await (await sHomeScreen.goSettingButton).isDisplayed()) {
+                await (await sHomeScreen.goSettingButton).click();
+                await driver.pause(5000);
+            }
+        }
+
+        await handleDisplayOverOtherApps();
+        await handleOkAlert();
+        await handleOkAlert();
+    }
+
+    async function handleFirstGetPointAfterGuide() {
+        if (await (await sHomeGetpointScreen.adCardOpenText).isExisting()) {
+            if (await (await sHomeGetpointScreen.adCardOpenText).isDisplayed()) {
+                await Gestures.swipeRight();
+
+                await sHomeGetpointScreen.waitForDoneButtonIsShown();
+                await driver.back();
+                await browser.pause(5000);
+            }
+        }
+    }
+
+    async function handleClickPointNumber() {
+        await driver.pause(5000);
+        // await sHomeScreen.waitForIsShown();
         await Gestures.swipeOnPercentage(
             Gestures.calculateXY({ x: 50, y: 50 }, 1),
             Gestures.calculateXY({ x: 50, y: 85 }, 1)
@@ -91,16 +182,20 @@ describe('rakuten_super_point_screen', async () => {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
                     // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, await pointNumberButton.getText());
                     await pointNumberButton.click();
-                    
+
                     let needClosePermissionRequestAlert = await handleClosePermissionRequestAlert();
                     if (needClosePermissionRequestAlert) {
                         await pointNumberButton.click();
                     }
 
-                    await sHomeGetpointScreen.waitForIsShown();
+                    // await sHomeGetpointScreen.waitForIsShown();
                     await sHomeGetpointScreen.waitForDoneButtonIsShown();
-                    await sHomeGetpointScreen.closeButton.click();
-                    
+                    // await sHomeGetpointScreen.closeButton.click();
+                    await driver.back();
+                    await browser.pause(5000);
+
+                    await handleCloseAlert();
+
                     pointNumberClickedIndex++;
                     console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
                 }
@@ -110,11 +205,12 @@ describe('rakuten_super_point_screen', async () => {
                 Gestures.calculateXY({ x: 50, y: 85 }, 1),
                 Gestures.calculateXY({ x: 50, y: 50 }, 1),
             );
+            await driver.pause(3000);
         }
         console.log(`todayPointLabel: `, await sHomeScreen.todayPointLabel.getText());
     }
 
-    async function handleClickGetPoint () {
+    async function handleClickGetPoint() {
         await sLuckycountScreen.waitForIsShown();
         await driver.pause(2000);
         let getButton = sLuckycountScreen.getButton;
@@ -125,7 +221,7 @@ describe('rakuten_super_point_screen', async () => {
         }
     }
 
-    async function handleClickPlay () {
+    async function handleClickPlay() {
         await driver.pause(2000);
         let playButton = sLuckycountScreen.playButton;
         if (await playButton.isExisting()) {
@@ -143,7 +239,7 @@ describe('rakuten_super_point_screen', async () => {
         }
     }
 
-    async function handleClickChallenge () {
+    async function handleClickChallenge() {
         await driver.pause(2000);
         let challengeButton = sLuckycountScreen.challengeButton
         if (await challengeButton.isExisting()) {
@@ -167,6 +263,8 @@ describe('rakuten_super_point_screen', async () => {
         }
         await handleSkipButton();
         await handleFirstLogin();
+        await handleGuideSetting();
+        await handleFirstGetPointAfterGuide();
         await handleCloseAlert();
         await handleClickPointNumber();
     });

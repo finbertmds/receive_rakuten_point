@@ -39,8 +39,8 @@ describe('rakuten_kuji', async () => {
     }
 
     async function handleFirstTimeLogin() {
-        await driver.pause(5000);
-        await kLoginScreen.waitForEnterLoginScreen();
+        await driver.pause(10000);
+        // await kLoginScreen.waitForEnterLoginScreen();
         if (await (await kLoginScreen.loginContinueButton).isDisplayed()) {
             await kLoginScreen.loginContinueButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

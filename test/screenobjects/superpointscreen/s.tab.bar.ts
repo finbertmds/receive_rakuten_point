@@ -1,24 +1,20 @@
 import config from "../../../config";
-import { getByResouceId } from "../../helpers/UiSelectorHelper";
+import { getByClassname, getByResouceId } from "../../helpers/UiSelectorHelper";
 
 const SELECTORS = {
-    BOTTOM_ICON: getByResouceId("jp.co.rakuten.slide:id/bottom_nav_view"),
+    BOTTOM_ICON: getByResouceId("jp.co.rakuten.slide:id/app_bottom_bar"),
     HOME_ICON: "~Home",
     LUCKY_COINT_ICON: getByResouceId("jp.co.rakuten.slide:id/lucky_coin"),
     POINT_HISTORY_ICON: getByResouceId("jp.co.rakuten.slide:id/point_history"),
 };
 
 export default class S_TabBar {
-    static async openHome () {
-        await $(SELECTORS.BOTTOM_ICON).click();
-    }
-
     static async openLuckyCoint () {
         await $(SELECTORS.LUCKY_COINT_ICON).click();
-    }
-
-    static async openPointHistory () {
-        await $(SELECTORS.POINT_HISTORY_ICON).click();
+        let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 3));
+        if (await (await luckyCoinTabbar).isDisplayed()) {
+            await (await luckyCoinTabbar).click();
+        }
     }
 
     static async waitForTabBarShown () {

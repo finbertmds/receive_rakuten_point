@@ -1,11 +1,17 @@
-import { getByResouceId } from '../../helpers/UiSelectorHelper';
+import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
-    DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.slide:id/toolbar_app_logo"),
-    LOGIN_BUTTON: getByResouceId("jp.co.rakuten.slide:id/vgl_button_login"),
-    POINT_NUMBER_BUTTON: getByResouceId("jp.co.rakuten.slide:id/status_bar_point_num"),
+    DEFAULT_SELECTOR: getByResouceId("jp.co.rakuten.slide:id/constraint_layout"),
+    LOGIN_BUTTON: getByText("LOGIN"),
+    POINT_NUMBER_BUTTON: getByText("1"),
     TODAY_POINT_LABEL: getByResouceId("jp.co.rakuten.slide:id/home_this_week_points_value"),
+
+    CARD_AD_IMAGE: getByResouceId("jp.co.rakuten.slide:id/card_ad_image"),
+    PR_MARK: getByResouceId("jp.co.rakuten.slide:id/PR_mark"),
+    GO_SETTING: getByText("Go Setting"),
+    OK_UNDERSTOOD_BUTTON: getByText("Ok, Understood"),
+    OK_BUTTON: getByText("OK"),
 };
 
 class S_HomeScreen extends AppScreen {
@@ -31,6 +37,26 @@ class S_HomeScreen extends AppScreen {
             return pointNumberButton;
         }
         return null
+    }
+
+    get cardAdImage () {
+        return $(SELECTORS.CARD_AD_IMAGE);
+    }
+
+    get prMark () {
+        return $(SELECTORS.PR_MARK);
+    }
+
+    get goSettingButton () {
+        return $(SELECTORS.GO_SETTING);
+    }
+
+    get okUnderStoodButton () {
+        return $(SELECTORS.OK_UNDERSTOOD_BUTTON);
+    }
+
+    get okButton () {
+        return $(SELECTORS.OK_BUTTON);
     }
 }
 

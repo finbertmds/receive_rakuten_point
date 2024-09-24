@@ -28,12 +28,12 @@ jobs:
         path: |
           ~/.android/avd/*
           ~/.android/adb*
-        key: avd-30
+        key: avd-29
     - name: create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 30
+        api-level: 29
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
@@ -54,7 +54,7 @@ jobs:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
       with:
-        api-level: 30
+        api-level: 29
         target: google_apis
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:kuji)"
     - name: upload-artifact
@@ -85,12 +85,12 @@ jobs:
         path: |
           ~/.android/avd/*
           ~/.android/adb*
-        key: avd-30
+        key: avd-29
     - name: create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 30
+        api-level: 29
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
@@ -111,7 +111,7 @@ jobs:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
       with:
-        api-level: 30
+        api-level: 29
         target: google_apis
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:pointclub)"
     - name: upload-artifact
@@ -142,12 +142,12 @@ jobs:
   #       path: |
   #         ~/.android/avd/*
   #         ~/.android/adb*
-  #       key: avd-30
+  #       key: avd-29
   #   - name: create AVD and generate snapshot for caching
   #     if: steps.avd-cache.outputs.cache-hit != 'true'
   #     uses: reactivecircus/android-emulator-runner@v2
   #     with:
-  #       api-level: 30
+  #       api-level: 29
   #       force-avd-creation: false
   #       emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
   #       disable-animations: false
@@ -168,7 +168,7 @@ jobs:
   #       RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
   #       RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
   #     with:
-  #       api-level: 30
+  #       api-level: 29
   #       target: google_apis
   #       script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:recipe)"
   #   - name: upload-artifact
@@ -199,12 +199,12 @@ jobs:
         path: |
           ~/.android/avd/*
           ~/.android/adb*
-        key: avd-30
+        key: avd-29
     - name: create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 30
+        api-level: 29
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
@@ -225,7 +225,7 @@ jobs:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
       with:
-        api-level: 30
+        api-level: 29
         target: google_apis
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:superpointscreen)"
     - name: upload-artifact
@@ -256,12 +256,12 @@ jobs:
         path: |
           ~/.android/avd/*
           ~/.android/adb*
-        key: avd-30
+        key: avd-29
     - name: create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 30
+        api-level: 29
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
@@ -282,7 +282,7 @@ jobs:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
       with:
-        api-level: 30
+        api-level: 29
         target: google_apis
         script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:toshiru)"
     - name: upload-artifact
@@ -313,12 +313,12 @@ jobs:
   #       path: |
   #         ~/.android/avd/*
   #         ~/.android/adb*
-  #       key: avd-30
+  #       key: avd-29
   #   - name: create AVD and generate snapshot for caching
   #     if: steps.avd-cache.outputs.cache-hit != 'true'
   #     uses: reactivecircus/android-emulator-runner@v2
   #     with:
-  #       api-level: 30
+  #       api-level: 29
   #       force-avd-creation: false
   #       emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
   #       disable-animations: false
@@ -339,7 +339,7 @@ jobs:
   #       RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
   #       RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
   #     with:
-  #       api-level: 30
+  #       api-level: 29
   #       target: google_apis
   #       script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:pointclub_toshiru)"
   #   - name: upload-artifact

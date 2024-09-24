@@ -1,21 +1,42 @@
 import config from '../../../config';
-import { getByResouceId } from '../../helpers/UiSelectorHelper';
+import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
-    LOGIN_SCREEN: getByResouceId("jp.co.rakuten.slide:id/login_outer_container"),
-    INPUT: getByResouceId("jp.co.rakuten.slide:id/manual_username"),
-    PASSWORD: getByResouceId("jp.co.rakuten.slide:id/manual_password"),
-    LOGIN_BUTTON: getByResouceId("jp.co.rakuten.slide:id/manual_login_button"),
+    CONTENT: getByResouceId("android:id/content"),
+    LOGIN_SCREEN: getByResouceId("h4k5-container"),
+    HELP_LABEL: getByText("Help"),
+    INPUT: getByResouceId("user_id"),
+    PASSWORD: getByResouceId("password_current"),
+    NEXT_BUTTON: getByResouceId("cta001"),
+    SIGNIN_BUTTON: getByResouceId("cta011"),
+    LOGIN_CONTINUE_BUTTON: getByResouceId("form_81"),
+    LOGIN_WITH_OTHER_BUTTON: getByResouceId("textl_182"),
 };
 
 class S_LoginScreen extends AppScreen {
     constructor () {
-        super(SELECTORS.LOGIN_SCREEN);
+        super(SELECTORS.CONTENT);
     }
 
-    get loginButton () {
-        return $(SELECTORS.LOGIN_BUTTON);
+    get enterLoginButton () {
+        return $(SELECTORS.CONTENT);
+    }
+
+    get nextButton () {
+        return $(SELECTORS.NEXT_BUTTON);
+    }
+
+    get signInButton () {
+        return $(SELECTORS.SIGNIN_BUTTON);
+    }
+
+    get loginContinueButton () {
+        return $(SELECTORS.LOGIN_CONTINUE_BUTTON);
+    }
+
+    get loginWithOtherButton () {
+        return $(SELECTORS.LOGIN_WITH_OTHER_BUTTON);
     }
 
     get userid () {
@@ -26,9 +47,19 @@ class S_LoginScreen extends AppScreen {
         return $(SELECTORS.PASSWORD);
     }
 
+    get loginScreen () {
+        return $(SELECTORS.LOGIN_SCREEN);
+    }
+
+    async waitForEnterLoginScreen () {
+        return $(SELECTORS.HELP_LABEL).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT
+        });
+    }
+
     async waitForLoggedIn () {
-        return $(SELECTORS.INPUT).waitForDisplayed({
-            timeout: 15 * config.DEFAULT_TIMEOUT,
+        return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
+            timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: true,
         });
     }
