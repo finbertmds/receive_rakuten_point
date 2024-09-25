@@ -6,9 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  bank:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v4
       with:
@@ -23,8 +22,72 @@ jobs:
         brew install geckodriver
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-    - name: Test
-      run: ([ -z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD || [ -z $BANK_RAKUTEN_PASSWORD || [ -z $BANK_RAKUTEN_PASSWORD ] || yarn test)
+    - name: Test bank
+      run: yarn test --spec ./test/specs/bank.point.e2e.ts
+      env:
+        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+    - name: upload-artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: upload-screenshots
+        path: screenshots
+    - name: remove-screenshots
+      if: ${{ failure() }}
+      run: rm -rf ./screenshots
+  infoseek:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 'developer'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'yarn'
+    - name: Install firefox and geckodriver
+      run: |
+        brew install --cask firefox
+        brew install geckodriver
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Test infoseek
+      run: yarn test --spec ./test/specs/infoseek.point.e2e.ts
+      env:
+        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+    - name: upload-artifact
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: upload-screenshots
+        path: screenshots
+    - name: remove-screenshots
+      if: ${{ failure() }}
+      run: rm -rf ./screenshots
+  rakuten:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 'developer'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'yarn'
+    - name: Install firefox and geckodriver
+      run: |
+        brew install --cask firefox
+        brew install geckodriver
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Test rakuten
+      run: yarn test --spec ./test/specs/rakuten.point.e2e.ts
       env:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
@@ -47,7 +110,7 @@ jobs:
     name: Restarts the scheduled run when it failed
     runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
-    needs: [build]
+    needs: [bank, infoseek, rakuten]
     steps:
       - name: Retry the workflow
         run: |
