@@ -33,7 +33,7 @@ export default {
     INFO_SEEK_PAGE: 'https://www.infoseek.co.jp',
     INFO_SEEK_MISSION_PAGE: 'https://www.infoseek.co.jp/mission/list/',
     DEFAULT_READ_ARTICLE_TIME: 10000,
-    READ_ARTICLE_MAX_COUNT: 10,
+    READ_ARTICLE_MAX_COUNT: 2,
     INFO_SEEK_TAB_NAME: [
         'genre-tab__category-all',
         'genre-tab__category-entertainment',
@@ -41,8 +41,8 @@ export default {
         'genre-tab__category-sports',
         'genre-tab__category-busi-econ',
         'genre-tab__category-world',
-        'genre-tab__category-it',
-        'genre-tab__category-life',
+        // 'genre-tab__category-it',
+        // 'genre-tab__category-life',
     ],
     INFO_SEEK_RANKING_PAGE: [
         'https://news.infoseek.co.jp/ranking/',
