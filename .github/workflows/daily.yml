@@ -33,7 +33,7 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: upload-screenshots
+        name: upload-screenshots-bank
         path: screenshots
     - name: remove-screenshots
       if: ${{ failure() }}
@@ -65,7 +65,7 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: upload-screenshots
+        name: upload-screenshots-infoseek
         path: screenshots
     - name: remove-screenshots
       if: ${{ failure() }}
@@ -97,7 +97,7 @@ jobs:
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: upload-screenshots
+        name: upload-screenshots-rakuten
         path: screenshots
     - name: remove-screenshots
       if: ${{ failure() }}
