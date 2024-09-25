@@ -81,8 +81,14 @@ class PC_RewardScreen extends AppScreen {
             return null;
         }
         if (unclaimListItems.length > index) {
-            return unclaimListItems[index].$(getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claimbutton"));
+            let unclaim = unclaimListItems[index];
+            if (await unclaim.isExisting()) {
+                if (await unclaim.isDisplayed()) {
+                    return unclaim.$(getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claimbutton"));
+                }
+            }
         }
+        return null;
     }
 
     async getButtonCountInHeader () {

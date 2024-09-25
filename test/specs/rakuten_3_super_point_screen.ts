@@ -91,26 +91,6 @@ describe('rakuten_super_point_screen', async () => {
         // await sHomeAlertScreen.alertContainerOkButton.click();
     }
 
-    async function handleClosePermissionRequestAlert() {
-        // await driver.pause(2000);
-        // if (! await sHomeAlertScreen.alertContainer.isExisting()) {
-        //     return false;
-        // }
-        // let permissionRequestAlertText = await sHomeAlertScreen.alertContainerMessage.getText();
-        // console.log("permissionRequestAlertText: ", permissionRequestAlertText);
-        // await sHomeAlertScreen.alertContainerOkButton.click();
-        // await driver.pause(2000);
-        if (await (await sHomeScreen.goSettingButton).isExisting()) {
-            if (await (await sHomeScreen.goSettingButton).isDisplayed()) {
-                await (await sHomeScreen.goSettingButton).click();
-                await driver.pause(5000);
-            }
-        }
-
-        await handleDisplayOverOtherApps();
-        return true;
-    }
-
     async function handleOkAlert() {
         if (await (await sHomeScreen.okButton).isExisting()) {
             if (await (await sHomeScreen.okButton).isDisplayed()) {
@@ -176,28 +156,26 @@ describe('rakuten_super_point_screen', async () => {
         let swipeCount = config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SWIPE_COUNT;
         for (let index = 0; index < swipeCount; index++) {
             let pointNumberButtonList = await sHomeScreen.pointNumberButtonList();
-            if (pointNumberButtonList) {
+            if (pointNumberButtonList.length > 0) {
                 console.log("pointNumberButtonListCount: ", pointNumberButtonList?.length);
                 for (let buttonIndex = 0; buttonIndex < pointNumberButtonList.length; buttonIndex++) {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
-                    // console.log(`swipeUp ${index}: pointNumberButton ${buttonIndex}: `, await pointNumberButton.getText());
+                    console.log(`swipeUp ${index}: pointNumberButton: ${buttonIndex}`);
                     await pointNumberButton.click();
 
-                    let needClosePermissionRequestAlert = await handleClosePermissionRequestAlert();
-                    if (needClosePermissionRequestAlert) {
-                        await pointNumberButton.click();
-                    }
-
                     // await sHomeGetpointScreen.waitForIsShown();
-                    await sHomeGetpointScreen.waitForDoneButtonIsShown();
-                    // await sHomeGetpointScreen.closeButton.click();
-                    await driver.back();
                     await browser.pause(5000);
-
-                    await handleCloseAlert();
-
-                    pointNumberClickedIndex++;
-                    console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
+                    if (!S_TabBar.bottomIconIsDisplayed()) {
+                        await sHomeGetpointScreen.waitForDoneButtonIsShown();
+                        // await sHomeGetpointScreen.closeButton.click();
+                        await driver.back();
+                        await browser.pause(5000);
+    
+                        await handleCloseAlert();
+    
+                        pointNumberClickedIndex++;
+                        console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
+                    }
                 }
             }
             console.log("swipeUp: ", index);
@@ -207,11 +185,10 @@ describe('rakuten_super_point_screen', async () => {
             );
             await driver.pause(3000);
         }
-        console.log(`todayPointLabel: `, await sHomeScreen.todayPointLabel.getText());
     }
 
     async function handleClickGetPoint() {
-        await sLuckycountScreen.waitForIsShown();
+        // await sLuckycountScreen.waitForIsShown();
         await driver.pause(2000);
         let getButton = sLuckycountScreen.getButton;
         if (await getButton.isExisting()) {
@@ -235,8 +212,11 @@ describe('rakuten_super_point_screen', async () => {
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (await sLuckycountScreen.getDoneButton.isDisplayed()) {
                 await sLuckycountScreen.getDoneButton.click();
+                await driver.pause(2000);
             }
         }
+        await driver.back();
+        await driver.pause(2000);
     }
 
     async function handleClickChallenge() {

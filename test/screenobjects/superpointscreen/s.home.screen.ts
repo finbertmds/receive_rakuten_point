@@ -1,4 +1,4 @@
-import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
@@ -32,11 +32,20 @@ class S_HomeScreen extends AppScreen {
     }
 
     async pointNumberButtonList () {
-        let pointNumberButton = await $$(SELECTORS.POINT_NUMBER_BUTTON);
-        if (pointNumberButton.length > 0) {
-            return pointNumberButton;
+        let pointNumberButtonRes = [];
+        let pointNumberButtonTmp = await $$(SELECTORS.POINT_NUMBER_BUTTON);
+        if (pointNumberButtonTmp.length > 0) {
+            for (let index = 0; index < pointNumberButtonTmp.length; index++) {
+                const element = pointNumberButtonTmp[index];
+                let poinMark = element.parent.$(getByClassname("android.widget.ImageView", 1));
+                if (await poinMark.isExisting()) {
+                    if (await poinMark.isDisplayed()) {
+                        pointNumberButtonRes.push(element);
+                    }
+                }
+            }
         }
-        return null
+        return pointNumberButtonRes;
     }
 
     get cardAdImage () {

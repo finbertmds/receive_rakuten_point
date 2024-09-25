@@ -12,9 +12,10 @@ describe('rakuten_point_club', async () => {
         await driver.pause(5000);
     })
 
-    async function handleFirstTimeCloseWarning () {
+    async function handleFirstTimeCloseWarning() {
         await pcFirststartScreen.waitForIsShown();
-        await pcFirststartScreen.waitForWarningLablelIsShown();
+        // await pcFirststartScreen.waitForWarningLablelIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
         let isDiplayedWarning = await pcFirststartScreen.warningLabel.isDisplayed()
         if (isDiplayedWarning) {
             await pcFirststartScreen.neverDisplayCheckbox.click()
@@ -22,14 +23,15 @@ describe('rakuten_point_club', async () => {
         }
     }
 
-    async function handleFirstTimeLogin () {
+    async function handleFirstTimeLogin() {
         // await webviewScreen.switchToContext(config.RAKUTEN_POINT_CLUB_WEBVIEW_CONTEXT);
         // let loginButtonWebView = $('//*[contains(text(),"ログイン")]')
         // if (await loginButtonWebView.isExisting()) {
         //     await loginButtonWebView.click();
         // }
         // await webviewScreen.switchToContext(CONTEXT_REF.NATIVE);
-        await pcLoginScreen.waitForIsShown();
+        // await pcLoginScreen.waitForIsShown();
+        await driver.pause(5000);
         await pcLoginScreen.enterLoginButton.click();
         await driver.pause(5000);
 
@@ -75,7 +77,7 @@ describe('rakuten_point_club', async () => {
         await driver.pause(5000);
     }
 
-    async function handleFirstTimeCloseNotification () {
+    async function handleFirstTimeCloseNotification() {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let isUpdateVersion = await pcHomeScreen.notificationUpdateLabel.isDisplayed()
         if (isUpdateVersion) {
@@ -90,16 +92,24 @@ describe('rakuten_point_club', async () => {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let isDiplayedCustomPanel = await pcHomeScreen.customPanel.isDisplayed()
         if (isDiplayedCustomPanel) {
-            await pcHomeScreen.closeCustomPanelButon.click();
+            if (await (await pcHomeScreen.closeCustomPanelButon).isExisting()) {
+                if (await (await pcHomeScreen.closeCustomPanelButon).isDisplayed()) {
+                    await pcHomeScreen.closeCustomPanelButon.click();
+                }
+            }
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let isDiplayedCustomPanel2 = await pcHomeScreen.customPanel.isDisplayed()
         if (isDiplayedCustomPanel2) {
-            await pcHomeScreen.closeCustomPanel2Buton.click();
+            if (await (await pcHomeScreen.closeCustomPanel2Buton).isExisting()) {
+                if (await (await pcHomeScreen.closeCustomPanel2Buton).isDisplayed()) {
+                    await pcHomeScreen.closeCustomPanel2Buton.click();
+                }
+            }
         }
     }
 
-    async function checkIsLoggedIn () {
+    async function checkIsLoggedIn() {
         let rakutenNameLabel = pcHomeScreen.rakutenNameLabel
         if (await rakutenNameLabel.isDisplayed()) {
             return true;
@@ -112,8 +122,13 @@ describe('rakuten_point_club', async () => {
         return false;
     }
 
-    async function handleClickPointHistory () {
-        await pcHomeScreen.waitForPointHistoryIsShown();
+    async function handleClickPointHistory() {
+        // await pcHomeScreen.waitForPointHistoryIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+        if (!await (await pcHomeScreen.pointHistoryIcon).isExisting() || !await (await pcHomeScreen.pointHistoryIcon).isDisplayed()) {
+            console.log("point history button is not displayed");
+            return;
+        }
         await pcHomeScreen.pointHistoryIcon.click();
         // await pcHomeScreen.waitForWebCloseButtonIsShown();
         // await pcHomeScreen.webCloseButton.click();
@@ -125,7 +140,7 @@ describe('rakuten_point_club', async () => {
         await driver.back();
     }
 
-    async function handleClickFirstAdBanner () {
+    async function handleClickFirstAdBanner() {
         // await pcHomeScreen.waitForAdBannerIsShown();
         let firstAdBanner = await pcHomeScreen.firstAdBanner()
         if (firstAdBanner === null) {
@@ -143,18 +158,24 @@ describe('rakuten_point_club', async () => {
         await driver.back();
     }
 
-    async function openRewardScreen (closeScreenWhenEnd: boolean = true) {
+    async function openRewardScreen(closeScreenWhenEnd: boolean = true) {
         // await pcHomeScreen.waitForRakutenNameLableIsShown();
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+            console.log("rakutenNameLabel is not displayed");
             return false;
         }
         await pcHomeScreen.menuNavigationButton.click();
         // console.log("rakutenRewardNumberLabel: ", await homeScreen.rakutenRewardNumberLabel?.getText());
-        await pcHomeScreen.waitForRakutenRewardLabelIsShown();
+        // await pcHomeScreen.waitForRakutenRewardLabelIsShown();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3 * 2)));
+        if (! await pcHomeScreen.rakutenRewardLabel.isDisplayed()) {
+            console.log("rakutenRewardLabel is not displayed");
+            return false;
+        }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         await pcHomeScreen.rakutenRewardLabel.click();
-        
+
         await pcRewardScreen.waitForIsShown();
         await driver.pause(config.DEFAULT_TIMEOUT);
         let retryLableIsShown = await pcRewardScreen.retryLabel.isDisplayed();
@@ -166,6 +187,7 @@ describe('rakuten_point_club', async () => {
             retryCount++;
         }
         if (retryCount >= config.RAKUTEN_RETRY_MAX_COUNT) {
+            console.log("cancel because retryCount: " + retryCount);
             return false;
         }
 
@@ -183,7 +205,7 @@ describe('rakuten_point_club', async () => {
         return true;
     }
 
-    async function handleLoginRequireAgain () {
+    async function handleLoginRequireAgain() {
         await driver.pause(5000);
         if (! await pcRewardScreen.requireLoginLabel.isDisplayed()) {
             return false;
@@ -201,12 +223,12 @@ describe('rakuten_point_club', async () => {
      * click unclaim button
      * @returns true: success, false: cannot click unclaim button need retry
      */
-    async function clickUnclaimButton () {
+    async function clickUnclaimButton() {
         let skipFlag = await openRewardScreen(false);
         if (!skipFlag) {
             return false;
         }
-        
+
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = pcRewardScreen.unclaimBox;
         if (! await unclaimBox.isDisplayed()) {
@@ -225,7 +247,7 @@ describe('rakuten_point_club', async () => {
         await pcRewardScreen.waitForUnclaimListItemsIsShown();
         let unclaimListCount = (await pcRewardScreen.getUnclaimListItems())?.length
         console.log("unclaimListCount: ", unclaimListCount);
-        
+
         if (unclaimListCount) {
             for (let index = 0; index < unclaimListCount; index++) {
                 if (index !== 0) {
@@ -285,34 +307,40 @@ describe('rakuten_point_club', async () => {
             return;
         }
         await driver.pause(5000);
-        await Gestures.swipeUp(0.7);
-        await handleClickPointHistory();
-        await driver.pause(5000);
-        await Gestures.swipeDown();
-    });
-
-    it('pc_click_first_ad_banner', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-        var scrollCount = 0
-        while (scrollCount < 3) {
-            if (await pcHomeScreen.adBannerGroup.isDisplayed()) {
-                break;
-            }
+        let needScroll = false;
+        if (!await (await pcHomeScreen.pointHistoryIcon).isExisting() || !await (await pcHomeScreen.pointHistoryIcon).isDisplayed()) {
             await Gestures.swipeUp(0.7);
-            scrollCount++;
+            needScroll = true;
         }
-        for (let index = 0; index < 5; index++) {
-            await handleClickFirstAdBanner();
-        }
-        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-        for (let index = 0; index < scrollCount; index++) {
+        await handleClickPointHistory();
+        if (needScroll) {
+            await driver.pause(5000);
             await Gestures.swipeDown();
         }
     });
+
+    // it('pc_click_first_ad_banner', async () => {
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         return;
+    //     }
+    //     await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+    //     var scrollCount = 0
+    //     while (scrollCount < 3) {
+    //         if (await pcHomeScreen.adBannerGroup.isDisplayed()) {
+    //             break;
+    //         }
+    //         await Gestures.swipeUp(0.7);
+    //         scrollCount++;
+    //     }
+    //     for (let index = 0; index < 5; index++) {
+    //         await handleClickFirstAdBanner();
+    //     }
+    //     await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+    //     for (let index = 0; index < scrollCount; index++) {
+    //         await Gestures.swipeDown();
+    //     }
+    // });
 
     it('pc_get_point_from_reward', async () => {
         let isLoggedIn = await checkIsLoggedIn();

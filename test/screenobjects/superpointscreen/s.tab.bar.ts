@@ -9,9 +9,15 @@ const SELECTORS = {
 };
 
 export default class S_TabBar {
+    static async bottomIconIsDisplayed () {
+        if (await (await $(SELECTORS.BOTTOM_ICON)).isExisting()) {
+            return await (await $(SELECTORS.BOTTOM_ICON)).isDisplayed();
+        }
+        return false;
+    }
+
     static async openLuckyCoint () {
-        await $(SELECTORS.LUCKY_COINT_ICON).click();
-        let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 3));
+        let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 6));
         if (await (await luckyCoinTabbar).isDisplayed()) {
             await (await luckyCoinTabbar).click();
         }

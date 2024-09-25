@@ -17,20 +17,20 @@ describe('rakuten_toshiru', async () => {
         if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
             await tFirststartScreen.enterLoginButton.click();
             await driver.pause(5000);
-            await handleChromeAction();
+            // await handleChromeAction();
 
-            if (await (await tFirststartScreen.warningOkButton).isDisplayed()) {
-                await tFirststartScreen.warningOkButton.click();
-                await driver.pause(5000);
-            }
-            let isEnterLoginButtonDisplay = true;
-            while (isEnterLoginButtonDisplay) {
-                if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
-                    await tFirststartScreen.enterLoginButton.click();
-                    await driver.pause(5000);
-                    isEnterLoginButtonDisplay = await (await tFirststartScreen.enterLoginButton).isDisplayed();
-                }
-            }
+            // if (await (await tFirststartScreen.warningOkButton).isDisplayed()) {
+            //     await tFirststartScreen.warningOkButton.click();
+            //     await driver.pause(5000);
+            // }
+            // let isEnterLoginButtonDisplay = true;
+            // while (isEnterLoginButtonDisplay) {
+            //     if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
+            //         await tFirststartScreen.enterLoginButton.click();
+            //         await driver.pause(5000);
+            //         isEnterLoginButtonDisplay = await (await tFirststartScreen.enterLoginButton).isDisplayed();
+            //     }
+            // }
             
             await tLoginScreen.waitForEnterLoginScreen();
             if (await (await tLoginScreen.loginContinueButton).isDisplayed()) {
@@ -85,18 +85,23 @@ describe('rakuten_toshiru', async () => {
     async function handleFirstTimeEnterApp () {
         await handleClaimPoint();
 
-        await tFirststartScreen.waitForRecommendedImageIsShown();
+        // await tFirststartScreen.waitForRecommendedImageIsShown();
+        await driver.pause(config.DEFAULT_TIMEOUT);
         if (await (await tFirststartScreen.commonNextButton).isDisplayed()) {
             await (await tFirststartScreen.commonNextButton).click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
         if (await (await tFirststartScreen.commonNextButton).isDisplayed()) {
             await (await tFirststartScreen.commonNextButton).click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
         if (await (await tFirststartScreen.commonNextButton).isDisplayed()) {
             await (await tFirststartScreen.commonNextButton).click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
         if (await (await tFirststartScreen.startButton).isDisplayed()) {
             await (await tFirststartScreen.startButton).click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
         await driver.pause(5000);
         if (await (await tFirststartScreen.parentPanel).isDisplayed()) {
