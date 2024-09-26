@@ -39,6 +39,10 @@ class InfoseekPage extends Page {
     get modalContents() { return $('.modalClick_contents') }
     get modalContentsCloseButton() { return $('.modalClick_close') }
 
+    get dialogContainer() { return $('.fc-monetization-dialog-container') }
+    get dialogAdButton() { return $('.fc-rewarded-ad-button') }
+    get adButtonAfter() { return $('#dismiss-button-element') }
+
     /**
      * mission page
      */
@@ -286,6 +290,27 @@ class InfoseekPage extends Page {
             await (await this.pointGet).waitForDisplayed();
 
             await super.open(config.INFO_SEEK_MISSION_PAGE);
+        }
+    }
+
+    async handleCloseDialogContainer() {
+        let needCloseAd = false;
+        if (await (await this.dialogContainer).isDisplayed()) {
+            if (await (await this.dialogAdButton).isClickable()) {
+                await (await this.dialogAdButton).click()
+                needCloseAd = true;
+                await browser.pause(config.DEFAULT_TIMEOUT);
+            }
+        }
+        if (needCloseAd) {
+            if (await (await this.adButtonAfter).isDisplayed()) {
+                if (await (await this.adButtonAfter).isClickable()) {
+                    await (await this.adButtonAfter).click()
+                    await browser.pause(config.DEFAULT_TIMEOUT);
+                }
+            } else {
+                await browser.refresh();
+            }
         }
     }
 
