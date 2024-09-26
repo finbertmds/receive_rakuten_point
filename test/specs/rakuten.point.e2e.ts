@@ -32,7 +32,7 @@ describe('Rakuten', () => {
         }
     }
 
-    // it('rakuten:search_get_point', async () => {
+    // it('rakuten_search_get_point', async () => {
     //     await credentials();
     //     await credentialsForWebSearch();
     //     await websearchPage.open();
@@ -40,7 +40,7 @@ describe('Rakuten', () => {
     //     await browser.pause(2000)
     // });
 
-    it('rakuten:click_link_get_point', async () => {
+    it('rakuten_click_link_get_point', async () => {
         await credentials();
         await rakutencardPage.open();
         await browser.pause(5000);
@@ -70,7 +70,7 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
 
-    it('rakuten:kuji_default_get_point', async () => {
+    it('rakuten_kuji_default_get_point', async () => {
         await credentials();
         for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
             await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
@@ -79,7 +79,7 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
 
-    it('rakuten:kuji_get_point', async () => {
+    it('rakuten_kuji_get_point', async () => {
         await credentials();
         await kujiPage.open();
         let kujiCount = await kujiPage.getKujiCount()
@@ -95,7 +95,7 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
 
-    // it('rakuten:view_video_get_point_one_day_monthly', async () => {
+    // it('rakuten_view_video_get_point_one_day_monthly', async () => {
     //     let currentDate = new Date().getDate();
     //     if (currentDate !== config.DAY_VIEW_VIDEO_GET_POINT) {
     //         console.log(`only view video in day ${config.DAY_VIEW_VIDEO_GET_POINT}`);
@@ -112,12 +112,12 @@ describe('Rakuten', () => {
     //     await rakutencardPage.handlClickVideo();
     // });
 
-    it('rakuten:entry_campaign', async () => {
+    it('rakuten_entry_campaign', async () => {
         await credentials();
         await campaignPage.entryCampaign();
     });
 
-    it('rakuten:websearch_entry_get_point', async () => {
+    it('rakuten_websearch_entry_get_point', async () => {
         await credentials();
         await credentialsForWebSearch();
         await websearchPage.entryCampaign();

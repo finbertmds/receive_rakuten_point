@@ -38,7 +38,7 @@ config.capabilities = [
         // },
         browserName: 'firefox',
         'moz:firefoxOptions': {
-            args: ['--headless'],
+            // args: ['--headless'],
         },
         //
         // Parameter to ignore some or all default flags

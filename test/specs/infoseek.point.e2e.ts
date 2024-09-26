@@ -17,7 +17,7 @@ describe('Infoseek', () => {
         }
     }
 
-    it('infoseek:join_mission', async () => {
+    it('infoseek_join_mission', async () => {
         await credentials();
         await browser.pause(2000);
 
@@ -25,7 +25,7 @@ describe('Infoseek', () => {
         await infoseekPage.joinMission();
     });
 
-    it('infoseek:read_articles', async () => {
+    it('infoseek_read_articles', async () => {
         await credentials();
         await browser.pause(2000);
 
@@ -36,7 +36,7 @@ describe('Infoseek', () => {
         }
     });
 
-    // it('infoseek:visit_mission', async () => {
+    // it('infoseek_visit_mission', async () => {
     //     await credentials();
     //     await browser.pause(2000);
 
@@ -44,7 +44,7 @@ describe('Infoseek', () => {
     //     await infoseekPage.visitMissionPage();
     // });
 
-    it('infoseek:get_point', async () => {
+    it('infoseek_get_point', async () => {
         await credentials();
         await browser.pause(2000);
 

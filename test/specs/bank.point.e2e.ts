@@ -16,7 +16,7 @@ describe('Rakuten bank', () => {
         await browser.pause(config.DEFAULT_TIMEOUT);
     }
 
-    it('bank:bank_click_campaign', async () => {
+    it('bank_click_campaign', async () => {
         await bankCredentials();
         await bankCampaignPage.handleClickCampaign();
     });

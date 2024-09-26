@@ -176,11 +176,13 @@ class InfoseekPage extends Page {
         let missionList = await this.btnMissionJoinList;
         for (let index = 0; index < missionList.length; index++) {
             const mission = await this.btnMissionJoin;
-            await mission.scrollIntoView();
+            // await mission.scrollIntoView();
+            await this.handleScrollIntoView(mission, true);
             await mission.click();
             await browser.pause(5000);
             if (await (await this.btnMissionAgree).isDisplayed()) {
-                await this.btnMissionAgree.scrollIntoView();
+                // await this.btnMissionAgree.scrollIntoView();
+                await this.handleScrollIntoView(await this.btnMissionAgree, true);
                 await (await this.btnMissionAgree).click();
                 await browser.pause(5000);
             }
@@ -191,7 +193,8 @@ class InfoseekPage extends Page {
 
     async handleOpenHomePageAndClickTab(tabName?: string) {
         await super.open(config.INFO_SEEK_PAGE);
-        await (await this.sectionBox).scrollIntoView();
+        // await (await this.sectionBox).scrollIntoView();
+        await this.handleScrollIntoView(await this.sectionBox, false);
 
         if (tabName) {
             let tabNameElement = await $('.' + tabName);
@@ -202,7 +205,8 @@ class InfoseekPage extends Page {
                 let tabNameContentsId = tabName.replace('genre-tab__', 'ranking-');
                 let tabNameContentsElement = await $('#' + tabNameContentsId);
                 if (await tabNameContentsElement.isDisplayed()) {
-                    await tabNameContentsElement.scrollIntoView();
+                    // await tabNameContentsElement.scrollIntoView();
+                    await this.handleScrollIntoView(tabNameContentsElement, false);
                 }
             }
         }
@@ -227,7 +231,8 @@ class InfoseekPage extends Page {
                 if (await link.isDisplayed()) {
                     await (await link).click();
                     await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                    await (await this.footerContainer).scrollIntoView();
+                    // await (await this.footerContainer).scrollIntoView();
+                    await this.handleScrollIntoView(await this.footerContainer, false);
                     await browser.pause(5000);
                     await this.handleReactionIine();
                 }
@@ -240,6 +245,7 @@ class InfoseekPage extends Page {
     async handleOpenRankingPage(rankingPage: string) {
         await super.open(rankingPage);
         // await (await this.sectionBox).scrollIntoView();
+        await this.handleScrollIntoView(await this.sectionBox, false);
     }
 
     async readArticleAtRankingPage(rankingPage: string) {
@@ -250,10 +256,12 @@ class InfoseekPage extends Page {
             if (rankingListTextLink.length > 0 && index < rankingListTextLink.length) {
                 const link = $(rankingListTextLink[index]);
                 if (await link.isDisplayed()) {
-                    await (await link).scrollIntoView();
+                    // await (await link).scrollIntoView();
+                    await this.handleScrollIntoView(await link, true);
                     await (await link).click();
                     await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                    await (await this.footerContainer).scrollIntoView();
+                    // await (await this.footerContainer).scrollIntoView();
+                    await this.handleScrollIntoView(await this.footerContainer, false);
                     await browser.pause(5000);
                     await this.handleReactionIine();
                 }
@@ -280,7 +288,8 @@ class InfoseekPage extends Page {
         let getPointList = await this.btnGetPointList;
         for (let index = 0; index < getPointList.length; index++) {
             const getPoint = await this.btnGetPoint;
-            await getPoint.scrollIntoView();
+            // await getPoint.scrollIntoView();
+            await this.handleScrollIntoView(getPoint, true);
             await getPoint.click();
             await browser.pause(5000);
             await (await this.pointGet).waitForDisplayed();
