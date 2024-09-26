@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "install:kuji": "adb install-multiple apps/R_Kuji/config.armeabi_v7a.apk apps/R_Kuji/config.mdpi.apk apps/R_Kuji/jp.co.rakuten.rakutenluckykuji.apk",
+    "install:kuji": "adb install-multiple apps/R_Kuji/config.mdpi.apk apps/R_Kuji/jp.co.rakuten.rakutenluckykuji.apk",
     "test:kuji": "yarn install:kuji && npx wdio run wdio.apps.kuji.conf.js",
     "test:pointclub": "npx wdio run wdio.apps.pointclub.conf.js",
     "test:recipe": "npx wdio run wdio.apps.recipe.conf.js",
