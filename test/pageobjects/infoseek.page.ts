@@ -214,6 +214,7 @@ class InfoseekPage extends Page {
 
     async handleReactionIine() {
         if (await (await this.reactionIconIine).isDisplayed()) {
+            await (await this.reactionIconIine).scrollIntoView();
             if (await (await this.reactionIconIine).isClickable()) {
                 await (await this.reactionIconIine).click()
                 await browser.pause(2000);

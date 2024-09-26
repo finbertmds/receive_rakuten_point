@@ -1,4 +1,5 @@
 import config from '../../config';
+import timeHelper from '../helpers/timeHelper';
 import infoseekPage from '../pageobjects/infoseek.page';
 
 describe('Infoseek', () => {
@@ -30,10 +31,9 @@ describe('Infoseek', () => {
         await browser.pause(2000);
 
         await infoseekPage.closeModalContents();
-        for (let index = 0; index < config.INFO_SEEK_RANKING_PAGE.length; index++) {
-            const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
-            await infoseekPage.readArticleAtRankingPage(rankingPage);
-        }
+        let index = timeHelper.randomFollowTime(config.INFO_SEEK_RANKING_PAGE.length);
+        const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
+        await infoseekPage.readArticleAtRankingPage(rankingPage);
     });
 
     // it('infoseek:visit_mission', async () => {
