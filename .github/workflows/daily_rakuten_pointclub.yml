@@ -6,22 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    # if: (github.event_name == 'schedule')
-    runs-on: macos-11
-
+  pointclub:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+    - name: Gradle cache
+      uses: gradle/actions/setup-gradle@v3
+    - name: AVD cache
+      uses: actions/cache@v4
+      id: avd-cache
       with:
-        ref: 'rakuten_apps'
+        path: |
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: avd-29
+    - name: create AVD and generate snapshot for caching
+      if: steps.avd-cache.outputs.cache-hit != 'true'
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 29
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: false
+        script: echo "Generated AVD snapshot for caching."
     - uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 20
         cache: 'yarn'
     - name: Install Appium
       uses: FinbertMDS/setup-appium@latest
-      with:
-        appium-version: "1.20.2"
+    - name: Install UIAutomator
+      run: appium driver install uiautomator2
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Run Appium Tests
@@ -29,18 +49,15 @@ jobs:
       env:
         RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
         RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
-        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
       with:
-        api-level: 28
+        api-level: 29
         target: google_apis
-        emulator-build: 7425822
-        script: "[-z $RAKUTEN_USERNAME ] || [ -z $RAKUTEN_PASSWORD ] || (sleep 60 && yarn test:pointclub)"
+        script: "sleep 60 && yarn test:pointclub"
     - name: upload-artifact
       if: ${{ failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: upload-screenshots
+        name: upload-screenshots-pointclub
         path: screenshots
     - name: remove-screenshots
       if: ${{ failure() }}
@@ -53,7 +70,7 @@ jobs:
     name: Restarts the scheduled run when it failed
     runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
-    needs: [build]
+    needs: [pointclub]
     steps:
       - name: Retry the workflow
         run: |
