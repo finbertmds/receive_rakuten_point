@@ -1,5 +1,6 @@
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
+import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
 import permission from '../screenobjects/components/permission';
 import sFirststartScreen from '../screenobjects/superpointscreen/s.firststart.screen';
 import sHomeAlertScreen from '../screenobjects/superpointscreen/s.home.alert.screen';
@@ -29,14 +30,13 @@ describe('rakuten_super_point_screen', async () => {
         await driver.pause(5000);
         // sHomeScreen.waitForLoginButtonIsShown();
         let loginButton = sHomeScreen.loginButton
-        if (await loginButton.isDisplayed()) {
-            await loginButton.click();
-        } else {
+        if (!await loginButton.isDisplayed()) {
             console.log("logged in");
             return;
         }
-
-        await driver.pause(10000);
+        await loginButton.click();
+        await handleChromeAction();
+        await driver.pause(5000);
         // await sLoginScreen.waitForEnterLoginScreen();
         if (await (await sLoginScreen.loginContinueButton).isDisplayed()) {
             await sLoginScreen.loginContinueButton.click();
@@ -57,6 +57,26 @@ describe('rakuten_super_point_screen', async () => {
         await sLoginScreen.signInButton.click();
         await driver.pause(3000);
         await sLoginScreen.waitForLoggedIn();
+    }
+
+    async function handleChromeAction() {
+        let currentPackage = await driver.getCurrentPackage();
+        console.log("currentPackage: " + currentPackage);
+        if (currentPackage !== config.CHROME_APP_ID) {
+            console.log("chrome app is not showing");
+            return;
+        }
+        if (await (await sLoginScreen.loginContinueButton).isDisplayed()) {
+            console.log("login page is displayed");
+            return;
+        }
+
+        await cFirststartScreen.waitForIsShown();
+        if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
+            await (await cFirststartScreen.acceptContinueButton).click();
+            await (await cFirststartScreen.noThanksButton).click();
+            await driver.pause(5000);
+        }
     }
 
     async function handleCloseAlert() {
@@ -170,9 +190,9 @@ describe('rakuten_super_point_screen', async () => {
                         // await sHomeGetpointScreen.closeButton.click();
                         await driver.back();
                         await browser.pause(5000);
-    
+
                         await handleCloseAlert();
-    
+
                         pointNumberClickedIndex++;
                         console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
                     }

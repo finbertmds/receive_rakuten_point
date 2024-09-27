@@ -37,8 +37,8 @@ describe('rakuten_point_club', async () => {
 
         if (! await pcLoginScreen.loginScreen.isExisting()) {
             await handleChromeAction();
-            // return app and click enter login button again
-            await pcLoginScreen.enterLoginButton.click();
+            // // return app and click enter login button again
+            // await pcLoginScreen.enterLoginButton.click();
             await driver.pause(5000);
         }
         if (await (await pcLoginScreen.loginContinueButton).isDisplayed()) {
@@ -63,8 +63,8 @@ describe('rakuten_point_club', async () => {
     }
 
     async function handleChromeAction() {
-        await driver.activateApp(config.CHROME_APP_ID);
-        await driver.pause(5000);
+        // await driver.activateApp(config.CHROME_APP_ID);
+        // await driver.pause(5000);
 
         await cFirststartScreen.waitForIsShown();
         if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
@@ -73,8 +73,8 @@ describe('rakuten_point_club', async () => {
             await driver.pause(5000);
         }
 
-        await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
-        await driver.pause(5000);
+        // await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        // await driver.pause(5000);
     }
 
     async function handleFirstTimeCloseNotification() {

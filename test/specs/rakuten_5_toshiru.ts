@@ -17,7 +17,8 @@ describe('rakuten_toshiru', async () => {
         if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
             await tFirststartScreen.enterLoginButton.click();
             await driver.pause(5000);
-            // await handleChromeAction();
+            await handleChromeAction();
+            await driver.pause(5000);
 
             // if (await (await tFirststartScreen.warningOkButton).isDisplayed()) {
             //     await tFirststartScreen.warningOkButton.click();
@@ -32,7 +33,7 @@ describe('rakuten_toshiru', async () => {
             //     }
             // }
             
-            await tLoginScreen.waitForEnterLoginScreen();
+            // await tLoginScreen.waitForEnterLoginScreen();
             if (await (await tLoginScreen.loginContinueButton).isDisplayed()) {
                 await tLoginScreen.loginContinueButton.click();
                 await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
@@ -56,8 +57,16 @@ describe('rakuten_toshiru', async () => {
     }
 
     async function handleChromeAction() {
-        await driver.activateApp(config.CHROME_APP_ID);
-        await driver.pause(5000);
+        let currentPackage = await driver.getCurrentPackage();
+        console.log("currentPackage: " + currentPackage);
+        if (currentPackage !== config.CHROME_APP_ID) {
+            console.log("chrome app is not showing");
+            return;
+        }
+        if (await (await tLoginScreen.loginContinueButton).isDisplayed()) {
+            console.log("login page is displayed");
+            return;
+        }
 
         await cFirststartScreen.waitForIsShown();
         if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
@@ -65,9 +74,6 @@ describe('rakuten_toshiru', async () => {
             await (await cFirststartScreen.noThanksButton).click();
             await driver.pause(10000);
         }
-
-        await driver.activateApp(config.RAKUTEN_TOSHIRU_APP_ID);
-        await driver.pause(5000);
     }
 
     async function handleClaimPoint() {

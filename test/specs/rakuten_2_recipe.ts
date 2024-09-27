@@ -71,7 +71,8 @@ describe('rakuten_recipe', async () => {
 
     async function handleFirstTimeLoginBrowser () {
         await handleChromeAction();
-        await rLoginBrowserScreen.waitForEnterLoginScreen();
+        await driver.pause(5000);
+        // await rLoginBrowserScreen.waitForEnterLoginScreen();
         if (await (await rLoginBrowserScreen.loginContinueButton).isDisplayed()) {
             await rLoginBrowserScreen.loginContinueButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

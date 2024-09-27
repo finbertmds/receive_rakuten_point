@@ -1,5 +1,6 @@
 import config from "../../config";
 import Gestures from "../helpers/Gestures";
+import cFirststartScreen from "../screenobjects/chrome/c.firststart.screen";
 import kFirststartScreen from "../screenobjects/kuji/k.firststart.screen";
 import kHomeScreen from "../screenobjects/kuji/k.home.screen";
 import kKujiScreen from "../screenobjects/kuji/k.kuji.screen";
@@ -15,9 +16,6 @@ describe('rakuten_kuji', async () => {
 
     async function handleFirstTimeEnterApp() {
         await closeWarningLabel();
-        if (await kFirststartScreen.tutorialSkipButton.isDisplayed()) {
-            await kFirststartScreen.tutorialSkipButton.click();
-        }
         await handleFirstTimeLogin();
         await closeWarningLabel();
         await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
@@ -39,7 +37,15 @@ describe('rakuten_kuji', async () => {
     }
 
     async function handleFirstTimeLogin() {
-        await driver.pause(10000);
+        if (await kFirststartScreen.tutorialSkipButton.isDisplayed()) {
+            await kFirststartScreen.tutorialSkipButton.click();
+        }
+        await driver.pause(5000);
+
+        if (! await kLoginScreen.loginScreen.isExisting()) {
+            await handleChromeAction();
+            await driver.pause(5000);
+        }
         // await kLoginScreen.waitForEnterLoginScreen();
         if (await (await kLoginScreen.loginContinueButton).isDisplayed()) {
             await kLoginScreen.loginContinueButton.click();
@@ -60,6 +66,26 @@ describe('rakuten_kuji', async () => {
         await kLoginScreen.signInButton.click();
         await driver.pause(3000);
         await kLoginScreen.waitForLoggedIn();
+    }
+
+    async function handleChromeAction() {
+        let currentPackage = await driver.getCurrentPackage();
+        console.log("currentPackage: " + currentPackage);
+        if (currentPackage !== config.CHROME_APP_ID) {
+            console.log("chrome app is not showing");
+            return;
+        }
+        if (await (await kLoginScreen.loginContinueButton).isDisplayed()) {
+            console.log("login page is displayed");
+            return;
+        }
+
+        await cFirststartScreen.waitForIsShown();
+        if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
+            await (await cFirststartScreen.acceptContinueButton).click();
+            await (await cFirststartScreen.noThanksButton).click();
+            await driver.pause(5000);
+        }
     }
 
     async function checkIsLoggedIn() {
@@ -221,6 +247,7 @@ describe('rakuten_kuji', async () => {
     }
 
     async function handleLuckyKujiV2() {
+        await driver.pause(5000);
         await kHomeScreen.handleStartGacha();
 
         await driver.pause(5000);
@@ -234,7 +261,7 @@ describe('rakuten_kuji', async () => {
             }
         }
         if (await (await kLuckykujiScreen.treasureDialog).isDisplayed()) {
-            await (await kLuckykujiScreen.treasureDialog).click();
+            await (await kLuckykujiScreen.treasurePlayButton).click();
 
             await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
             await driver.back();
