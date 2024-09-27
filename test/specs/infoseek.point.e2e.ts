@@ -31,8 +31,10 @@ describe('Infoseek', () => {
         await browser.pause(2000);
 
         await infoseekPage.closeModalContents();
-        let index = timeHelper.randomFollowTime(config.INFO_SEEK_RANKING_PAGE.length);
+        let index = timeHelper.randomFollowTime(config.INFO_SEEK_RANKING_PAGE.length - 1);
+        console.log("random index: " + index);
         const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
+        console.log("rankingPage: " + rankingPage);
         await infoseekPage.readArticleAtRankingPage(rankingPage);
     });
 

@@ -1,4 +1,5 @@
 import config from '../../config';
+import timeHelper from '../helpers/timeHelper';
 import Page from './page';
 
 /**
@@ -225,21 +226,33 @@ class InfoseekPage extends Page {
     async readArticle(tabName?: string) {
         await this.handleOpenHomePageAndClickTab(tabName);
 
+        let urlClickedList = [];
+        let titleClickedList = [];
+        let oldRandomValue = -1;
         for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
             let rankingListTextLink = await this.rankingListTextLink();
-            if (rankingListTextLink.length > 0 && index < rankingListTextLink.length) {
-                const link = $(rankingListTextLink[index]);
-                if (await link.isDisplayed()) {
-                    await (await link).click();
-                    await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                    await (await this.footerContainer).scrollIntoView();
-                    await browser.pause(5000);
-                    await this.handleReactionIine();
-                }
+            let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+            if (indexPage === oldRandomValue) {
+                indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+            }
+            console.log("readArticle: random indexPage: " + indexPage);
+            const link = rankingListTextLink[indexPage];
+            if (await link.isDisplayed()) {
+                await link.click();
+                await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+                let url = await browser.getUrl()
+                urlClickedList.push(url);
+                let title = await browser.getTitle()
+                titleClickedList.push(title);
+                await (await this.footerContainer).scrollIntoView();
+                await this.handleReactionIine();
             }
 
             await this.handleOpenHomePageAndClickTab(tabName);
         }
+        console.log("readArticle: rankingPage: " + tabName);
+        console.log("readArticle: urlClickedList: " + urlClickedList);
+        console.log("readArticle: titleClickedList: " + titleClickedList);
     }
 
     async handleOpenRankingPage(rankingPage: string) {
@@ -250,22 +263,34 @@ class InfoseekPage extends Page {
     async readArticleAtRankingPage(rankingPage: string) {
         await this.handleOpenRankingPage(rankingPage);
 
+        let urlClickedList = [];
+        let titleClickedList = [];
+        let oldRandomValue = -1;
         for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
             let rankingListTextLink = await this.rankingListTextLink();
-            if (rankingListTextLink.length > 0 && index < rankingListTextLink.length) {
-                const link = $(rankingListTextLink[index]);
-                if (await link.isDisplayed()) {
-                    await (await link).scrollIntoView();
-                    await (await link).click();
-                    await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                    await (await this.footerContainer).scrollIntoView();
-                    await browser.pause(5000);
-                    await this.handleReactionIine();
-                }
+            let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+            if (indexPage === oldRandomValue) {
+                indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+            }
+            console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
+            const link = rankingListTextLink[indexPage];
+            if (await link.isDisplayed()) {
+                await link.scrollIntoView();
+                await link.click();
+                await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+                let url = await browser.getUrl()
+                urlClickedList.push(url);
+                let title = await browser.getTitle()
+                titleClickedList.push(title);
+                await (await this.footerContainer).scrollIntoView();
+                await this.handleReactionIine();
             }
 
             await this.handleOpenRankingPage(rankingPage);
         }
+        console.log("readArticleAtRankingPage: rankingPage: " + rankingPage);
+        console.log("readArticleAtRankingPage: urlClickedList: " + urlClickedList);
+        console.log("readArticleAtRankingPage: titleClickedList: " + titleClickedList);
     }
 
     async visitMissionPage() {
