@@ -1,10 +1,7 @@
 # Get Rakuten points automatically every day
 [![Daily](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily.yml)
-[![Daily WebSearch](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20WebSearch/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_websearch.yml)
 [![Daily Infoseek](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20Infoseek/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_infoseek.yml)
-[![Daily Apps](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20Apps/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_apps.yml)
 [![Daily App PoinClub](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20PoinClub/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_pointclub.yml)
-[![Daily App Recipe](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20Recipe/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_recipe.yml)
 [![Daily App SPS](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20SPS/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_sps.yml)
 [![Daily App Kuji](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20Kuji/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_kuji.yml)
 [![Daily App PoinClub_Toshiru](https://github.com/FinbertMDS/receive_rakuten_point/workflows/Daily%20App%20PoinClub_Toshiru/badge.svg)](https://github.com/FinbertMDS/receive_rakuten_point/actions/workflows/daily_rakuten_pointclub_toshiru.yml)
