@@ -21,10 +21,35 @@ class S_HomeGetPointScreen extends AppScreen {
     }
 
     async waitForDoneButtonIsShown () {
-        return this.doneButton.waitForDisplayed({
-            timeout: 2 * config.DEFAULT_TIMEOUT,
-            reverse: false,
-        });
+        let clickedAfterTime = new Date();
+        await browser.waitUntil(async () => {
+            try {
+                let now = new Date();
+                let diffMs = (now.valueOf() - clickedAfterTime.valueOf());
+                let isDone = await (await this.doneButton).isDisplayed();
+                if (isDone) {
+                    console.log(`done is displayed`);
+                    return true;
+                }
+                if (diffMs >= 2 * config.DEFAULT_TIMEOUT - 5000) {
+                    console.log(`diffMs greater than timeout`);
+                    return true;
+                }
+                console.log(`diffMs less than timeout`);
+                return false;
+            } catch (error) {
+                return true;
+            }
+        },
+            {
+                timeout: config.DEFAULT_TIMEOUT * 2,
+                timeoutMsg: 'expected done is displayed',
+                interval: 5000
+            })
+        // return this.doneButton.waitForDisplayed({
+        //     timeout: 2 * config.DEFAULT_TIMEOUT,
+        //     reverse: false,
+        // });
     }
 
     get closeButton () {

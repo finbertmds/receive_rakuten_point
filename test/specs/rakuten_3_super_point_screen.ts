@@ -3,7 +3,6 @@ import Gestures from '../helpers/Gestures';
 import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
 import permission from '../screenobjects/components/permission';
 import sFirststartScreen from '../screenobjects/superpointscreen/s.firststart.screen';
-import sHomeAlertScreen from '../screenobjects/superpointscreen/s.home.alert.screen';
 import sHomeGetpointScreen from '../screenobjects/superpointscreen/s.home.getpoint.screen';
 import sHomeScreen from '../screenobjects/superpointscreen/s.home.screen';
 import sLoginScreen from '../screenobjects/superpointscreen/s.login.screen';
@@ -12,8 +11,8 @@ import S_TabBar from '../screenobjects/superpointscreen/s.tab.bar';
 
 describe('rakuten_super_point_screen', async () => {
     before(async () => {
-        await await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-        await await driver.pause(5000);
+        await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        await driver.pause(5000);
     })
 
     async function handleMaintenance() {
@@ -232,11 +231,11 @@ describe('rakuten_super_point_screen', async () => {
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (await sLuckycountScreen.getDoneButton.isDisplayed()) {
                 await sLuckycountScreen.getDoneButton.click();
-                await driver.pause(2000);
+                await driver.pause(5000);
             }
         }
         await driver.back();
-        await driver.pause(2000);
+        await driver.pause(5000);
     }
 
     async function handleClickChallenge() {
