@@ -1,0 +1,166 @@
+{
+  "xapk_version": "2",
+  "package_name": "jp.co.rakuten.pointclub.android",
+  "name": "楽天PointClub",
+  "locales_name": {
+    "af": "楽天PointClub",
+    "am": "楽天PointClub",
+    "ar": "楽天PointClub",
+    "as": "楽天PointClub",
+    "az": "楽天PointClub",
+    "be": "楽天PointClub",
+    "bg": "楽天PointClub",
+    "bn": "楽天PointClub",
+    "bs": "楽天PointClub",
+    "ca": "楽天PointClub",
+    "cs": "楽天PointClub",
+    "da": "楽天PointClub",
+    "de": "楽天PointClub",
+    "el": "楽天PointClub",
+    "en_AU": "楽天PointClub",
+    "en_CA": "楽天PointClub",
+    "en_GB": "楽天PointClub",
+    "en_IN": "楽天PointClub",
+    "en_XC": "楽天PointClub",
+    "es": "楽天PointClub",
+    "es_419": "楽天PointClub",
+    "es_US": "楽天PointClub",
+    "es_�$": "楽天PointClub",
+    "et": "楽天PointClub",
+    "eu": "楽天PointClub",
+    "fa": "楽天PointClub",
+    "fi": "楽天PointClub",
+    "fr": "楽天PointClub",
+    "fr_CA": "楽天PointClub",
+    "gl": "楽天PointClub",
+    "gu": "楽天PointClub",
+    "hi": "楽天PointClub",
+    "hr": "楽天PointClub",
+    "hu": "楽天PointClub",
+    "hy": "楽天PointClub",
+    "in": "楽天PointClub",
+    "is": "楽天PointClub",
+    "it": "楽天PointClub",
+    "iw": "楽天PointClub",
+    "ja": "楽天PointClub",
+    "ka": "楽天PointClub",
+    "kk": "楽天PointClub",
+    "km": "楽天PointClub",
+    "kn": "楽天PointClub",
+    "ko": "楽天PointClub",
+    "ky": "楽天PointClub",
+    "lo": "楽天PointClub",
+    "lt": "楽天PointClub",
+    "lv": "楽天PointClub",
+    "mk": "楽天PointClub",
+    "ml": "楽天PointClub",
+    "mn": "楽天PointClub",
+    "mr": "楽天PointClub",
+    "ms": "楽天PointClub",
+    "my": "楽天PointClub",
+    "nb": "楽天PointClub",
+    "ne": "楽天PointClub",
+    "nl": "楽天PointClub",
+    "or": "楽天PointClub",
+    "pa": "楽天PointClub",
+    "pl": "楽天PointClub",
+    "pt": "楽天PointClub",
+    "pt_BR": "楽天PointClub",
+    "pt_PT": "楽天PointClub",
+    "ro": "楽天PointClub",
+    "ru": "楽天PointClub",
+    "si": "楽天PointClub",
+    "sk": "楽天PointClub",
+    "sl": "楽天PointClub",
+    "sq": "楽天PointClub",
+    "sr": "楽天PointClub",
+    "sv": "楽天PointClub",
+    "sw": "楽天PointClub",
+    "ta": "楽天PointClub",
+    "te": "楽天PointClub",
+    "th": "楽天PointClub",
+    "tl": "楽天PointClub",
+    "tr": "楽天PointClub",
+    "uk": "楽天PointClub",
+    "ur": "楽天PointClub",
+    "uz": "楽天PointClub",
+    "vi": "楽天PointClub",
+    "zh_CN": "楽天PointClub",
+    "zh_HK": "楽天PointClub",
+    "zh_TW": "楽天PointClub",
+    "zu": "楽天PointClub"
+  },
+  "version_code": "390",
+  "version_name": "5.25.0",
+  "min_sdk_version": "26",
+  "target_sdk_version": "34",
+  "permissions": [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.INTERNET",
+    "android.permission.POST_NOTIFICATIONS",
+    "point.club.notification",
+    "android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS",
+    "android.permission.WAKE_LOCK",
+    "com.google.android.c2dm.permission.RECEIVE",
+    "com.google.android.gms.permission.AD_ID",
+    "android.permission.ACCESS_ADSERVICES_ATTRIBUTION",
+    "android.permission.ACCESS_ADSERVICES_AD_ID",
+    "android.permission.ACCESS_WIFI_STATE",
+    "android.permission.USE_BIOMETRIC",
+    "android.permission.USE_FINGERPRINT",
+    "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE",
+    "jp.co.rakuten.pointclub.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "total_size": 22087782,
+  "icon": "icon.png",
+  "split_apks": [
+    {
+      "file": "jp.co.rakuten.pointclub.android.apk",
+      "id": "base"
+    },
+    {
+      "file": "config.x86.apk",
+      "id": "config.x86"
+    },
+    {
+      "file": "config.xxhdpi.apk",
+      "id": "config.xxhdpi"
+    },
+    {
+      "file": "config.x86_64.apk",
+      "id": "config.x86_64"
+    },
+    {
+      "file": "config.mdpi.apk",
+      "id": "config.mdpi"
+    },
+    {
+      "file": "config.hdpi.apk",
+      "id": "config.hdpi"
+    },
+    {
+      "file": "config.ldpi.apk",
+      "id": "config.ldpi"
+    },
+    {
+      "file": "config.tvdpi.apk",
+      "id": "config.tvdpi"
+    },
+    {
+      "file": "config.xxxhdpi.apk",
+      "id": "config.xxxhdpi"
+    },
+    {
+      "file": "config.arm64_v8a.apk",
+      "id": "config.arm64_v8a"
+    },
+    {
+      "file": "config.xhdpi.apk",
+      "id": "config.xhdpi"
+    },
+    {
+      "file": "config.armeabi_v7a.apk",
+      "id": "config.armeabi_v7a"
+    }
+  ]
+}

@@ -18,7 +18,7 @@ describe('rakuten_kuji', async () => {
         await closeWarningLabel();
         await handleFirstTimeLogin();
         await closeWarningLabel();
-        await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
         await driver.pause(5000);
         await driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
         await driver.pause(5000);
@@ -187,7 +187,9 @@ describe('rakuten_kuji', async () => {
 
     async function handleClickAd() {
         // await kHomeScreen.waitForPlayMoviewIconIsShown();
+        await driver.pause(config.DEFAULT_TIMEOUT);
         if (! await kHomeScreen.adButton.isDisplayed()) {
+            console.log("AdButton is not displayed");
             return;
         }
         await kHomeScreen.adButton.click();
@@ -290,6 +292,18 @@ describe('rakuten_kuji', async () => {
         await handleClickKujiV2();
     });
 
+    it('k_click_message', async () => {
+        let isLoggedIn = await checkIsLoggedIn();
+        if (!isLoggedIn) {
+            return;
+        }
+        await handleLuckyKujiV2();
+        if (await kHomeScreen.homeTabLabel.isDisplayed()) {
+            await kHomeScreen.homeTabLabel.click();
+        }
+        await handleClickMessage();
+    });
+
     it('k_click_ad', async () => {
         let isLoggedIn = await checkIsLoggedIn();
         if (!isLoggedIn) {
@@ -300,15 +314,6 @@ describe('rakuten_kuji', async () => {
             await kHomeScreen.homeTabLabel.click();
         }
         await handleClickAd();
-    });
-
-    it('k_click_message', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        await handleLuckyKujiV2();
-        await handleClickMessage();
     });
 });
 

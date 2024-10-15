@@ -33,7 +33,7 @@ config.capabilities = [
         // https://github.com/appium/appium/releases/tag/v1.13.0
         'appium:automationName': 'UiAutomator2',
         // The path to the app
-        'appium:app': getAppPath(configConst.default.RAKUTEN_POINT_CLUB_APK_NAME),
+        'appium:app': getAppPath(configConst.default.RAKUTEN_RECIPE_APK_NAME),
         'appium:otherApps': `["${getAppPath(configConst.default.RAKUTEN_RECIPE_APK_NAME)}","${getAppPath(configConst.default.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME)}","${getAppPath(configConst.default.RAKUTEN_TOSHIRU_APK_NAME)}"]`,
         // Read the reset strategies very well, they differ per platform, see
         // http://appium.io/docs/en/writing-running-appium/other/reset-strategies/

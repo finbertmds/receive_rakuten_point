@@ -109,6 +109,19 @@ describe('rakuten_point_club', async () => {
         }
     }
 
+    async function clickToCancelGuide() {
+        if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+            console.log("rakutenNameLabel is not displayed");
+            return false;
+        }
+        if (! await pcHomeScreen.menuNavigationButton.isDisplayed()) {
+            console.log("menuNavigationButton is not displayed");
+            return false;
+        }
+        await pcHomeScreen.menuNavigationButton.click();
+        await pcHomeScreen.menuNavigationButton.click();
+    }
+
     async function checkIsLoggedIn() {
         let rakutenNameLabel = pcHomeScreen.rakutenNameLabel
         if (await rakutenNameLabel.isDisplayed()) {
@@ -288,6 +301,7 @@ describe('rakuten_point_club', async () => {
             await handleFirstTimeCloseWarning();
             await handleFirstTimeLogin();
             await handleFirstTimeCloseNotification();
+            await clickToCancelGuide();
         }
     });
 
@@ -296,7 +310,7 @@ describe('rakuten_point_club', async () => {
         if (!isLoggedIn) {
             return;
         }
-        for (let index = 0; index < 3; index++) {
+        for (let index = 0; index < config.RAKUTEN_POINT_CLUB_OPEN_REWARD_COUNT; index++) {
             await openRewardScreen();
         }
     });
