@@ -41,6 +41,12 @@ describe('rakuten_point_club', async () => {
             // await pcLoginScreen.enterLoginButton.click();
             await driver.pause(5000);
         }
+        if (await (await pcLoginScreen.skipToSignIn).isDisplayed()) {
+            await pcLoginScreen.skipToSignIn.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await pcLoginScreen.waitForLoggedIn();
+            return;
+        }
         if (await (await pcLoginScreen.loginContinueButton).isDisplayed()) {
             await pcLoginScreen.loginContinueButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

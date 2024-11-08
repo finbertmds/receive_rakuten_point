@@ -37,6 +37,12 @@ describe('rakuten_super_point_screen', async () => {
         await handleChromeAction();
         await driver.pause(5000);
         // await sLoginScreen.waitForEnterLoginScreen();
+        if (await (await sLoginScreen.skipToSignIn).isDisplayed()) {
+            await sLoginScreen.skipToSignIn.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await sLoginScreen.waitForLoggedIn();
+            return;
+        }
         if (await (await sLoginScreen.loginContinueButton).isDisplayed()) {
             await sLoginScreen.loginContinueButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

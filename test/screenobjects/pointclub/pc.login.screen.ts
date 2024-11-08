@@ -11,6 +11,7 @@ const SELECTORS = {
     SIGNIN_BUTTON: getByResouceId("cta011"),
     LOGIN_CONTINUE_BUTTON: getByResouceId("form_81"),
     LOGIN_WITH_OTHER_BUTTON: getByResouceId("textl_182"),
+    SKIP_TO_SIGN_IN: getByResouceId("seco_473"),
 };
 
 class PC_LoginScreen extends AppScreen {
@@ -36,6 +37,10 @@ class PC_LoginScreen extends AppScreen {
 
     get loginWithOtherButton () {
         return $(SELECTORS.LOGIN_WITH_OTHER_BUTTON);
+    }
+
+    get skipToSignIn () {
+        return $(SELECTORS.SKIP_TO_SIGN_IN);
     }
 
     get userid () {

@@ -47,6 +47,12 @@ describe('rakuten_kuji', async () => {
             await driver.pause(5000);
         }
         // await kLoginScreen.waitForEnterLoginScreen();
+        if (await (await kLoginScreen.skipToSignIn).isDisplayed()) {
+            await kLoginScreen.skipToSignIn.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await kLoginScreen.waitForLoggedIn();
+            return;
+        }
         if (await (await kLoginScreen.loginContinueButton).isDisplayed()) {
             await kLoginScreen.loginContinueButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

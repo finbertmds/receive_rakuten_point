@@ -34,6 +34,12 @@ describe('rakuten_toshiru', async () => {
             // }
             
             // await tLoginScreen.waitForEnterLoginScreen();
+            if (await (await tLoginScreen.skipToSignIn).isDisplayed()) {
+                await tLoginScreen.skipToSignIn.click();
+                await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+                await tLoginScreen.waitForLoggedIn();
+                return;
+            }
             if (await (await tLoginScreen.loginContinueButton).isDisplayed()) {
                 await tLoginScreen.loginContinueButton.click();
                 await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
