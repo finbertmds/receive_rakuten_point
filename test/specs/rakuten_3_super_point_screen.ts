@@ -61,6 +61,10 @@ describe('rakuten_super_point_screen', async () => {
         await driver.pause(3000);
         await sLoginScreen.signInButton.click();
         await driver.pause(3000);
+        if (await (await sLoginScreen.skipToSignIn).isDisplayed()) {
+            await sLoginScreen.skipToSignIn.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        }
         await sLoginScreen.waitForLoggedIn();
     }
 

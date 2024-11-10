@@ -71,6 +71,10 @@ describe('rakuten_kuji', async () => {
         await driver.pause(3000);
         await kLoginScreen.signInButton.click();
         await driver.pause(3000);
+        if (await (await kLoginScreen.skipToSignIn).isDisplayed()) {
+            await kLoginScreen.skipToSignIn.click();
+            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        }
         await kLoginScreen.waitForLoggedIn();
     }
 
