@@ -27,7 +27,16 @@ class CampaignPage extends Page {
     }
 
     async clickBtnEntry(index: number): Promise<void> {
-        await (await $(this.entryButtonList[index])).click();
+        await browser.pause(2000);
+        await (await $(this.entryButtonList[index])).scrollIntoView();
+        await browser.pause(2000);
+        if (await (await $(this.entryButtonList[index])).isExisting()) {
+            if (await (await $(this.entryButtonList[index])).isDisplayed()) {
+                if (await (await $(this.entryButtonList[index])).isClickable()) {
+                    await (await $(this.entryButtonList[index])).click();
+                }
+            }
+        }
     }
 
     async entryCampaign(): Promise<void> {
