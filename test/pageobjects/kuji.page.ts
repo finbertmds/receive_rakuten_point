@@ -12,6 +12,9 @@ class KujiPage extends Page {
     // get kujiElement (kujiCountCurrent: string) { return $('//section[@class="kuji_list"]/ul/li['+kujiCountCurrent+']/a/img') }
     get btnDisnon() { return $('.btn-10000') }
     get btnEntry() { return $('#entry') }
+    get fcDialogContent() { return $('.fc-dialog-content') }
+    get fcRewardedAdButton() { return $('.fc-rewarded-ad-button') }
+    get fcCloseButton() { return $('#close_button_icon') }
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -40,6 +43,11 @@ class KujiPage extends Page {
             return false;
         }
         await kujiElementIndex.click();
+        await browser.pause(3000)
+        let url = await browser.getUrl()
+        if (url.indexOf(config.KUJI_HOME_PAGE) == -1) {
+            return false;
+        }
         return true;
         // await (await this.getKujiElementIndex(index)).click()
         // await browser.pause(1000)
@@ -63,10 +71,39 @@ class KujiPage extends Page {
         return await (await this.btnEntry).isDisplayed();
     }
 
-    async handleClickEntry() {
+    async handleFcDialogIsShow() {
         await browser.pause(1000)
+        let isFcDialogIsShow = false;
+        if (await (await this.fcDialogContent).isExisting()) {
+            if (await (await this.fcDialogContent).isDisplayed()) {
+                if (await (await this.fcRewardedAdButton).isDisplayed() && await (await this.fcRewardedAdButton).isClickable()) {
+                    await (await this.fcRewardedAdButton).click()
+                    await browser.pause(40000);
+                    isFcDialogIsShow = true;
+                }
+            }
+        }
+        if (!isFcDialogIsShow) {
+            return;
+        }
+        await browser.refresh();
+        await browser.pause(3000);
+    }
+
+    async handleClickEntry() {
+        await browser.pause(2000)
         let url = await browser.getUrl()
-        if (url.indexOf(config.KUJI_HOME_PAGE) == -1 || !(await (await this.btnEntry).isClickable())) {
+        if (url.indexOf(config.KUJI_HOME_PAGE) == -1) {
+            console.log("this page is not kuji: " + url);
+            return;
+        }
+        if (!(await (await this.btnEntry).isExisting())) {
+            console.log("entry is not existing");
+            return;
+        }
+        await (await this.btnEntry).scrollIntoView();
+        if (!(await (await this.btnEntry).isClickable())) {
+            console.log("entry is not clickable");
             return;
         }
         await (await this.btnEntry).click();
@@ -95,15 +132,19 @@ class KujiPage extends Page {
 
     async handleProcessAfterClickKuji(index: number, isDefaultLink: boolean = false) {
         await browser.pause(5000)
+        let url = await browser.getUrl()
+        if (url.indexOf(config.KUJI_HOME_PAGE) == -1) {
+            return;
+        }
         if (!isDefaultLink && await this.hasDisnon()) {
             await this.handleHasDisnon();
         }
-        if (await this.hasEntry()) {
-            console.log(`kuji ${index}: hasEntry`);
-            await this.handleClickEntry();
-        } else {
-            console.log("notEntry");
+        await browser.pause(5000)
+        if (url.indexOf(config.KUJI_HOME_PAGE) == -1) {
+            return;
         }
+        await this.handleFcDialogIsShow();
+        await this.handleClickEntry();
     }
 
     /**

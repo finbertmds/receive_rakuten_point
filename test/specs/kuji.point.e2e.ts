@@ -1,4 +1,5 @@
 import config from '../../config';
+import timeHelper from '../helpers/timeHelper';
 import kujiPage from '../pageobjects/kuji.page';
 import loginPage from '../pageobjects/login.page';
 import rakutencardPage from '../pageobjects/rakutencard.page';
@@ -32,10 +33,13 @@ describe('Rakuten', () => {
     it('rakuten:kuji_get_point', async () => {
         await credentials();
         await kujiPage.open();
-        let kujiCount = await kujiPage.getKujiCount()
+        let kujiCount = await kujiPage.getKujiCount();
+        let isAM = timeHelper.checkIsAM();
         if (kujiCount > 0) {
-            for (let index = 0; index < kujiCount; index++) {
+            let kujiCountHalf = (Math.round(kujiCount / 2));
+            for (let index = (isAM ? 0 : kujiCountHalf); index < (isAM ? kujiCountHalf : kujiCount); index++) {
                 await kujiPage.open();
+                console.log("open kuji at " + index);
                 let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
                 if (clickedKuji) {
                     await kujiPage.handleProcessAfterClickKuji(index, false);

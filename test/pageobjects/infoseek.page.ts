@@ -54,6 +54,13 @@ class InfoseekPage extends Page {
     get btnGetPoint() { return $('.list-acquired .btn') }
 
     /**
+     * fc dialog
+     */
+    get fcDialogContent() { return $('.fc-dialog-content') }
+    get fcRewardedAdButton() { return $('.fc-rewarded-ad-button') }
+    get fcCloseButton() { return $('#close_button_icon') }
+
+    /**
      * ranking list link
      */
     get sectionBox() { return $('section.section-box') }
@@ -221,6 +228,25 @@ class InfoseekPage extends Page {
                 await browser.pause(2000);
             }
         }
+    }
+
+    async handleFcDialogIsShow() {
+        await browser.pause(1000)
+        let isFcDialogIsShow = false;
+        if (await (await this.fcDialogContent).isExisting()) {
+            if (await (await this.fcDialogContent).isDisplayed()) {
+                if (await (await this.fcRewardedAdButton).isDisplayed() && await (await this.fcRewardedAdButton).isClickable()) {
+                    await (await this.fcRewardedAdButton).click()
+                    await browser.pause(40000);
+                    isFcDialogIsShow = true;
+                }
+            }
+        }
+        if (!isFcDialogIsShow) {
+            return;
+        }
+        await browser.refresh();
+        await browser.pause(3000);
     }
 
     async readArticle(tabName?: string) {
