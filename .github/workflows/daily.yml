@@ -142,7 +142,7 @@ jobs:
     name: Restarts the scheduled run when it failed
     runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
-    needs: [bank, campaign, card, kuji, search]
+    needs: [bank, campaign, card, search]
     steps:
       - name: Retry the workflow
         run: |
