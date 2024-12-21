@@ -11,6 +11,7 @@ describe('Infoseek', () => {
     async function credentials() {
         await infoseekPage.open();
         await browser.pause(config.DEFAULT_TIMEOUT);
+        await infoseekPage.handleCloseInterstitialModal();
         await infoseekPage.closeModalContents();
         await infoseekPage.closeNotificationModal();
         if (await infoseekPage.isNeedLogin()) {
@@ -22,6 +23,7 @@ describe('Infoseek', () => {
         await credentials();
         await browser.pause(2000);
 
+        await infoseekPage.handleCloseInterstitialModal();
         await infoseekPage.closeModalContents();
         await infoseekPage.joinMission();
     });
@@ -30,6 +32,7 @@ describe('Infoseek', () => {
         await credentials();
         await browser.pause(2000);
 
+        await infoseekPage.handleCloseInterstitialModal();
         await infoseekPage.closeModalContents();
         let index = timeHelper.randomFollowTime(config.INFO_SEEK_RANKING_PAGE.length - 1);
         console.log("random index: " + index);
@@ -50,6 +53,7 @@ describe('Infoseek', () => {
         await credentials();
         await browser.pause(2000);
 
+        await infoseekPage.handleCloseInterstitialModal();
         await infoseekPage.closeModalContents();
         await infoseekPage.handleClickGetPoint();
     });

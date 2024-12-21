@@ -134,7 +134,7 @@ class RakutenCardPage extends Page {
         if (! await videoBtn.isDisplayed()) {
             return;
         }
-        await videoBtn.scrollIntoView()
+        await videoBtn.moveTo()
         await videoBtn.click();
         await browser.waitUntil(async () => {
             try {

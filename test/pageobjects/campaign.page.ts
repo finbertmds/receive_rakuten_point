@@ -28,7 +28,7 @@ class CampaignPage extends Page {
 
     async clickBtnEntry(index: number): Promise<void> {
         await browser.pause(2000);
-        await (await $(this.entryButtonList[index])).scrollIntoView();
+        await (await $(this.entryButtonList[index])).moveTo();
         await browser.pause(2000);
         if (await (await $(this.entryButtonList[index])).isExisting()) {
             if (await (await $(this.entryButtonList[index])).isDisplayed()) {

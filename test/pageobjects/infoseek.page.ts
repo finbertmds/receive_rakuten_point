@@ -61,6 +61,30 @@ class InfoseekPage extends Page {
     get fcCloseButton() { return $('#close_button_icon') }
 
     /**
+     * interstital modal
+     */
+    async getInterstitialModalIsVisible() {
+        let interstitialModalList = await $$('.interstitial-modal-container');
+        for (let index = 0; index < interstitialModalList.length; index++) {
+            const visibleEle = interstitialModalList[index];
+            if (await visibleEle.isDisplayed()) {
+                return visibleEle;
+            }
+        }
+        return null;
+    }
+    async getInterstitialModalCloseButtonIsVisible() {
+        let interstitialModalList = await $$('#interstitial_close_button');
+        for (let index = 0; index < interstitialModalList.length; index++) {
+            const visibleEle = interstitialModalList[index];
+            if (await visibleEle.isDisplayed()) {
+                return visibleEle;
+            }
+        }
+        return null;
+    }
+
+    /**
      * ranking list link
      */
     get sectionBox() { return $('section.section-box') }
@@ -188,11 +212,11 @@ class InfoseekPage extends Page {
         let missionList = await this.btnMissionJoinList;
         for (let index = 0; index < missionList.length; index++) {
             const mission = await this.btnMissionJoin;
-            await mission.scrollIntoView();
+            await mission.moveTo();
             await mission.click();
             await browser.pause(5000);
             if (await (await this.btnMissionAgree).isDisplayed()) {
-                await this.btnMissionAgree.scrollIntoView();
+                await this.btnMissionAgree.moveTo();
                 await (await this.btnMissionAgree).click();
                 await browser.pause(5000);
             }
@@ -203,7 +227,7 @@ class InfoseekPage extends Page {
 
     async handleOpenHomePageAndClickTab(tabName?: string) {
         await super.open(config.INFO_SEEK_PAGE);
-        await (await this.sectionBox).scrollIntoView();
+        await (await this.sectionBox).moveTo();
 
         if (tabName) {
             let tabNameElement = await $('.' + tabName);
@@ -214,7 +238,7 @@ class InfoseekPage extends Page {
                 let tabNameContentsId = tabName.replace('genre-tab__', 'ranking-');
                 let tabNameContentsElement = await $('#' + tabNameContentsId);
                 if (await tabNameContentsElement.isDisplayed()) {
-                    await tabNameContentsElement.scrollIntoView();
+                    await tabNameContentsElement.moveTo();
                 }
             }
         }
@@ -222,7 +246,7 @@ class InfoseekPage extends Page {
 
     async handleReactionIine() {
         if (await (await this.reactionIconIine).isDisplayed()) {
-            await (await this.reactionIconIine).scrollIntoView();
+            await (await this.reactionIconIine).moveTo();
             if (await (await this.reactionIconIine).isClickable()) {
                 await (await this.reactionIconIine).click()
                 await browser.pause(2000);
@@ -270,7 +294,7 @@ class InfoseekPage extends Page {
                 urlClickedList.push(url);
                 let title = await browser.getTitle()
                 titleClickedList.push(title);
-                await (await this.footerContainer).scrollIntoView();
+                await (await this.footerContainer).moveTo();
                 await this.handleReactionIine();
             }
 
@@ -283,7 +307,7 @@ class InfoseekPage extends Page {
 
     async handleOpenRankingPage(rankingPage: string) {
         await super.open(rankingPage);
-        // await (await this.sectionBox).scrollIntoView();
+        // await (await this.sectionBox).moveTo();
     }
 
     async readArticleAtRankingPage(rankingPage: string) {
@@ -301,14 +325,14 @@ class InfoseekPage extends Page {
             console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
             const link = rankingListTextLink[indexPage];
             if (await link.isDisplayed()) {
-                await link.scrollIntoView();
+                await link.moveTo();
                 await link.click();
                 await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
                 let url = await browser.getUrl()
                 urlClickedList.push(url);
                 let title = await browser.getTitle()
                 titleClickedList.push(title);
-                await (await this.footerContainer).scrollIntoView();
+                await (await this.footerContainer).moveTo();
                 await this.handleReactionIine();
             }
 
@@ -336,7 +360,7 @@ class InfoseekPage extends Page {
         let getPointList = await this.btnGetPointList;
         for (let index = 0; index < getPointList.length; index++) {
             const getPoint = await this.btnGetPoint;
-            await getPoint.scrollIntoView();
+            await getPoint.moveTo();
             await getPoint.click();
             await browser.pause(5000);
             await (await this.pointGet).waitForDisplayed();
@@ -362,6 +386,15 @@ class InfoseekPage extends Page {
                 }
             } else {
                 await browser.refresh();
+            }
+        }
+    }
+
+    async handleCloseInterstitialModal() {
+        if (await this.getInterstitialModalIsVisible()) {
+            let visibleEle = await this.getInterstitialModalCloseButtonIsVisible();
+            if (visibleEle) {
+                await visibleEle.click();
             }
         }
     }
