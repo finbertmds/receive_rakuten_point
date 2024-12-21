@@ -101,7 +101,7 @@ class KujiPage extends Page {
             console.log("entry is not existing");
             return;
         }
-        await (await this.btnEntry).moveTo();
+        await (await this.btnEntry).scrollIntoView();
         if (!(await (await this.btnEntry).isClickable())) {
             console.log("entry is not clickable");
             return;

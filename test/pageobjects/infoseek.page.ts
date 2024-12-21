@@ -245,12 +245,16 @@ class InfoseekPage extends Page {
     }
 
     async handleReactionIine() {
-        if (await (await this.reactionIconIine).isDisplayed()) {
-            await (await this.reactionIconIine).moveTo();
-            if (await (await this.reactionIconIine).isClickable()) {
-                await (await this.reactionIconIine).click()
-                await browser.pause(2000);
+        try {
+            if (await (await this.reactionIconIine).isDisplayed()) {
+                await (await this.reactionIconIine).moveTo();
+                if (await (await this.reactionIconIine).isClickable()) {
+                    await (await this.reactionIconIine).click()
+                    await browser.pause(2000);
+                }
             }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -288,13 +292,14 @@ class InfoseekPage extends Page {
             console.log("readArticle: random indexPage: " + indexPage);
             const link = rankingListTextLink[indexPage];
             if (await link.isDisplayed()) {
+                await link.moveTo();
                 await link.click();
                 await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
                 let url = await browser.getUrl()
                 urlClickedList.push(url);
                 let title = await browser.getTitle()
                 titleClickedList.push(title);
-                await (await this.footerContainer).moveTo();
+                // await (await this.footerContainer).moveTo();
                 await this.handleReactionIine();
             }
 
@@ -332,7 +337,7 @@ class InfoseekPage extends Page {
                 urlClickedList.push(url);
                 let title = await browser.getTitle()
                 titleClickedList.push(title);
-                await (await this.footerContainer).moveTo();
+                // await (await this.footerContainer).moveTo();
                 await this.handleReactionIine();
             }
 
