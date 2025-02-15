@@ -88,16 +88,17 @@ class InfoseekPage extends Page {
      * ranking list link
      */
     get sectionBox() { return $('section.section-box') }
-    async rankingListTextLink() {
-        let rankingListTextLinkList = await $$('.ranking-list__text-title');
-        let visibleList = [];
-        for (let index = 0; index < rankingListTextLinkList.length; index++) {
-            const link = rankingListTextLinkList[index];
-            if (await link.isDisplayed()) {
-                visibleList.push(link);
-            }
-        }
-        return visibleList;
+    rankingListTextLink() {
+        // let rankingListTextLinkList = await $$('.ranking-list__text-title');
+        // let visibleList = [];
+        // for (let index = 0; index < rankingListTextLinkList.length; index++) {
+        //     let link = rankingListTextLinkList[index];
+        //     if (await link.isDisplayed()) {
+        //         visibleList.push(link);
+        //     }
+        // }
+        // return rankingListTextLinkList;
+        return $$('.ranking-list__text-title');
     }
     get footerContainer() { return $('.footer-container') }
 
@@ -246,35 +247,41 @@ class InfoseekPage extends Page {
 
     async handleReactionIine() {
         try {
-            if (await (await this.reactionIconIine).isDisplayed()) {
-                await (await this.reactionIconIine).moveTo();
-                if (await (await this.reactionIconIine).isClickable()) {
-                    await (await this.reactionIconIine).click()
+            let reaction = await this.reactionIconIine;
+            await browser.pause(1000);
+            if (await reaction.isDisplayed()) {
+                await browser.pause(1000);
+                await reaction.scrollIntoView({block:'center'});
+                // await reaction.moveTo();
+                if (await reaction.isClickable()) {
+                    await reaction.click()
                     await browser.pause(2000);
+                    return true;
                 }
             }
         } catch (error) {
             console.log(error);
         }
+        return false;
     }
 
     async handleFcDialogIsShow() {
-        await browser.pause(1000)
+        await browser.pause(2000)
         let isFcDialogIsShow = false;
-        if (await (await this.fcDialogContent).isExisting()) {
-            if (await (await this.fcDialogContent).isDisplayed()) {
-                if (await (await this.fcRewardedAdButton).isDisplayed() && await (await this.fcRewardedAdButton).isClickable()) {
-                    await (await this.fcRewardedAdButton).click()
-                    await browser.pause(40000);
-                    isFcDialogIsShow = true;
-                }
+        let dialog = await this.fcDialogContent;
+        if (await dialog.isDisplayed()) {
+            if (await (await this.fcRewardedAdButton).isDisplayed() && await (await this.fcRewardedAdButton).isClickable()) {
+                await (await this.fcRewardedAdButton).click()
+                await browser.pause(40000);
+                isFcDialogIsShow = true;
             }
         }
-        if (!isFcDialogIsShow) {
-            return;
-        }
-        await browser.refresh();
-        await browser.pause(3000);
+        // if (!isFcDialogIsShow) {
+        //     return isFcDialogIsShow;
+        // }
+        // await browser.refresh();
+        // await browser.pause(3000);
+        return isFcDialogIsShow;
     }
 
     async readArticle(tabName?: string) {
@@ -320,32 +327,36 @@ class InfoseekPage extends Page {
 
         let urlClickedList = [];
         let titleClickedList = [];
-        let oldRandomValue = -1;
+        let oldRandomValue: number[] = [];
         for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
             let rankingListTextLink = await this.rankingListTextLink();
             let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
-            if (indexPage === oldRandomValue) {
+            if (!oldRandomValue.includes(indexPage)) {
                 indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
             }
-            console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
-            const link = rankingListTextLink[indexPage];
+            let link = rankingListTextLink[index];
+            // console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
+            await browser.pause(1000);
             if (await link.isDisplayed()) {
-                await link.moveTo();
-                await link.click();
-                await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                let url = await browser.getUrl()
-                urlClickedList.push(url);
-                let title = await browser.getTitle()
-                titleClickedList.push(title);
-                // await (await this.footerContainer).moveTo();
-                await this.handleReactionIine();
+                await browser.pause(1000);
+                await link.scrollIntoView({block:'center'});
+                // await link.moveTo();
+                if (await link.isClickable()) {
+                    await link.click();
+                    // await (await this.footerContainer).moveTo();
+                    let iineClicked = await this.handleReactionIine();
+                    await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+                    if (iineClicked) {
+                        oldRandomValue.push(indexPage);
+                    }
+                }
             }
 
             await this.handleOpenRankingPage(rankingPage);
         }
-        console.log("readArticleAtRankingPage: rankingPage: " + rankingPage);
-        console.log("readArticleAtRankingPage: urlClickedList: " + urlClickedList);
-        console.log("readArticleAtRankingPage: titleClickedList: " + titleClickedList);
+        // console.log("readArticleAtRankingPage: rankingPage: " + rankingPage);
+        // console.log("readArticleAtRankingPage: urlClickedList: " + urlClickedList);
+        // console.log("readArticleAtRankingPage: titleClickedList: " + titleClickedList);
     }
 
     async visitMissionPage() {

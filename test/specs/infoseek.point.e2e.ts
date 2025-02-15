@@ -19,14 +19,14 @@ describe('Infoseek', () => {
         }
     }
 
-    it('infoseek:join_mission', async () => {
-        await credentials();
-        await browser.pause(2000);
+    // it('infoseek:join_mission', async () => {
+    //     await credentials();
+    //     await browser.pause(2000);
 
-        await infoseekPage.handleCloseInterstitialModal();
-        await infoseekPage.closeModalContents();
-        await infoseekPage.joinMission();
-    });
+    //     await infoseekPage.handleCloseInterstitialModal();
+    //     await infoseekPage.closeModalContents();
+    //     await infoseekPage.joinMission();
+    // });
 
     it('infoseek:read_articles', async () => {
         await credentials();
@@ -39,6 +39,15 @@ describe('Infoseek', () => {
         const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
         console.log("rankingPage: " + rankingPage);
         await infoseekPage.readArticleAtRankingPage(rankingPage);
+        await browser.pause(2000);
+        let rankingPage2;
+        if (index < config.INFO_SEEK_RANKING_PAGE.length - 1) {
+            rankingPage2 = config.INFO_SEEK_RANKING_PAGE[index + 1];
+        } else {
+            rankingPage2 = config.INFO_SEEK_RANKING_PAGE[0];
+        }
+        console.log("rankingPage2: " + rankingPage2);
+        await infoseekPage.readArticleAtRankingPage(rankingPage2);
     });
 
     // it('infoseek:visit_mission', async () => {
