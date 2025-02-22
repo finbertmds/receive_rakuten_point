@@ -33,7 +33,7 @@ export default {
     INFO_SEEK_PAGE: 'https://www.infoseek.co.jp',
     INFO_SEEK_MISSION_PAGE: 'https://www.infoseek.co.jp/mission/list/',
     DEFAULT_READ_ARTICLE_TIME: 10000,
-    READ_ARTICLE_MAX_COUNT: 3,
+    READ_ARTICLE_MAX_COUNT: 2,
     INFO_SEEK_RANKING_PAGE: [
         'https://news.infoseek.co.jp/ranking/',
         'https://news.infoseek.co.jp/ranking/entertainment',

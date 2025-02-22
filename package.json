@@ -16,7 +16,7 @@
     "@wdio/local-runner": "^8.41.0",
     "@wdio/mocha-framework": "^8.41.0",
     "@wdio/spec-reporter": "^8.41.0",
-    "chromedriver": "^131.0.1",
+    "chromedriver": "^133.0.2",
     "concurrently": "^8.2.2",
     "geckodriver": "^5.0.0",
     "ts-node": "^10.9.2",

@@ -246,21 +246,16 @@ class InfoseekPage extends Page {
     }
 
     async handleReactionIine() {
-        try {
-            let reaction = await this.reactionIconIine;
-            await browser.pause(1000);
-            if (await reaction.isDisplayed()) {
-                await browser.pause(1000);
-                await reaction.scrollIntoView({block:'center'});
-                // await reaction.moveTo();
-                if (await reaction.isClickable()) {
-                    await reaction.click()
-                    await browser.pause(2000);
-                    return true;
-                }
+        let reaction = await this.reactionIconIine;
+        if (await reaction.isDisplayed()) {
+            // await reaction.scrollIntoView({block:'center'});
+            if (await reaction.isClickable()) {
+                await reaction.moveTo();
+                console.log("handleReactionIine: click iine");
+                await reaction.click()
+                await browser.pause(2000);
+                return true;
             }
-        } catch (error) {
-            console.log(error);
         }
         return false;
     }
@@ -284,38 +279,38 @@ class InfoseekPage extends Page {
         return isFcDialogIsShow;
     }
 
-    async readArticle(tabName?: string) {
-        await this.handleOpenHomePageAndClickTab(tabName);
+    // async readArticle(tabName?: string) {
+    //     await this.handleOpenHomePageAndClickTab(tabName);
 
-        let urlClickedList = [];
-        let titleClickedList = [];
-        let oldRandomValue = -1;
-        for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
-            let rankingListTextLink = await this.rankingListTextLink();
-            let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
-            if (indexPage === oldRandomValue) {
-                indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
-            }
-            console.log("readArticle: random indexPage: " + indexPage);
-            const link = rankingListTextLink[indexPage];
-            if (await link.isDisplayed()) {
-                await link.moveTo();
-                await link.click();
-                await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-                let url = await browser.getUrl()
-                urlClickedList.push(url);
-                let title = await browser.getTitle()
-                titleClickedList.push(title);
-                // await (await this.footerContainer).moveTo();
-                await this.handleReactionIine();
-            }
+    //     let urlClickedList = [];
+    //     let titleClickedList = [];
+    //     let oldRandomValue = -1;
+    //     for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
+    //         let rankingListTextLink = await this.rankingListTextLink();
+    //         let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+    //         if (indexPage === oldRandomValue) {
+    //             indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+    //         }
+    //         console.log("readArticle: random indexPage: " + indexPage);
+    //         const link = rankingListTextLink[indexPage];
+    //         if (await link.isDisplayed()) {
+    //             await link.moveTo();
+    //             await link.click();
+    //             await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+    //             let url = await browser.getUrl()
+    //             urlClickedList.push(url);
+    //             let title = await browser.getTitle()
+    //             titleClickedList.push(title);
+    //             // await (await this.footerContainer).moveTo();
+    //             await this.handleReactionIine();
+    //         }
 
-            await this.handleOpenHomePageAndClickTab(tabName);
-        }
-        console.log("readArticle: rankingPage: " + tabName);
-        console.log("readArticle: urlClickedList: " + urlClickedList);
-        console.log("readArticle: titleClickedList: " + titleClickedList);
-    }
+    //         await this.handleOpenHomePageAndClickTab(tabName);
+    //     }
+    //     console.log("readArticle: rankingPage: " + tabName);
+    //     console.log("readArticle: urlClickedList: " + urlClickedList);
+    //     console.log("readArticle: titleClickedList: " + titleClickedList);
+    // }
 
     async handleOpenRankingPage(rankingPage: string) {
         await super.open(rankingPage);
@@ -323,25 +318,21 @@ class InfoseekPage extends Page {
     }
 
     async readArticleAtRankingPage(rankingPage: string) {
-        await this.handleOpenRankingPage(rankingPage);
 
-        let urlClickedList = [];
-        let titleClickedList = [];
         let oldRandomValue: number[] = [];
         for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
-            let rankingListTextLink = await this.rankingListTextLink();
-            let indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+            await browser.url(rankingPage);
+            let rankingListTextLink = this.rankingListTextLink();
+            let indexPage = timeHelper.randomFollowTime(await rankingListTextLink.length - 1);
             if (!oldRandomValue.includes(indexPage)) {
-                indexPage = timeHelper.randomFollowTime(rankingListTextLink.length - 1);
+                indexPage = timeHelper.randomFollowTime(await rankingListTextLink.length - 1);
             }
-            let link = rankingListTextLink[index];
+            let link = rankingListTextLink[indexPage];
             // console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
-            await browser.pause(1000);
             if (await link.isDisplayed()) {
-                await browser.pause(1000);
-                await link.scrollIntoView({block:'center'});
-                // await link.moveTo();
+                // await link.scrollIntoView({block:'center'});
                 if (await link.isClickable()) {
+                    await link.moveTo();
                     await link.click();
                     // await (await this.footerContainer).moveTo();
                     let iineClicked = await this.handleReactionIine();
@@ -349,14 +340,10 @@ class InfoseekPage extends Page {
                     if (iineClicked) {
                         oldRandomValue.push(indexPage);
                     }
+                    console.log("handleReactionIine: iineClicked = " + iineClicked);
                 }
             }
-
-            await this.handleOpenRankingPage(rankingPage);
         }
-        // console.log("readArticleAtRankingPage: rankingPage: " + rankingPage);
-        // console.log("readArticleAtRankingPage: urlClickedList: " + urlClickedList);
-        // console.log("readArticleAtRankingPage: titleClickedList: " + titleClickedList);
     }
 
     async visitMissionPage() {
