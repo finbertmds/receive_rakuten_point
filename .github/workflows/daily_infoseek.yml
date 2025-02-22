@@ -48,6 +48,7 @@ jobs:
     runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
     needs: [infoseek]
+    
     steps:
       - name: Retry the workflow
         run: |
