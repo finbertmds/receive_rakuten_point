@@ -97,7 +97,7 @@ describe('rakuten_recipe', async () => {
         });
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1030'],
+            args: ['tap', '410', '1100'],
             includeStderr: true,
             timeout: 2000
         });
@@ -111,7 +111,7 @@ describe('rakuten_recipe', async () => {
         });
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1030'],
+            args: ['tap', '410', '1100'],
             includeStderr: true,
             timeout: 2000
         });
