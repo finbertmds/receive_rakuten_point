@@ -24,6 +24,10 @@ describe('Rakuten', () => {
         await rakutencardPage.open();
         await browser.pause(5000);
         let labelclickPointCountTxt = await rakutencardPage.getLableClickPointCountTxt();
+        if (! await (await rakutencardPage.btnClickPointCountLink).isDisplayed()) {
+            console.log("btnClickPointCountLink is not displayed");
+            return;
+        }
         await rakutencardPage.handleClickPointCountLink();
         console.log("labelclickPointCountTxt: ", labelclickPointCountTxt);
         for (let index = labelclickPointCountTxt - 1; index >= 0; index--) {
