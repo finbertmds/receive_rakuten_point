@@ -69,12 +69,14 @@ describe('rakuten_kuji', async () => {
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_USERNAME],
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['tap', '410', '1100'],
@@ -82,13 +84,14 @@ describe('rakuten_kuji', async () => {
             timeout: 2000
         });
 
-        await driver.pause(3000);
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_PASSWORD],
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['tap', '410', '1100'],
