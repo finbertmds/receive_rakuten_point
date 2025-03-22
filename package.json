@@ -4,15 +4,18 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "clear": "./scripts/clear_data.sh && adb shell pm clear com.android.chrome",
+    "install:all": "yarn install:kuji && yarn install:pointclub && yarn install:recipe",
     "install:kuji": "adb install-multiple apps/R_Kuji/config.mdpi.apk apps/R_Kuji/jp.co.rakuten.rakutenluckykuji.apk",
     "install:pointclub": "adb install-multiple apps/R_PointClub/config.mdpi.apk apps/R_PointClub/jp.co.rakuten.pointclub.android.apk",
+    "install:recipe": "adb install-multiple apps/R_Recipe/config.mdpi.apk apps/R_Recipe/jp.co.rakuten.recipe.apk",
     "test:kuji": "yarn install:kuji && npx wdio run wdio.apps.kuji.conf.js",
     "test:pointclub": "yarn install:pointclub && npx wdio run wdio.apps.pointclub.conf.js",
-    "test:recipe": "npx wdio run wdio.apps.recipe.conf.js",
+    "test:recipe": "yarn install:recipe && npx wdio run wdio.apps.recipe.conf.js",
     "test:superpointscreen": "npx wdio run wdio.apps.superpointscreen.conf.js",
     "test:toshiru": "npx wdio run wdio.apps.toshiru.conf.js",
     "test:pointclub_toshiru": "npx wdio run wdio.apps.pointclub_toshiru.conf.js",
-    "test": "yarn install:kuji && yarn install:pointclub && npx wdio run wdio.conf.js"
+    "test": "yarn install:kuji && yarn install:pointclub && yarn install:recipe && npx wdio run wdio.conf.js"
   },
   "dependencies": {
     "@wdio/cli": "^7.25.2"

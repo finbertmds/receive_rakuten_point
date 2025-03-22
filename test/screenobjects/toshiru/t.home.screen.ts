@@ -13,6 +13,9 @@ const SELECTORS = {
     HEADER_MENU_BUTTON: getByResouceId("jp.co.rakutensec.toshiru:id/headerMenuButton"),
     HEADER_REWARD_BUTTON: getByResouceId("jp.co.rakutensec.toshiru:id/headerRewardButton"),
 
+    UNCLAIMED_POINT_TAB: "~Unclaimed Points",
+    rakutenreward_claimbutton: getByResouceId("jp.co.rakutensec.toshiru:id/rakutenreward_claimbutton"),
+
     RAKUTEN_REWARD_LABEL: getByText("ポイントミッション(楽天リワード)"),
     LOGOUT_BUTTON: getByResouceId("jp.co.rakutensec.toshiru:id/rakutenLoginCellButton"),
     FOOTER_TOP_BORDERLINE_BUTTON: getByResouceId("jp.co.rakutensec.toshiru:id/footerTopBorderline"),
@@ -74,6 +77,18 @@ class T_HomeScreen extends AppScreen {
     
     get headerMenuButton () {
         return $(SELECTORS.HEADER_MENU_BUTTON);
+    }
+    
+    get headerRewardButton () {
+        return $(SELECTORS.HEADER_REWARD_BUTTON);
+    }
+    
+    get unclaimedPointTab () {
+        return $(SELECTORS.UNCLAIMED_POINT_TAB);
+    }
+    
+    get rakutenreward_claimbutton () {
+        return $(SELECTORS.rakutenreward_claimbutton);
     }
 
     async waitForRakutenRewardLabelIsShown () {

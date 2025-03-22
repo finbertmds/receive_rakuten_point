@@ -17,33 +17,67 @@ const SELECTORS = {
     RETRY_LABEL: getByText("再試行"),
     GET_POINT_DONE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_claim_title"),
     UNCLAIM_ERROR_MESSAGE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/rakutenreward_error_message"),
+
+    CLOSE_BUTTON2: getByResouceId("jp.co.rakuten.pointclub.android:id/close_button"),
+    SP_ONBBOARDING_TEXT_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/sps_onboarding_text"),
+    SP_OSUSUME_CARD_BOTTOM: getByResouceId("jp.co.rakuten.pointclub.android:id/sps_osusume_card_bottom"),
+    ENGAGE_DONE_VIEW: getByResouceId("jp.co.rakuten.pointclub.android:id/engage_done_view"),
+    CLOSE_BUTTON3: getByResouceId("jp.co.rakuten.pointclub.android:id/reward_sps_portal_header_close"),
 };
 
 class PC_RewardScreen extends AppScreen {
-    constructor () {
+    constructor() {
         super(SELECTORS.REWARD_SCREEN);
     }
 
-    get suggestProductLabel () {
+    get spsOnboardingTextLabel() {
+        return $(SELECTORS.SP_ONBBOARDING_TEXT_LABEL);
+    }
+
+    get spsOsusumeCardBottom() {
+        return $(SELECTORS.SP_OSUSUME_CARD_BOTTOM);
+    }
+
+    get engageDoneView() {
+        return $(SELECTORS.ENGAGE_DONE_VIEW);
+    }
+
+    async waitForEngageDoneViewIsShown() {
+        // return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
+        return $(SELECTORS.ENGAGE_DONE_VIEW).waitForDisplayed({
+            timeout: 2 * config.DEFAULT_TIMEOUT,
+            reverse: false,
+        });
+    }
+
+    get closeButton2() {
+        return $(SELECTORS.CLOSE_BUTTON2);
+    }
+
+    get closeButton3() {
+        return $(SELECTORS.CLOSE_BUTTON3);
+    }
+
+    get suggestProductLabel() {
         return $(SELECTORS.SUGGEST_PRODUCT_LABEL);
     }
 
-    get retryLabel () {
+    get retryLabel() {
         return $(SELECTORS.RETRY_LABEL);
     }
 
-    get unclaimBox () {
+    get unclaimBox() {
         return $(SELECTORS.UNCLAIM_BOX);
     }
 
-    async waitForUnclaimBoxIsShown () {
+    async waitForUnclaimBoxIsShown() {
         return $(SELECTORS.UNCLAIM_BOX).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
 
-    async waitForSuggestProductIsShown () {
+    async waitForSuggestProductIsShown() {
         return this.waitForElementIsShown(SELECTORS.SUGGEST_PRODUCT_LABEL);
         // return $(SELECTORS.SUGGEST_PRODUCT_LABEL).waitForDisplayed({
         //     timeout: 2 * config.DEFAULT_TIMEOUT,
@@ -51,15 +85,15 @@ class PC_RewardScreen extends AppScreen {
         // });
     }
 
-    async waitForUnclaimListIsShown () {
+    async waitForUnclaimListIsShown() {
         return this.waitForElementIsShown(SELECTORS.UNCLAIM_LIST);
     }
 
-    get unclaimList () {
+    get unclaimList() {
         return $(SELECTORS.UNCLAIM_LIST);
     }
 
-    async waitForUnclaimListItemsIsShown () {
+    async waitForUnclaimListItemsIsShown() {
         if (await this.unclaimList.isExisting()) {
             return this.unclaimList.$(SELECTORS.UNCLAIM_LIST_ITEMS).waitForDisplayed({
                 timeout: config.DEFAULT_TIMEOUT,
@@ -68,14 +102,14 @@ class PC_RewardScreen extends AppScreen {
         }
     }
 
-    async getUnclaimListItems () {
+    async getUnclaimListItems() {
         if (await this.unclaimList.isExisting()) {
             return this.unclaimList.$$(SELECTORS.UNCLAIM_LIST_ITEMS);
         }
         return null;
     }
 
-    async getUnclaimListIndexButton (index: number) {
+    async getUnclaimListIndexButton(index: number) {
         let unclaimListItems = await this.getUnclaimListItems();
         if (unclaimListItems === null) {
             return null;
@@ -91,12 +125,12 @@ class PC_RewardScreen extends AppScreen {
         return null;
     }
 
-    async getButtonCountInHeader () {
+    async getButtonCountInHeader() {
         let parent = $(SELECTORS.REWARD_SCREEN);
         return parent.$$(getByClassname("android.widget.ImageButton")).length;
     }
 
-    async waitForGetPointDoneLabelIsShown () {
+    async waitForGetPointDoneLabelIsShown() {
         // return this.waitForElementIsShown(SELECTORS.GET_POINT_DONE_LABEL);
         return $(SELECTORS.GET_POINT_DONE_LABEL).waitForDisplayed({
             timeout: 2 * config.DEFAULT_TIMEOUT,
@@ -104,24 +138,24 @@ class PC_RewardScreen extends AppScreen {
         });
     }
 
-    get getPointDoneLabel () {
+    get getPointDoneLabel() {
         return $(SELECTORS.GET_POINT_DONE_LABEL);
     }
 
-    get unclaimErrorMessageLabel () {
+    get unclaimErrorMessageLabel() {
         return $(SELECTORS.UNCLAIM_ERROR_MESSAGE_LABEL);
     }
 
-    get closeButton () {
+    get closeButton() {
         return $(SELECTORS.CLOSE_BUTTON);
     }
 
-    async backButton () {
+    async backButton() {
         let parent = (await $(SELECTORS.REWARD_SCREEN).parent);
         return parent.$(getByClassname("android.widget.ImageButton", 0));
     }
 
-    async needLoginButton () {
+    async needLoginButton() {
         let signInTitle = $(SELECTORS.NEED_ONE_MORE_TIME_LOGIN_BUTTON);
         if (await signInTitle.isDisplayed()) {
             console.log("need sign in again");
@@ -130,23 +164,23 @@ class PC_RewardScreen extends AppScreen {
         return null;
     }
 
-    get requireLoginLabel () {
+    get requireLoginLabel() {
         return $(SELECTORS.REQUIRE_LOGIN_LABEL);
     }
 
-    get loginButton () {
+    get loginButton() {
         return $(SELECTORS.LOGIN_BUTTON);
     }
 
-    get userid () {
+    get userid() {
         return $(SELECTORS.LOGIN_INPUT);
     }
 
-    get password () {
+    get password() {
         return $(SELECTORS.LOGIN_PASSWORD);
     }
 
-    async waitForLoggedIn () {
+    async waitForLoggedIn() {
         return $(SELECTORS.LOGIN_INPUT).waitForDisplayed({
             timeout: 15 * config.DEFAULT_TIMEOUT,
             reverse: true,

@@ -53,14 +53,46 @@ describe('rakuten_super_point_screen', async () => {
             await sLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '840'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_USERNAME],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+
         await driver.pause(3000);
-        await sLoginScreen.nextButton.click();
-        await driver.pause(3000);
-        await sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        await driver.pause(3000);
-        await sLoginScreen.signInButton.click();
-        await driver.pause(3000);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_PASSWORD],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        // await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        // await driver.pause(3000);
+        // await sLoginScreen.nextButton.click();
+        // await driver.pause(3000);
+        // await sLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        // await driver.pause(3000);
+        // await sLoginScreen.signInButton.click();
+        // await driver.pause(3000);
         if (await (await sLoginScreen.skipToSignIn).isDisplayed()) {
             await sLoginScreen.skipToSignIn.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
@@ -235,7 +267,24 @@ describe('rakuten_super_point_screen', async () => {
             await sLuckycountScreen.waitForChallengePlayButtonIsShown();
             await sLuckycountScreen.waitForPlayIconIsShown();
             await sLuckycountScreen.challengePlayButton.click();
-            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 45000);
+            if (await sLuckycountScreen.viewFullScreenOK.isDisplayed()) {
+                await sLuckycountScreen.viewFullScreenOK.click();
+            }
+            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 90000);
+            await driver.execute('mobile: shell', {
+                command: 'input',
+                args: ['tap', '1000', '75'],
+                includeStderr: true,
+                timeout: 2000
+            });
+            await driver.pause(5000);
+            await driver.execute('mobile: shell', {
+                command: 'input',
+                args: ['tap', '1000', '75'],
+                includeStderr: true,
+                timeout: 2000
+            });
+            await driver.pause(5000);
             await driver.back();
             // await sLuckycountScreen.waitForGetDoneButtonIsShown();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

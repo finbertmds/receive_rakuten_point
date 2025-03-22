@@ -14,6 +14,7 @@ const SELECTORS = {
     CHALLENGE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_challenge"),
     CHALLENGE_PLAY_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_play"),
     CHALLENGE_CARD_BUTTON: getByResouceId("jp.co.rakuten.slide:id/card" + String(Math.floor(Math.random() * 4) + 1)),
+    VIEW_FULL_SCREEN_OK: getByResouceId("android:id/ok"),
 };
 
 class R_LuckyCointScreen extends AppScreen {
@@ -54,6 +55,10 @@ class R_LuckyCointScreen extends AppScreen {
 
     get challengeButton () {
         return $(SELECTORS.CHALLENGE_BUTTON)
+    }
+
+    get viewFullScreenOK () {
+        return $(SELECTORS.VIEW_FULL_SCREEN_OK)
     }
 
     async waitForChallengePlayButtonIsShown () {

@@ -18,7 +18,7 @@ describe('rakuten_kuji', async () => {
         await closeWarningLabel();
         await handleFirstTimeLogin();
         await closeWarningLabel();
-        await driver.activateApp(config.RAKUTEN_RECIPE_APP_ID);
+        await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
         await driver.pause(5000);
         await driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
         await driver.pause(5000);
@@ -63,14 +63,46 @@ describe('rakuten_kuji', async () => {
             await kLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await kLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '840'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_USERNAME],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+
         await driver.pause(3000);
-        await kLoginScreen.nextButton.click();
-        await driver.pause(3000);
-        await kLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        await driver.pause(3000);
-        await kLoginScreen.signInButton.click();
-        await driver.pause(3000);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_PASSWORD],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        // await kLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        // await driver.pause(3000);
+        // await kLoginScreen.nextButton.click();
+        // await driver.pause(3000);
+        // await kLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        // await driver.pause(3000);
+        // await kLoginScreen.signInButton.click();
+        // await driver.pause(3000);
         if (await (await kLoginScreen.skipToSignIn).isDisplayed()) {
             await kLoginScreen.skipToSignIn.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));

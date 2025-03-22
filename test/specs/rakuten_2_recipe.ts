@@ -17,7 +17,7 @@ describe('rakuten_recipe', async () => {
         // await driver.pause(5000);
     })
 
-    async function handleFirstTimeEnterApp (completeServey: boolean = false) {
+    async function handleFirstTimeEnterApp(completeServey: boolean = false) {
         // await rFirststartScreen.waitForStartLablelIsShown();
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (await rFirststartScreen.cancelUpgradeLabel.isDisplayed()) {
@@ -35,9 +35,9 @@ describe('rakuten_recipe', async () => {
                 await Gestures.swipeUp();
                 await rHomeSettingScreen.choice2Option1.click();
                 await rHomeSettingScreen.choice3Option1.click();
-                
+
                 console.log("click ok button");
-                
+
                 await rHomeSettingScreen.serveyOkButton.click();
                 await rHomeSettingScreen.waitForRecommendedIsShown();
                 await rHomeSettingScreen.serveyOkButton.click();
@@ -54,7 +54,7 @@ describe('rakuten_recipe', async () => {
         await driver.pause(10000);
     }
 
-    async function handleFirstTimeEnterAppNew () {
+    async function handleFirstTimeEnterAppNew() {
         if (await rFirststartScreen.welcomeLoginButton.isDisplayed()) {
             await rFirststartScreen.welcomeLoginButton.click();
             await handleFirstTimeLoginBrowser();
@@ -69,7 +69,7 @@ describe('rakuten_recipe', async () => {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
     }
 
-    async function handleFirstTimeLoginBrowser () {
+    async function handleFirstTimeLoginBrowser() {
         await handleChromeAction();
         await driver.pause(5000);
         // await rLoginBrowserScreen.waitForEnterLoginScreen();
@@ -83,14 +83,46 @@ describe('rakuten_recipe', async () => {
             await rLoginBrowserScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await rLoginBrowserScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '840'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_USERNAME],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+
         await driver.pause(3000);
-        await rLoginBrowserScreen.nextButton.click();
-        await driver.pause(3000);
-        await rLoginBrowserScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        await driver.pause(3000);
-        await rLoginBrowserScreen.nextButton.click();
-        await driver.pause(3000);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_PASSWORD],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        // await rLoginBrowserScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        // await driver.pause(3000);
+        // await rLoginBrowserScreen.nextButton.click();
+        // await driver.pause(3000);
+        // await rLoginBrowserScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        // await driver.pause(3000);
+        // await rLoginBrowserScreen.nextButton.click();
+        // await driver.pause(3000);
         await rLoginBrowserScreen.waitForLoggedIn();
     }
 
@@ -109,7 +141,7 @@ describe('rakuten_recipe', async () => {
         await driver.pause(5000);
     }
 
-    async function handleOpenTabMyPageAndLogin () {
+    async function handleOpenTabMyPageAndLogin() {
         await rTabBar.waitForTabBarShown();
         await rTabBar.openMyPage();
 
@@ -121,7 +153,7 @@ describe('rakuten_recipe', async () => {
         }
     }
 
-    async function handleFirstTimeLogin () {
+    async function handleFirstTimeLogin() {
         await rLoginScreen.waitForIsShown();
         await rLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
         await rLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
@@ -130,7 +162,7 @@ describe('rakuten_recipe', async () => {
         console.log("logged in");
     }
 
-    async function handleCloseModal () {
+    async function handleCloseModal() {
         await driver.pause(3000);
         if (await sHomeModalScreen.modalContainer.isDisplayed()) {
             await sHomeModalScreen.modalNotShowButton.click();
@@ -139,7 +171,7 @@ describe('rakuten_recipe', async () => {
         }
     }
 
-    async function openRewardScreen () {
+    async function openRewardScreen() {
         // await Gestures.swipeUp(0.7);
         var scrollCount = 0
         while (scrollCount < 3) {
@@ -177,8 +209,8 @@ describe('rakuten_recipe', async () => {
         }
         return true;
     }
-    
-    async function clickUnclaimButton () {
+
+    async function clickUnclaimButton() {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         let unclaimBox = rRewardScreen.unclaimBox;
         if (await unclaimBox.isDisplayed()) {
@@ -188,7 +220,7 @@ describe('rakuten_recipe', async () => {
             // await rRewardScreen.waitForUnclaimListItemsIsShown();
             let unclaimListCount = (await rRewardScreen.getUnclaimListItems())?.length
             console.log("unclaimListCount: ", unclaimListCount);
-            
+
             if (unclaimListCount) {
                 for (let index = 0; index < unclaimListCount; index++) {
                     if (index !== 0) {
@@ -201,7 +233,7 @@ describe('rakuten_recipe', async () => {
                     if (unclaimListIndexButton) {
                         console.log("unclaimText: ", await (await rRewardScreen.getUnclaimListIndexButton(index))?.getText());
                         unclaimListIndexButton.click();
-                        
+
                         let loginAgain = await handleLoginRequireAgain();
                         if (loginAgain) {
                             return true;
@@ -212,7 +244,7 @@ describe('rakuten_recipe', async () => {
                         // @ts-ignore
                         await (await rRewardScreen.backButton()).click();
                     }
-                }                
+                }
             }
         }
         // await (await rRewardScreen.closeButton()).click();
@@ -220,7 +252,7 @@ describe('rakuten_recipe', async () => {
         return false;
     }
 
-    async function handleLoginRequireAgain () {
+    async function handleLoginRequireAgain() {
         await driver.pause(5000);
         if (! await rRewardScreen.requireLoginLabel.isDisplayed()) {
             return false;
@@ -233,7 +265,7 @@ describe('rakuten_recipe', async () => {
         console.log("logged in one again");
         return true;
     }
-    
+
     async function openRewardGetPoint() {
         let loggedIn = await openRewardScreen();
         let retryCount = 0;
@@ -308,7 +340,7 @@ describe('rakuten_recipe', async () => {
 
     // it('r_first_login', async () => {
     //     await driver.pause(7000);
-        
+
     //     await handleFirstTimeEnterApp();
     //     await handleFirstTimeEnterAppNew();
     //     await handleOpenTabMyPageAndLogin();

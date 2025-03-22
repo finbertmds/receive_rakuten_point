@@ -57,14 +57,46 @@ describe('rakuten_point_club', async () => {
             await pcLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await pcLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '840'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_USERNAME],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+
         await driver.pause(3000);
-        await pcLoginScreen.nextButton.click();
-        await driver.pause(3000);
-        await pcLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
-        await driver.pause(3000);
-        await pcLoginScreen.signInButton.click();
-        await driver.pause(3000);
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['text', config.RAKUTEN_PASSWORD],
+            includeStderr: true,
+            timeout: 2000
+        });
+        await driver.execute('mobile: shell', {
+            command: 'input',
+            args: ['tap', '410', '1030'],
+            includeStderr: true,
+            timeout: 2000
+        });
+        // await pcLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
+        // await driver.pause(3000);
+        // await pcLoginScreen.nextButton.click();
+        // await driver.pause(3000);
+        // await pcLoginScreen.password.setValue(config.RAKUTEN_PASSWORD);
+        // await driver.pause(3000);
+        // await pcLoginScreen.signInButton.click();
+        // await driver.pause(3000);
         if (await (await pcLoginScreen.skipToSignIn).isDisplayed()) {
             await pcLoginScreen.skipToSignIn.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
@@ -129,6 +161,7 @@ describe('rakuten_point_club', async () => {
             return false;
         }
         await pcHomeScreen.menuNavigationButton.click();
+        await driver.pause(3000);
         await pcHomeScreen.menuNavigationButton.click();
     }
 
@@ -179,6 +212,45 @@ describe('rakuten_point_club', async () => {
             return;
         }
         await driver.back();
+    }
+
+    async function openRewardScreenAndClaim() {
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+            console.log("rakutenNameLabel is not displayed");
+            return false;
+        }
+        await pcHomeScreen.menuNavigationButton.click();
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3 * 2)));
+        if (! await pcHomeScreen.rakutenRewardLabel.isDisplayed()) {
+            console.log("rakutenRewardLabel is not displayed");
+            // return false;
+            await pcHomeScreen.menuNavigationButton.click();
+        }
+        await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+        await pcHomeScreen.rakutenRewardLabel.click();
+
+        await driver.pause(2000);
+        if (await pcRewardScreen.spsOnboardingTextLabel.isDisplayed()) {
+            await pcRewardScreen.spsOnboardingTextLabel.click();
+        }
+        await driver.pause(2000);
+        if (await pcRewardScreen.closeButton2.isDisplayed()) {
+            await pcRewardScreen.closeButton2.click();
+        }
+        await driver.pause(2000);
+        if (await pcRewardScreen.spsOsusumeCardBottom.isDisplayed()) {
+            await pcRewardScreen.spsOsusumeCardBottom.click();
+            // await pcRewardScreen.waitForEngageDoneViewIsShown();
+            await driver.pause(config.DEFAULT_TIMEOUT);
+            if (await pcRewardScreen.closeButton2.isDisplayed()) {
+                await pcRewardScreen.closeButton2.click();
+            }
+        }
+        await driver.pause(2000);
+        if (await pcRewardScreen.closeButton3.isDisplayed()) {
+            await pcRewardScreen.closeButton3.click();
+        }
     }
 
     async function openRewardScreen(closeScreenWhenEnd: boolean = true) {
@@ -320,28 +392,29 @@ describe('rakuten_point_club', async () => {
         if (!isLoggedIn) {
             return;
         }
-        for (let index = 0; index < config.RAKUTEN_POINT_CLUB_OPEN_REWARD_COUNT; index++) {
-            await openRewardScreen();
-        }
+        // for (let index = 0; index < config.RAKUTEN_POINT_CLUB_OPEN_REWARD_COUNT; index++) {
+        //     await openRewardScreen();
+        // }
+        await openRewardScreenAndClaim();
     });
 
-    it('pc_click_point_history', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        await driver.pause(5000);
-        let needScroll = false;
-        if (!await (await pcHomeScreen.pointHistoryIcon).isExisting() || !await (await pcHomeScreen.pointHistoryIcon).isDisplayed()) {
-            await Gestures.swipeUp(0.7);
-            needScroll = true;
-        }
-        await handleClickPointHistory();
-        if (needScroll) {
-            await driver.pause(5000);
-            await Gestures.swipeDown();
-        }
-    });
+    // it('pc_click_point_history', async () => {
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         return;
+    //     }
+    //     await driver.pause(5000);
+    //     let needScroll = false;
+    //     if (!await (await pcHomeScreen.pointHistoryIcon).isExisting() || !await (await pcHomeScreen.pointHistoryIcon).isDisplayed()) {
+    //         await Gestures.swipeUp(0.7);
+    //         needScroll = true;
+    //     }
+    //     await handleClickPointHistory();
+    //     if (needScroll) {
+    //         await driver.pause(5000);
+    //         await Gestures.swipeDown();
+    //     }
+    // });
 
     // it('pc_click_first_ad_banner', async () => {
     //     let isLoggedIn = await checkIsLoggedIn();
@@ -366,19 +439,19 @@ describe('rakuten_point_club', async () => {
     //     }
     // });
 
-    it('pc_get_point_from_reward', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        let result = false;
-        let retryCount = 0;
-        while (!result && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
-            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
-            result = await clickUnclaimButton();
-            retryCount++;
-        }
-    });
+    // it('pc_get_point_from_reward', async () => {
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         return;
+    //     }
+    //     let result = false;
+    //     let retryCount = 0;
+    //     while (!result && retryCount < config.RAKUTEN_RETRY_MAX_COUNT) {
+    //         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 2)));
+    //         result = await clickUnclaimButton();
+    //         retryCount++;
+    //     }
+    // });
 });
 
 
