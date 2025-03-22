@@ -335,10 +335,12 @@ describe('rakuten_super_point_screen', async () => {
             return;
         }
         await handleCloseAlert();
-        await S_TabBar.openLuckyCoint();
-        await handleClickGetPoint();
-        await handleClickChallenge();
-        await handleClickPlay();
+        if (!S_TabBar.bottomIconIsDisplayed()) {} {
+            await S_TabBar.openLuckyCoint();
+            await handleClickGetPoint();
+            await handleClickChallenge();
+            await handleClickPlay();
+        }
     });
 
 });

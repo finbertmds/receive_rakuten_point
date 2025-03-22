@@ -164,8 +164,8 @@ describe('rakuten_toshiru', async () => {
     async function checkIsLoggedIn() {
         if (await (await tHomeScreen.headerMenuButton).isDisplayed()) {
             await (await tHomeScreen.headerMenuButton).click();
-            await tHomeScreen.waitForRakutenRewardLabelIsShown();
-
+            // await tHomeScreen.waitForRakutenRewardLabelIsShown();
+            await driver.pause(config.DEFAULT_TIMEOUT);
             await Gestures.swipeUp();
             if (await (await tHomeScreen.logoutButton).isDisplayed()) {
                 await driver.back();
