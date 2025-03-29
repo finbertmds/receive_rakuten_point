@@ -37,3 +37,10 @@ If you want to automatically run every day to receive points of rakuten, you can
 3. View all runs from Github actions every day
 
   ![Github actions guide](./images/github_actions_run.png)
+
+
+4. Demo
+
+Rakuten App: SuperPointScreen | Rakuten App: Kuji | Rakuten App: Point Club
+---------|----------|---------
+ ![Rakuten App: SuperPointScreen](images/Rakuten_SuperPointScreen.gif)  | ![Rakuten App: Kuji](images/Rakuten_Kuji.gif)  | ![Rakuten App: Point Club](images/Rakuten_PointClub.gif)
