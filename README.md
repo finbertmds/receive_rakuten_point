@@ -44,3 +44,7 @@ If you want to automatically run every day to receive points of rakuten, you can
 Rakuten App: SuperPointScreen | Rakuten App: Kuji | Rakuten App: Point Club
 ---------|----------|---------
  ![Rakuten App: SuperPointScreen](images/Rakuten_SuperPointScreen.gif)  | ![Rakuten App: Kuji](images/Rakuten_Kuji.gif)  | ![Rakuten App: Point Club](images/Rakuten_PointClub.gif)
+
+Rakuten Web Campain | Rakuten Web Card | Rakuten Web Kuji
+---------|----------|---------
+![Rakuten_Web_Campain](images/Rakuten_Web_Campain.gif)  | ![Rakuten_Web_Card](images/Rakuten_Web_Card.gif)  | ![Rakuten_Web_Kuji](images/Rakuten_Web_Kuji.gif)
