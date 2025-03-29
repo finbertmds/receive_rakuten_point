@@ -1,9 +1,10 @@
 import config from '../../../config';
-import { getByResouceId } from '../../helpers/UiSelectorHelper';
+import { getByClassname, getByResouceId } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     LOGIN_SCREEN: getByResouceId("h4k5-container"),
+    PROGRESS_BAR: getByClassname("android.widget.ProgressBar"),
     INPUT: getByResouceId("user_id"),
     PASSWORD: getByResouceId("password_current"),
     NEXT_BUTTON: getByResouceId("cta001"),
@@ -14,50 +15,61 @@ const SELECTORS = {
 };
 
 class T_LoginScreen extends AppScreen {
-    constructor () {
+    constructor() {
         super(SELECTORS.LOGIN_SCREEN);
     }
 
-    get nextButton () {
+    get nextButton() {
         return $(SELECTORS.NEXT_BUTTON);
     }
 
-    get signInButton () {
+    get signInButton() {
         return $(SELECTORS.SIGNIN_BUTTON);
     }
 
-    get loginContinueButton () {
+    get loginContinueButton() {
         return $(SELECTORS.LOGIN_CONTINUE_BUTTON);
     }
 
-    get loginWithOtherButton () {
+    get loginWithOtherButton() {
         return $(SELECTORS.LOGIN_WITH_OTHER_BUTTON);
     }
 
-    get skipToSignIn () {
+    get skipToSignIn() {
         return $(SELECTORS.SKIP_TO_SIGN_IN);
     }
 
-    get userid () {
+    get userid() {
         return $(SELECTORS.INPUT);
     }
 
-    get password () {
+    get password() {
         return $(SELECTORS.PASSWORD);
     }
 
-    get loginScreen () {
+    get loginScreen() {
         return $(SELECTORS.LOGIN_SCREEN);
     }
 
-    async waitForEnterLoginScreen () {
+    get progressBar() {
+        return $(SELECTORS.PROGRESS_BAR);
+    }
+
+    async waitForProgressBarLoggedIn() {
+        return $(SELECTORS.PROGRESS_BAR).waitForDisplayed({
+            timeout: 3 * config.DEFAULT_TIMEOUT,
+            reverse: true,
+        });
+    }
+
+    async waitForEnterLoginScreen() {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
             timeout: 3 * config.DEFAULT_TIMEOUT,
             reverse: false,
         });
     }
 
-    async waitForLoggedIn () {
+    async waitForLoggedIn() {
         return $(SELECTORS.LOGIN_SCREEN).waitForDisplayed({
             timeout: 15 * config.DEFAULT_TIMEOUT,
             reverse: true,

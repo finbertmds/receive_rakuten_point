@@ -1,10 +1,11 @@
 import config from '../../../config';
-import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
     CONTENT: getByResouceId("android:id/content"),
     LOGIN_SCREEN: getByResouceId("h4k5-container"),
+    PROGRESS_BAR: getByClassname("android.widget.ProgressBar"),
     HELP_LABEL: getByText("Help"),
     INPUT: getByResouceId("user_id"),
     PASSWORD: getByResouceId("password_current"),
@@ -54,6 +55,17 @@ class S_LoginScreen extends AppScreen {
 
     get loginScreen () {
         return $(SELECTORS.LOGIN_SCREEN);
+    }
+
+    get progressBar () {
+        return $(SELECTORS.PROGRESS_BAR);
+    }
+
+    async waitForProgressBarLoggedIn () {
+        return $(SELECTORS.PROGRESS_BAR).waitForDisplayed({
+            timeout: 3 * config.DEFAULT_TIMEOUT,
+            reverse: true,
+        });
     }
 
     async waitForEnterLoginScreen () {

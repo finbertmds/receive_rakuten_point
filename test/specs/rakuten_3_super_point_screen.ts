@@ -145,21 +145,28 @@ describe('rakuten_super_point_screen', async () => {
             console.log("permission is permitted");
             return;
         }
-        // await permission.waitForIsShown();
-        await driver.pause(3000);
-        await permission.allowButton.click();
-        await driver.pause(3000);
+        await handleClickPermission();
         await handleOkAlert();
         await handleOkAlert();
         // await sHomeAlertScreen.waitForIsShown();
         // await sHomeAlertScreen.alertContainerOkButton.click();
     }
 
+    async function handleClickPermission() {
+        // await permission.waitForIsShown();
+        await driver.pause(3000);
+        if (await permission.allowButton.isDisplayed()) {
+            await permission.allowButton.click();
+            await driver.pause(3000);
+        }
+    }
+
     async function handleOkAlert() {
+        await driver.pause(2000);
         if (await (await sHomeScreen.okButton).isExisting()) {
             if (await (await sHomeScreen.okButton).isDisplayed()) {
                 await (await sHomeScreen.okButton).click();
-                await driver.pause(5000);
+                await driver.pause(3000);
             }
         }
     }
@@ -179,12 +186,14 @@ describe('rakuten_super_point_screen', async () => {
     }
 
     async function handleGuideSetting() {
+        await driver.pause(5000);
         if (await (await sHomeScreen.cardAdImage).isDisplayed()) {
             if (await (await sHomeScreen.prMark).isDisplayed()) {
                 await (await sHomeScreen.prMark).click();
                 await driver.pause(5000);
             }
         }
+        await driver.pause(5000);
         if (await (await sHomeScreen.goSettingButton).isExisting()) {
             if (await (await sHomeScreen.goSettingButton).isDisplayed()) {
                 await (await sHomeScreen.goSettingButton).click();
@@ -198,10 +207,12 @@ describe('rakuten_super_point_screen', async () => {
     }
 
     async function handleFirstGetPointAfterGuide() {
+        await handleClickPermission();
         if (await (await sHomeGetpointScreen.adCardOpenText).isExisting()) {
             if (await (await sHomeGetpointScreen.adCardOpenText).isDisplayed()) {
                 await Gestures.swipeRight();
 
+                await handleClickPermission();
                 await sHomeGetpointScreen.waitForDoneButtonIsShown();
                 await driver.back();
                 await browser.pause(5000);
@@ -289,6 +300,13 @@ describe('rakuten_super_point_screen', async () => {
             });
             await driver.pause(5000);
             await driver.back();
+
+            if (await sLuckycountScreen.alertContent.isDisplayed()) {
+                if (await sLuckycountScreen.alertCloseButton.isDisplayed()) {
+                    await sLuckycountScreen.alertCloseButton.click();
+                }
+            }
+
             // await sLuckycountScreen.waitForGetDoneButtonIsShown();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             if (await sLuckycountScreen.getDoneButton.isDisplayed()) {
@@ -335,7 +353,7 @@ describe('rakuten_super_point_screen', async () => {
             return;
         }
         await handleCloseAlert();
-        if (!S_TabBar.bottomIconIsDisplayed()) {} {
+        if (!S_TabBar.bottomIconIsDisplayed()) { } {
             await S_TabBar.openLuckyCoint();
             await handleClickGetPoint();
             await handleClickChallenge();
