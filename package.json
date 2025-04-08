@@ -15,6 +15,7 @@
     "test:superpointscreen": "npx wdio run wdio.apps.superpointscreen.conf.js",
     "test:toshiru": "npx wdio run wdio.apps.toshiru.conf.js",
     "test:pointclub_toshiru": "npx wdio run wdio.apps.pointclub_toshiru.conf.js",
+    "test:websearch": "npx wdio run wdio.apps.websearch.conf.js",
     "test": "yarn install:kuji && yarn install:pointclub && yarn install:recipe && npx wdio run wdio.conf.js"
   },
   "dependencies": {
