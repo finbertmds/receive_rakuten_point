@@ -19,16 +19,16 @@ describe('Infoseek', () => {
         }
     }
 
-    // it('infoseek:join_mission', async () => {
-    //     await credentials();
-    //     await browser.pause(2000);
+    it('infoseek__join_mission', async () => {
+        await credentials();
+        await browser.pause(2000);
 
-    //     await infoseekPage.handleCloseInterstitialModal();
-    //     await infoseekPage.closeModalContents();
-    //     await infoseekPage.joinMission();
-    // });
+        // await infoseekPage.handleCloseInterstitialModal();
+        // await infoseekPage.closeModalContents();
+        await infoseekPage.joinMission();
+    });
 
-    it('infoseek:read_articles', async () => {
+    it('infoseek__read_articles', async () => {
         await credentials();
         await browser.pause(2000);
 
@@ -50,15 +50,15 @@ describe('Infoseek', () => {
         await infoseekPage.readArticleAtRankingPage(rankingPage2);
     });
 
-    // it('infoseek:visit_mission', async () => {
-    //     await credentials();
-    //     await browser.pause(2000);
+    it('infoseek__visit_mission', async () => {
+        await credentials();
+        await browser.pause(2000);
 
-    //     await infoseekPage.closeModalContents();
-    //     await infoseekPage.visitMissionPage();
-    // });
+        await infoseekPage.closeModalContents();
+        await infoseekPage.visitMissionPage();
+    });
 
-    it('infoseek:get_point', async () => {
+    it('infoseek__get_point', async () => {
         await credentials();
         await browser.pause(2000);
 

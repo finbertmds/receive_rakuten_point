@@ -15,20 +15,24 @@ class BankCampaignPage extends Page {
      */
 
     async canClickCampaign(): Promise<boolean> {
-        return (await this.cashGiftBtn).length > 0;
+        return (await this.cashGiftBtn.length) > 0;
     }
 
     async handleClickCampaign(): Promise<void> {
         if (!await this.canClickCampaign()) {
             return;
         }
-        let campaignList = await this.cashGiftBtn;
-        for (let index = 0; index < campaignList.length; index++) {
-            const campaign = campaignList[index];
-            const currentWindows = await browser.getWindowHandle();
-            await campaign.click();
-            await browser.pause(5000);
-            await browser.switchToWindow(currentWindows);
+        let campaignListCount = await this.cashGiftBtn.length;
+        for (let index = 0; index < campaignListCount; index++) {
+            const campaign = this.cashGiftBtn[index];
+            if (await campaign.isDisplayed()) {
+                if (await campaign.isClickable()) {
+                    const currentWindows = await browser.getWindowHandle();
+                    await campaign.click();
+                    await browser.pause(5000);
+                    await browser.switchToWindow(currentWindows);
+                }
+            }
         }
     }
 }

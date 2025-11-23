@@ -1,5 +1,4 @@
 import config from '../../config';
-import timeHelper from '../helpers/timeHelper';
 import Page from './page';
 
 /**
@@ -65,7 +64,7 @@ class InfoseekPage extends Page {
      */
     async getInterstitialModalIsVisible() {
         let interstitialModalList = await $$('.interstitial-modal-container');
-        for (let index = 0; index < interstitialModalList.length; index++) {
+        for (let index = 0; index < (await interstitialModalList.length); index++) {
             const visibleEle = interstitialModalList[index];
             if (await visibleEle.isDisplayed()) {
                 return visibleEle;
@@ -75,7 +74,7 @@ class InfoseekPage extends Page {
     }
     async getInterstitialModalCloseButtonIsVisible() {
         let interstitialModalList = await $$('#interstitial_close_button');
-        for (let index = 0; index < interstitialModalList.length; index++) {
+        for (let index = 0; index < (await interstitialModalList.length); index++) {
             const visibleEle = interstitialModalList[index];
             if (await visibleEle.isDisplayed()) {
                 return visibleEle;
@@ -89,15 +88,6 @@ class InfoseekPage extends Page {
      */
     get sectionBox() { return $('section.section-box') }
     rankingListTextLink() {
-        // let rankingListTextLinkList = await $$('.ranking-list__text-title');
-        // let visibleList = [];
-        // for (let index = 0; index < rankingListTextLinkList.length; index++) {
-        //     let link = rankingListTextLinkList[index];
-        //     if (await link.isDisplayed()) {
-        //         visibleList.push(link);
-        //     }
-        // }
-        // return rankingListTextLinkList;
         return $$('.ranking-list__text-title');
     }
     get footerContainer() { return $('.footer-container') }
@@ -188,9 +178,9 @@ class InfoseekPage extends Page {
         if (await (await this.inputPasswordV2).isDisplayed()) {
             await (await this.inputPasswordV2).setValue(password);
             let btnNextList = await this.btnNextV2;
-            if (btnNextList.length > 1) {
+            if ((await btnNextList.length) > 1) {
                 await (btnNextList[1]).click();
-            } else if (btnNextList.length > 0) {
+            } else if ((await btnNextList.length) > 0) {
                 await (btnNextList[0]).click();
             }
             await browser.pause(2000);
@@ -202,7 +192,7 @@ class InfoseekPage extends Page {
     }
 
     async canClickJoinMission(): Promise<boolean> {
-        return (await this.btnMissionJoinList).length > 0;
+        return (await (await this.btnMissionJoinList).length) > 0;
     }
 
     async joinMission() {
@@ -211,10 +201,12 @@ class InfoseekPage extends Page {
             return;
         }
         let missionList = await this.btnMissionJoinList;
-        for (let index = 0; index < missionList.length; index++) {
+        for (let index = 0; index < (await missionList.length); index++) {
             const mission = await this.btnMissionJoin;
             await mission.moveTo();
-            await mission.click();
+            if (await mission.isClickable()) {
+                await mission.click();
+            }
             await browser.pause(5000);
             if (await (await this.btnMissionAgree).isDisplayed()) {
                 await this.btnMissionAgree.moveTo();
@@ -323,12 +315,8 @@ class InfoseekPage extends Page {
         for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
             await browser.url(rankingPage);
             let rankingListTextLink = this.rankingListTextLink();
-            let indexPage = timeHelper.randomFollowTime(await rankingListTextLink.length - 1);
-            if (!oldRandomValue.includes(indexPage)) {
-                indexPage = timeHelper.randomFollowTime(await rankingListTextLink.length - 1);
-            }
-            let link = rankingListTextLink[indexPage];
-            // console.log("readArticleAtRankingPage: random indexPage: " + indexPage);
+            let link = rankingListTextLink[index];
+            console.log("readArticleAtRankingPage: random index: " + index);
             if (await link.isDisplayed()) {
                 // await link.scrollIntoView({block:'center'});
                 if (await link.isClickable()) {
@@ -338,7 +326,7 @@ class InfoseekPage extends Page {
                     let iineClicked = await this.handleReactionIine();
                     await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
                     if (iineClicked) {
-                        oldRandomValue.push(indexPage);
+                        oldRandomValue.push(index);
                     }
                     console.log("handleReactionIine: iineClicked = " + iineClicked);
                 }
@@ -352,7 +340,7 @@ class InfoseekPage extends Page {
     }
 
     async canClickGetPoint(): Promise<boolean> {
-        return (await this.btnGetPointList).length > 0;
+        return (await (await this.btnGetPointList).length) > 0;
     }
 
     async handleClickGetPoint() {
@@ -361,7 +349,7 @@ class InfoseekPage extends Page {
             return;
         }
         let getPointList = await this.btnGetPointList;
-        for (let index = 0; index < getPointList.length; index++) {
+        for (let index = 0; index < (await getPointList.length); index++) {
             const getPoint = await this.btnGetPoint;
             await getPoint.moveTo();
             await getPoint.click();

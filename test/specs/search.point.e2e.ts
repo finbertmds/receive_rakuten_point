@@ -28,15 +28,7 @@ describe('Rakuten', () => {
         }
     }
 
-    // it('rakuten:search_get_point', async () => {
-    //     await credentials();
-    //     await credentialsForWebSearch();
-    //     await websearchPage.open();
-    //     await websearchPage.search();
-    //     await browser.pause(2000)
-    // });
-
-    it('rakuten:websearch_entry_get_point', async () => {
+    it('websearch__entry_get_point', async () => {
         await credentials();
         await credentialsForWebSearch();
         await websearchPage.entryCampaign();

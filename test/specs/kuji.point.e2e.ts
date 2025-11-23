@@ -21,7 +21,7 @@ describe('Rakuten', () => {
         }
     }
 
-    it('rakuten:kuji_default_get_point', async () => {
+    it('kuji__default_get_point', async () => {
         await credentials();
         for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
             await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
@@ -30,7 +30,7 @@ describe('Rakuten', () => {
         await browser.pause(2000)
     });
 
-    it('rakuten:kuji_get_point', async () => {
+    it('kuji__get_point', async () => {
         await credentials();
         await kujiPage.open();
         let kujiCount = await kujiPage.getKujiCount();

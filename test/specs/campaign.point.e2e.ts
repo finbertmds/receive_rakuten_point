@@ -20,7 +20,7 @@ describe('Rakuten', () => {
         }
     }
 
-    it('rakuten:entry_campaign', async () => {
+    it('campaign__entry_campaign', async () => {
         await credentials();
         await campaignPage.entryCampaign();
     });

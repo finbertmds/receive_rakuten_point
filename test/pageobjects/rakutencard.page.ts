@@ -22,14 +22,10 @@ class RakutenCardPage extends Page {
 
     get labelClickPointCountTxt() { return $('.sprite-ico_rc_enavi_point_01 > .top-edit-total-click-point') }
     get btnClickPointCountLink() { return $('.sprite-ico_rc_enavi_point_01') }
-    get clickPointList() { return $$('.click-point-banner') }
+    get clickPointList() { return $$('.click-point-banner-image-wrap') }
 
     get videoBtn() { return $('#vjs_video_3 > button') }
-    get videoGetPointImg() { return $('.js-movie-point-finish') }
-
-    get btnClickShoppingLink() { return $('.pNav03 > a') }
-    get btnClickShoppingTxt() { return $('.pNav03 > a > span') }
-    get btnClickShoppingReceivePoint() { return $('#js-coreppo-receive') }
+    get videoGetPointImg() { return $('.js-movie-point-finish') }   
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -37,7 +33,7 @@ class RakutenCardPage extends Page {
      */
     async isNeedLogin(): Promise<boolean> {
         let btnNextList = await this.btnNextV2;
-        if (btnNextList.length > 0) {
+        if ((await btnNextList.length) > 0) {
             let isBtnNextListDisplayed = await (btnNextList[0]).isDisplayed();
             return isBtnNextListDisplayed;
         }
@@ -74,9 +70,9 @@ class RakutenCardPage extends Page {
         if (await (await this.inputPasswordV2).isDisplayed()) {
             await (await this.inputPasswordV2).setValue(password);
             let btnNextList = await this.btnNextV2;
-            if (btnNextList.length > 1) {
+            if ((await btnNextList.length) > 1) {
                 await (btnNextList[1]).click();
-            } else if (btnNextList.length > 0) {
+            } else if ((await btnNextList.length) > 0) {
                 await (btnNextList[0]).click();
             }
             await browser.pause(2000);
@@ -95,38 +91,12 @@ class RakutenCardPage extends Page {
         await (await this.btnClickPointCountLink).click();
     }
 
-    async getClickPointListCount(): Promise<number> {
-        return (await this.clickPointList).length;
-    }
-
     async canClickPointNewIndex(index: number): Promise<boolean> {
         return await (await (await this.clickPointList)[index]).isExisting();
     }
 
     async handleClickPointNewIndex(index: number): Promise<void> {
         await (await (await this.clickPointList)[index]).click();
-    }
-
-    async handleClickShoppingLink(): Promise<void> {
-        await (await this.btnClickShoppingLink).click();
-        await browser.pause(2000);
-    }
-
-    async getBtnClickShoppingTxtValue(): Promise<string> {
-        return await (await this.btnClickShoppingTxt).getText();
-    }
-
-    async canClickShoppingReceivePointFromLabel(): Promise<boolean> {
-        return (await this.getBtnClickShoppingTxtValue()).localeCompare("新着") === 0;
-    }
-
-    async canClickShoppingReceivePointFromBtn(): Promise<boolean> {
-        return await (await this.btnClickShoppingReceivePoint).isClickable();
-    }
-
-
-    async handleClickShoppingReceivePoint(): Promise<void> {
-        await (await this.btnClickShoppingReceivePoint).click();
     }
 
     async handlClickVideo() {
