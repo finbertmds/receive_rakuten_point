@@ -46,7 +46,7 @@ jobs:
           ref: "developer"
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: "yarn"
       - name: Install firefox and geckodriver
         run: |
@@ -78,7 +78,7 @@ jobs:
   #       ref: 'developer'
   #   - uses: actions/setup-node@v4
   #     with:
-  #       node-version: 18
+  #       node-version: 22
   #       cache: 'yarn'
   #   - name: Install firefox and geckodriver
   #     run: |
@@ -110,7 +110,7 @@ jobs:
           ref: "developer"
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: "yarn"
       - name: Install firefox and geckodriver
         run: |
