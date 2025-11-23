@@ -2,7 +2,7 @@ name: Daily Kuji
 
 on:
   schedule:
-    - cron: '0 6,8,18,20 * * *'
+    - cron: "0 6,8,18,20 * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,35 +10,35 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 'developer'
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'yarn'
-    - name: Install firefox and geckodriver
-      run: |
-        brew install --cask firefox
-        brew install geckodriver
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Test
-      run: yarn test --spec ./test/specs/kuji.point.e2e.ts
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
-        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
-    - name: upload-artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload-screenshots-infoseek
-        path: screenshots
-    - name: remove-screenshots
-      if: ${{ failure() }}
-      run: rm -rf ./screenshots
+      - uses: actions/checkout@v4
+        with:
+          ref: "developer"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "yarn"
+      - name: Install firefox and geckodriver
+        run: |
+          brew install --cask firefox
+          brew install geckodriver
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn test --spec ./test/specs/kuji.point.e2e.ts
+        env:
+          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+          BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+          BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+      - name: upload-artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-screenshots-infoseek
+          path: screenshots
+      - name: remove-screenshots
+        if: ${{ failure() }}
+        run: rm -rf ./screenshots
 
   ##################################
   ### Run when a schedule failed ###

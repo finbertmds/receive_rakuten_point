@@ -2,74 +2,74 @@ name: Daily
 
 on:
   schedule:
-    - cron: '0 20,6 * * *'
+    - cron: "0 20,6 * * *"
   workflow_dispatch:
 
 jobs:
   bank:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 'developer'
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'yarn'
-    - name: Install firefox and geckodriver
-      run: |
-        brew install --cask firefox
-        brew install geckodriver
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Test bank
-      run: yarn test --spec ./test/specs/bank.point.e2e.ts
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
-        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
-    - name: upload-artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload-screenshots-bank
-        path: screenshots
-    - name: remove-screenshots
-      if: ${{ failure() }}
-      run: rm -rf ./screenshots
+      - uses: actions/checkout@v4
+        with:
+          ref: "developer"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "yarn"
+      - name: Install firefox and geckodriver
+        run: |
+          brew install --cask firefox
+          brew install geckodriver
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test bank
+        run: yarn test --spec ./test/specs/bank.point.e2e.ts
+        env:
+          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+          BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+          BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+      - name: upload-artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-screenshots-bank
+          path: screenshots
+      - name: remove-screenshots
+        if: ${{ failure() }}
+        run: rm -rf ./screenshots
   campaign:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 'developer'
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'yarn'
-    - name: Install firefox and geckodriver
-      run: |
-        brew install --cask firefox
-        brew install geckodriver
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Test campaign
-      run: yarn test --spec ./test/specs/campaign.point.e2e.ts
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
-        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
-    - name: upload-artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload-screenshots-campaign
-        path: screenshots
-    - name: remove-screenshots
-      if: ${{ failure() }}
-      run: rm -rf ./screenshots
+      - uses: actions/checkout@v4
+        with:
+          ref: "developer"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install firefox and geckodriver
+        run: |
+          brew install --cask firefox
+          brew install geckodriver
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test campaign
+        run: yarn test --spec ./test/specs/campaign.point.e2e.ts
+        env:
+          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+          BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+          BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+      - name: upload-artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-screenshots-campaign
+          path: screenshots
+      - name: remove-screenshots
+        if: ${{ failure() }}
+        run: rm -rf ./screenshots
   # card:
   #   runs-on: macos-latest
   #   steps:
@@ -105,35 +105,35 @@ jobs:
   search:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 'developer'
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'yarn'
-    - name: Install firefox and geckodriver
-      run: |
-        brew install --cask firefox
-        brew install geckodriver
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Test search
-      run: yarn test --spec ./test/specs/search.point.e2e.ts
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-        BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
-        BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
-    - name: upload-artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload-screenshots-search
-        path: screenshots
-    - name: remove-screenshots
-      if: ${{ failure() }}
-      run: rm -rf ./screenshots
+      - uses: actions/checkout@v4
+        with:
+          ref: "developer"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Install firefox and geckodriver
+        run: |
+          brew install --cask firefox
+          brew install geckodriver
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test search
+        run: yarn test --spec ./test/specs/search.point.e2e.ts
+        env:
+          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+          BANK_RAKUTEN_USERNAME: ${{ secrets.BANK_RAKUTEN_USERNAME }}
+          BANK_RAKUTEN_PASSWORD: ${{ secrets.BANK_RAKUTEN_PASSWORD }}
+      - name: upload-artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-screenshots-search
+          path: screenshots
+      - name: remove-screenshots
+        if: ${{ failure() }}
+        run: rm -rf ./screenshots
 
   ##################################
   ### Run when a schedule failed ###
