@@ -51,12 +51,12 @@ describe('rakuten_toshiru', async () => {
                 await tLoginScreen.loginWithOtherButton.click();
                 await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
             }
-            await driver.execute('mobile: shell', {
-                command: 'input',
-                args: ['tap', '410', '840'],
-                includeStderr: true,
-                timeout: 2000
-            });
+            // await driver.execute('mobile: shell', {
+            //     command: 'input',
+            //     args: ['tap', '410', '840'],
+            //     includeStderr: true,
+            //     timeout: 2000
+            // });
             await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
@@ -67,11 +67,18 @@ describe('rakuten_toshiru', async () => {
             await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
-                args: ['tap', '410', '1100'],
+                args: ['keyevent', '66'], // KEYCODE_ENTER
                 includeStderr: true,
                 timeout: 2000
             });
-
+            await driver.pause(2000);
+            // await driver.execute('mobile: shell', {
+            //     command: 'input',
+            //     args: ['tap', '410', '1100'],
+            //     includeStderr: true,
+            //     timeout: 2000
+            // });
+    
             await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
@@ -79,13 +86,20 @@ describe('rakuten_toshiru', async () => {
                 includeStderr: true,
                 timeout: 2000
             });
-            await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
-                args: ['tap', '410', '1100'],
+                args: ['keyevent', '66'], // KEYCODE_ENTER
                 includeStderr: true,
                 timeout: 2000
             });
+            await driver.pause(2000);
+            // await driver.pause(2000);
+            // await driver.execute('mobile: shell', {
+            //     command: 'input',
+            //     args: ['tap', '410', '1100'],
+            //     includeStderr: true,
+            //     timeout: 2000
+            // });
             // await tLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
             // await driver.pause(3000);
             // await tLoginScreen.nextButton.click();

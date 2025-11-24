@@ -64,12 +64,12 @@ describe('rakuten_kuji', async () => {
             await kLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await driver.execute('mobile: shell', {
-            command: 'input',
-            args: ['tap', '410', '840'],
-            includeStderr: true,
-            timeout: 2000
-        });
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '840'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
@@ -80,10 +80,17 @@ describe('rakuten_kuji', async () => {
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
 
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
@@ -92,13 +99,20 @@ describe('rakuten_kuji', async () => {
             includeStderr: true,
             timeout: 2000
         });
-        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         // await kLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
         // await driver.pause(3000);
         // await kLoginScreen.nextButton.click();

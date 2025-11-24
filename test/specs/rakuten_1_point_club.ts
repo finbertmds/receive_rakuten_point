@@ -61,12 +61,12 @@ describe('rakuten_point_club', async () => {
             await pcLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await driver.execute('mobile: shell', {
-            command: 'input',
-            args: ['tap', '410', '840'],
-            includeStderr: true,
-            timeout: 2000
-        });
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '840'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
@@ -77,10 +77,17 @@ describe('rakuten_point_club', async () => {
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
 
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
@@ -89,13 +96,20 @@ describe('rakuten_point_club', async () => {
             includeStderr: true,
             timeout: 2000
         });
-        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         // await pcLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
         // await driver.pause(3000);
         // await pcLoginScreen.nextButton.click();
@@ -139,34 +153,26 @@ describe('rakuten_point_club', async () => {
             await pcHomeScreen.notificationNoButon.click();
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        let isDiplayedCustomPanel = await pcHomeScreen.customPanel.isDisplayed()
-        if (isDiplayedCustomPanel) {
-            if (await (await pcHomeScreen.closeCustomPanelButon).isExisting()) {
-                if (await (await pcHomeScreen.closeCustomPanelButon).isDisplayed()) {
-                    await pcHomeScreen.closeCustomPanelButon.click();
-                }
+        if (await (await pcHomeScreen.closeCustomPanelButon).isExisting()) {
+            if (await (await pcHomeScreen.closeCustomPanelButon).isDisplayed()) {
+                await pcHomeScreen.closeCustomPanelButon.click();
             }
         }
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        let isDiplayedCustomPanel2 = await pcHomeScreen.customPanel.isDisplayed()
-        if (isDiplayedCustomPanel2) {
-            if (await (await pcHomeScreen.closeCustomPanel2Buton).isExisting()) {
-                if (await (await pcHomeScreen.closeCustomPanel2Buton).isDisplayed()) {
-                    await pcHomeScreen.closeCustomPanel2Buton.click();
-                }
+        if (await (await pcHomeScreen.closeCustomPanel2Buton).isExisting()) {
+            if (await (await pcHomeScreen.closeCustomPanel2Buton).isDisplayed()) {
+                await pcHomeScreen.closeCustomPanel2Buton.click();
             }
         }
     }
 
     async function clickToCancelGuide() {
-        await pcFirststartScreen.tooltipButton.click();
-        await driver.pause(2000);
-        await pcFirststartScreen.tooltipButton.click();
-        await driver.pause(2000);
-        await pcFirststartScreen.tooltipButton.click();
-        await driver.pause(2000);
-        await pcFirststartScreen.tooltipButton.click();
-        await driver.pause(2000);
+        for (let index = 0; index < 4; index++) {
+            await driver.pause(5000);
+            if (await (await pcHomeScreen.menuNavigationHome).isDisplayed()) {
+                await pcHomeScreen.menuNavigationHome.click();
+            }
+        }
 
         if (! await pcHomeScreen.rakutenAllTimePointLabel.isDisplayed()) {
             console.log("rakutenNameLabel is not displayed");
@@ -176,6 +182,7 @@ describe('rakuten_point_club', async () => {
             console.log("menuNavigationButton is not displayed");
             return false;
         }
+        await driver.pause(3000);
         await pcHomeScreen.menuNavigationButton.click();
         await driver.pause(3000);
         await pcHomeScreen.menuNavigationButton.click();

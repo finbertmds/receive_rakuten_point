@@ -55,12 +55,12 @@ describe('rakuten_super_point_screen', async () => {
             await sLoginScreen.loginWithOtherButton.click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await driver.execute('mobile: shell', {
-            command: 'input',
-            args: ['tap', '410', '840'],
-            includeStderr: true,
-            timeout: 2000
-        });
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '840'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
@@ -71,10 +71,17 @@ describe('rakuten_super_point_screen', async () => {
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
 
         await driver.pause(2000);
         await driver.execute('mobile: shell', {
@@ -83,13 +90,20 @@ describe('rakuten_super_point_screen', async () => {
             includeStderr: true,
             timeout: 2000
         });
-        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
-            args: ['tap', '410', '1100'],
+            args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 2000
         });
+        await driver.pause(2000);
+        // await driver.pause(2000);
+        // await driver.execute('mobile: shell', {
+        //     command: 'input',
+        //     args: ['tap', '410', '1100'],
+        //     includeStderr: true,
+        //     timeout: 2000
+        // });
         // await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
         // await driver.pause(3000);
         // await sLoginScreen.nextButton.click();
