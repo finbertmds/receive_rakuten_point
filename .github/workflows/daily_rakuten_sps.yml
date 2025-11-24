@@ -2,70 +2,70 @@ name: Daily App SPS
 
 on:
   schedule:
-    - cron: '30 0,3,6,9,11,13 * * *'
+    - cron: "30 0,3,6,9,11,13 * * *"
   workflow_dispatch:
 
 jobs:
   superpointscreen:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: 'rakuten_apps'
-    - name: Enable KVM
-      run: |
-        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-        sudo udevadm control --reload-rules
-        sudo udevadm trigger --name-match=kvm
-    - name: Gradle cache
-      uses: gradle/actions/setup-gradle@v3
-    - name: AVD cache
-      uses: actions/cache@v4
-      id: avd-cache
-      with:
-        path: |
-          ~/.android/avd/*
-          ~/.android/adb*
-        key: avd-29
-    - name: create AVD and generate snapshot for caching
-      if: steps.avd-cache.outputs.cache-hit != 'true'
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        force-avd-creation: false
-        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-        disable-animations: false
-        profile: pixel_7
-        script: echo "Generated AVD snapshot for caching."
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'yarn'
-    - name: Install Appium
-      uses: FinbertMDS/setup-appium@latest
-    - name: Install UIAutomator
-      run: appium driver install uiautomator2
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-    - name: Run Appium Tests
-      uses: reactivecircus/android-emulator-runner@v2
-      env:
-        RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-        RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-      with:
-        api-level: 29
-        target: google_apis
-        profile: pixel_7
-        script: "sleep 60 && yarn test:superpointscreen"
-    - name: upload-artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: upload-screenshots-superpointscreen
-        path: screenshots
-    - name: remove-screenshots
-      if: ${{ failure() }}
-      run: rm -rf ./screenshots
+      - uses: actions/checkout@v4
+        with:
+          ref: "rakuten_apps"
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-29
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          profile: pixel_7
+          script: echo "Generated AVD snapshot for caching."
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "yarn"
+      - name: Install Appium
+        uses: FinbertMDS/setup-appium@latest
+      - name: Install UIAutomator
+        run: appium driver install uiautomator2
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run Appium Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
+          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
+        with:
+          api-level: 29
+          target: google_apis
+          profile: pixel_7
+          script: "sleep 60 && yarn test:superpointscreen"
+      - name: upload-artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-screenshots-superpointscreen
+          path: screenshots
+      - name: remove-screenshots
+        if: ${{ failure() }}
+        run: rm -rf ./screenshots
 
   ##################################
   ### Run when a schedule failed ###
