@@ -59,50 +59,50 @@ describe('rakuten_super_point_screen', async () => {
         //     command: 'input',
         //     args: ['tap', '410', '840'],
         //     includeStderr: true,
-        //     timeout: 2000
+        //     timeout: 5000
         // });
-        await driver.pause(2000);
+        await driver.pause(5000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_USERNAME],
             includeStderr: true,
-            timeout: 2000
+            timeout: 5000
         });
-        await driver.pause(2000);
+        await driver.pause(5000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
-            timeout: 2000
+            timeout: 5000
         });
-        await driver.pause(2000);
+        await driver.pause(5000);
         // await driver.execute('mobile: shell', {
         //     command: 'input',
         //     args: ['tap', '410', '1100'],
         //     includeStderr: true,
-        //     timeout: 2000
+        //     timeout: 5000
         // });
 
-        await driver.pause(2000);
+        await driver.pause(5000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_PASSWORD],
             includeStderr: true,
-            timeout: 2000
+            timeout: 5000
         });
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
-            timeout: 2000
+            timeout: 5000
         });
-        await driver.pause(2000);
-        // await driver.pause(2000);
+        await driver.pause(5000);
+        // await driver.pause(5000);
         // await driver.execute('mobile: shell', {
         //     command: 'input',
         //     args: ['tap', '410', '1100'],
         //     includeStderr: true,
-        //     timeout: 2000
+        //     timeout: 5000
         // });
         // await sLoginScreen.userid.setValue(config.RAKUTEN_USERNAME);
         // await driver.pause(3000);
