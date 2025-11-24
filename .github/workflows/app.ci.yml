@@ -46,6 +46,8 @@ jobs:
   #         cache: "yarn"
   #     - name: Install Appium
   #       uses: FinbertMDS/setup-appium@latest
+  #     - name: Install UIAutomator
+  #       run: appium driver install uiautomator2
   #     - name: Install dependencies
   #       run: yarn install --frozen-lockfile
   #     - name: Run Appium Tests
@@ -103,6 +105,8 @@ jobs:
           cache: "yarn"
       - name: Install Appium
         uses: FinbertMDS/setup-appium@latest
+      - name: Install UIAutomator
+        run: appium driver install uiautomator2
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Run Appium Tests
@@ -160,6 +164,8 @@ jobs:
           cache: "yarn"
       - name: Install Appium
         uses: FinbertMDS/setup-appium@latest
+      - name: Install UIAutomator
+        run: appium driver install uiautomator2
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Run Appium Tests
@@ -217,6 +223,8 @@ jobs:
           cache: "yarn"
       - name: Install Appium
         uses: FinbertMDS/setup-appium@latest
+      - name: Install UIAutomator
+        run: appium driver install uiautomator2
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Run Appium Tests
@@ -274,6 +282,8 @@ jobs:
   #       cache: "yarn"
   #   - name: Install Appium
   #     uses: FinbertMDS/setup-appium@latest
+  #   - name: Install UIAutomator
+  #     run: appium driver install uiautomator2
   #   - name: Install dependencies
   #     run: yarn install --frozen-lockfile
   #   - name: Run Appium Tests
