@@ -1,3 +1,4 @@
+import { driver } from '@wdio/globals';
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
 import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
@@ -31,6 +32,9 @@ describe('rakuten_point_club', async () => {
         // }
         // await webviewScreen.switchToContext(CONTEXT_REF.NATIVE);
         // await pcLoginScreen.waitForIsShown();
+        await driver.pause(2000);
+        await pcFirststartScreen.skipButton.click();
+
         await driver.pause(5000);
         await pcLoginScreen.enterLoginButton.click();
         await driver.pause(5000);
@@ -155,7 +159,16 @@ describe('rakuten_point_club', async () => {
     }
 
     async function clickToCancelGuide() {
-        if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+        await pcFirststartScreen.tooltipButton.click();
+        await driver.pause(2000);
+        await pcFirststartScreen.tooltipButton.click();
+        await driver.pause(2000);
+        await pcFirststartScreen.tooltipButton.click();
+        await driver.pause(2000);
+        await pcFirststartScreen.tooltipButton.click();
+        await driver.pause(2000);
+
+        if (! await pcHomeScreen.rakutenAllTimePointLabel.isDisplayed()) {
             console.log("rakutenNameLabel is not displayed");
             return false;
         }
@@ -169,7 +182,7 @@ describe('rakuten_point_club', async () => {
     }
 
     async function checkIsLoggedIn() {
-        let rakutenNameLabel = pcHomeScreen.rakutenNameLabel
+        let rakutenNameLabel = pcHomeScreen.rakutenAllTimePointLabel
         if (await rakutenNameLabel.isDisplayed()) {
             return true;
         }
@@ -219,7 +232,7 @@ describe('rakuten_point_club', async () => {
 
     async function openRewardScreenAndClaim() {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+        if (! await pcHomeScreen.rakutenAllTimePointLabel.isDisplayed()) {
             console.log("rakutenNameLabel is not displayed");
             return false;
         }
@@ -259,7 +272,7 @@ describe('rakuten_point_club', async () => {
     async function openRewardScreen(closeScreenWhenEnd: boolean = true) {
         // await pcHomeScreen.waitForRakutenNameLableIsShown();
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
-        if (! await pcHomeScreen.rakutenNameLabel.isDisplayed()) {
+        if (! await pcHomeScreen.rakutenAllTimePointLabel.isDisplayed()) {
             console.log("rakutenNameLabel is not displayed");
             return false;
         }

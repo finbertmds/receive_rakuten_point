@@ -13,9 +13,16 @@ const SELECTORS = {
     CLOSE_CUSTOM_PANEL: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_close"),
     CLOSE_CUSTOM_PANEL2: getByResouceId("jp.co.rakuten.pointclub.android:id/iv_cross"),
 
-    RAKUTEN_NAME_LABLEL: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_mem_name"),
+    RAKUTEN_ALL_TIME_POINT_LABLEL: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_all_time_point"),
     MENU_NAVIGATION_BUTTON: getByClassname("android.widget.ImageButton"),
     // RAKUTEN_REWARD_LABEL: getByClassnameAndText("android.widget.Image", "ic_rakutenreward"),
+
+    MENU_NAVIGATION_HOME: getByResouceId("jp.co.rakuten.pointclub.android:id/nav_home"),
+    MENU_NAVIGATION_EARN: getByResouceId("jp.co.rakuten.pointclub.android:id/nav_earn"),
+    MENU_NAVIGATION_DEPOSIT: getByResouceId("jp.co.rakuten.pointclub.android:id/nav_deposit"),
+    MENU_NAVIGATION_USE: getByResouceId("jp.co.rakuten.pointclub.android:id/nav_use"),
+    MENU_NAVIGATION_HISTORY: getByResouceId("jp.co.rakuten.pointclub.android:id/nav_history"),
+    
     /** Point Mission */
     RAKUTEN_REWARD_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/menu_point_mission"),
     /** Point History Report Button */
@@ -30,8 +37,8 @@ class PC_HomeScreen extends AppScreen {
         super(SELECTORS.HOME_SCREEN);
     }
 
-    async waitForRakutenNameLableIsShown () {
-        return $(SELECTORS.RAKUTEN_NAME_LABLEL).waitForDisplayed({
+    async waitForRakutenAllTimePointLableIsShown () {
+        return $(SELECTORS.RAKUTEN_ALL_TIME_POINT_LABLEL).waitForDisplayed({
             timeout: config.DEFAULT_TIMEOUT,
             reverse: false,
         });
@@ -65,8 +72,8 @@ class PC_HomeScreen extends AppScreen {
         return $(SELECTORS.CLOSE_CUSTOM_PANEL2);
     }
 
-    get rakutenNameLabel () {
-        return $(SELECTORS.RAKUTEN_NAME_LABLEL);
+    get rakutenAllTimePointLabel () {
+        return $(SELECTORS.RAKUTEN_ALL_TIME_POINT_LABLEL);
     }
 
     get menuNavigationButton () {
@@ -114,6 +121,26 @@ class PC_HomeScreen extends AppScreen {
 
     async waitForAdBannerIsShown () {
         return this.waitForElementIsShown(SELECTORS.AD_BANNER_GROUP);
+    }
+
+    get menuNavigationHome () {
+        return $(SELECTORS.MENU_NAVIGATION_HOME);
+    }
+
+    get menuNavigationEarn () {
+        return $(SELECTORS.MENU_NAVIGATION_EARN);
+    }
+
+    get menuNavigationDeposit () {
+        return $(SELECTORS.MENU_NAVIGATION_DEPOSIT);
+    }
+
+    get menuNavigationUse () {
+        return $(SELECTORS.MENU_NAVIGATION_USE);
+    }
+
+    get menuNavigationHistory () {
+        return $(SELECTORS.MENU_NAVIGATION_HISTORY);
     }
 
 }

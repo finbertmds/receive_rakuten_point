@@ -7,6 +7,8 @@ const SELECTORS = {
     WARNING_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/text_root_title"),
     NEVER_DISPLAY_CHECKBOX: getByResouceId("jp.co.rakuten.pointclub.android:id/checkbox_root_detection_popup_never_ask_again"),
     CLOSE_LABEL: getByResouceId("jp.co.rakuten.pointclub.android:id/text_close_dialog"),
+    SKIP_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/btn_skip"),
+    TOOLTIP_BUTTON: getByResouceId("jp.co.rakuten.pointclub.android:id/tv_tooltip_ok"),
 };
 
 class PC_FirstStartScreen extends AppScreen {
@@ -31,6 +33,14 @@ class PC_FirstStartScreen extends AppScreen {
 
     get closeLabel () {
         return $(SELECTORS.CLOSE_LABEL);
+    }
+
+    get skipButton () {
+        return $(SELECTORS.SKIP_BUTTON);
+    }
+
+    get tooltipButton () {
+        return $(SELECTORS.TOOLTIP_BUTTON);
     }
 }
 
