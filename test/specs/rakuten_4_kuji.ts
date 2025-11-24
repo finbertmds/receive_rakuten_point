@@ -325,42 +325,42 @@ describe('rakuten_kuji', async () => {
         }
     }
 
-    it('k_click_kuji', async () => {
-        await driver.pause(7000);
+    // it('k_click_kuji', async () => {
+    //     await driver.pause(7000);
 
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            await handleFirstTimeEnterApp();
-        }
-        await handleLuckyKujiV2();
-        await driver.pause(config.DEFAULT_TIMEOUT);
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         await handleFirstTimeEnterApp();
+    //     }
+    //     await handleLuckyKujiV2();
+    //     await driver.pause(config.DEFAULT_TIMEOUT);
 
-        await handleClickKujiV2();
-    });
+    //     await handleClickKujiV2();
+    // });
 
-    it('k_click_message', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        await handleLuckyKujiV2();
-        if (await kHomeScreen.homeTabLabel.isDisplayed()) {
-            await kHomeScreen.homeTabLabel.click();
-        }
-        await handleClickMessage();
-    });
+    // it('k_click_message', async () => {
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         return;
+    //     }
+    //     await handleLuckyKujiV2();
+    //     if (await kHomeScreen.homeTabLabel.isDisplayed()) {
+    //         await kHomeScreen.homeTabLabel.click();
+    //     }
+    //     await handleClickMessage();
+    // });
 
-    it('k_click_ad', async () => {
-        let isLoggedIn = await checkIsLoggedIn();
-        if (!isLoggedIn) {
-            return;
-        }
-        await handleLuckyKujiV2();
-        if (await kHomeScreen.homeTabLabel.isDisplayed()) {
-            await kHomeScreen.homeTabLabel.click();
-        }
-        await handleClickAd();
-    });
+    // it('k_click_ad', async () => {
+    //     let isLoggedIn = await checkIsLoggedIn();
+    //     if (!isLoggedIn) {
+    //         return;
+    //     }
+    //     await handleLuckyKujiV2();
+    //     if (await kHomeScreen.homeTabLabel.isDisplayed()) {
+    //         await kHomeScreen.homeTabLabel.click();
+    //     }
+    //     await handleClickAd();
+    // });
 });
 
 
