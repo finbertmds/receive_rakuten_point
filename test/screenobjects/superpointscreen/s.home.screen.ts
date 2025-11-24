@@ -41,6 +41,7 @@ class S_HomeScreen extends AppScreen {
                 if (await poinMark.isExisting()) {
                     if (await poinMark.isDisplayed()) {
                         pointNumberButtonRes.push(element);
+                        break;
                     }
                 }
             }

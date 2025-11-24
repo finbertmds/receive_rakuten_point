@@ -1,3 +1,4 @@
+import { driver } from '@wdio/globals';
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
 import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
@@ -25,6 +26,7 @@ describe('rakuten_super_point_screen', async () => {
             await sFirststartScreen.skipButon.click();
         }
     }
+
     async function handleFirstLogin() {
         await driver.pause(5000);
         // sHomeScreen.waitForLoginButtonIsShown();
@@ -137,7 +139,7 @@ describe('rakuten_super_point_screen', async () => {
         if (await (await sHomeGetpointScreen.nextButton).isExisting()) {
             if (await (await sHomeGetpointScreen.nextButton).isDisplayed()) {
                 await (await sHomeGetpointScreen.nextButton).click();
-                await browser.pause(5000);
+                await driver.pause(5000);
                 needAllow = true;
             }
         }
@@ -214,8 +216,9 @@ describe('rakuten_super_point_screen', async () => {
 
                 await handleClickPermission();
                 await sHomeGetpointScreen.waitForDoneButtonIsShown();
+                await driver.pause(5000);
                 await driver.back();
-                await browser.pause(5000);
+                await driver.pause(5000);
             }
         }
     }
@@ -236,15 +239,17 @@ describe('rakuten_super_point_screen', async () => {
                 for (let buttonIndex = 0; buttonIndex < pointNumberButtonList.length; buttonIndex++) {
                     const pointNumberButton = pointNumberButtonList[buttonIndex];
                     console.log(`swipeUp ${index}: pointNumberButton: ${buttonIndex}`);
+                    await driver.pause(2000);
                     await pointNumberButton.click();
 
                     // await sHomeGetpointScreen.waitForIsShown();
-                    await browser.pause(5000);
+                    await driver.pause(5000);
                     if (!S_TabBar.bottomIconIsDisplayed()) {
                         await sHomeGetpointScreen.waitForDoneButtonIsShown();
+                        await driver.pause(5000);
                         // await sHomeGetpointScreen.closeButton.click();
                         await driver.back();
-                        await browser.pause(5000);
+                        await driver.pause(5000);
 
                         await handleCloseAlert();
 
@@ -275,14 +280,13 @@ describe('rakuten_super_point_screen', async () => {
 
     async function handleClickPlay() {
         await driver.pause(2000);
-        let playButton = sLuckycountScreen.playButton;
-        if (await playButton.isExisting()) {
-            await playButton.click();
+        if (await (await sLuckycountScreen.playButton).isDisplayed()) {
+            await (await sLuckycountScreen.playButton).click();
             await sLuckycountScreen.waitForChallengePlayButtonIsShown();
             await sLuckycountScreen.waitForPlayIconIsShown();
-            await sLuckycountScreen.challengePlayButton.click();
-            if (await sLuckycountScreen.viewFullScreenOK.isDisplayed()) {
-                await sLuckycountScreen.viewFullScreenOK.click();
+            await (await sLuckycountScreen.challengePlayButton).click();
+            if (await (await sLuckycountScreen.viewFullScreenOK).isDisplayed()) {
+                await (await sLuckycountScreen.viewFullScreenOK).click();
             }
             await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 90000);
             await driver.execute('mobile: shell', {
@@ -301,7 +305,7 @@ describe('rakuten_super_point_screen', async () => {
             await driver.pause(5000);
             await driver.back();
 
-            if (await sLuckycountScreen.alertContent.isDisplayed()) {
+            if (await (await sLuckycountScreen.alertContent).isDisplayed()) {
                 if (await sLuckycountScreen.alertCloseButton.isDisplayed()) {
                     await sLuckycountScreen.alertCloseButton.click();
                 }
@@ -320,14 +324,13 @@ describe('rakuten_super_point_screen', async () => {
 
     async function handleClickChallenge() {
         await driver.pause(2000);
-        let challengeButton = sLuckycountScreen.challengeButton
-        if (await challengeButton.isExisting()) {
-            await challengeButton.click();
+        if (await (await sLuckycountScreen.challengeButton).isDisplayed()) {
+            await (await sLuckycountScreen.challengeButton).click();
             await sLuckycountScreen.waitForChallengePlayButtonIsShown();
-            await sLuckycountScreen.challengePlayButton.click();
+            await (await sLuckycountScreen.challengePlayButton).click();
 
             await sLuckycountScreen.waitForChallengeCardIsShown();
-            await sLuckycountScreen.challengeCard.click();
+            await (await sLuckycountScreen.challengeCard).click();
 
             await sLuckycountScreen.waitForChallengePlayButtonIsShown();
 

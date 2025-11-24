@@ -1,3 +1,4 @@
+import { driver } from '@wdio/globals';
 import config from '../../../config';
 import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
@@ -22,7 +23,7 @@ class S_HomeGetPointScreen extends AppScreen {
 
     async waitForDoneButtonIsShown () {
         let clickedAfterTime = new Date();
-        await browser.waitUntil(async () => {
+        await driver.waitUntil(async () => {
             try {
                 let now = new Date();
                 let diffMs = (now.valueOf() - clickedAfterTime.valueOf());
