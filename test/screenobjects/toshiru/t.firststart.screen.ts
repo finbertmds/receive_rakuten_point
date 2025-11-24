@@ -38,10 +38,6 @@ class T_FirstStartScreen extends AppScreen {
         return $(SELECTORS.WARNING_OK_BUTTON);
     }
 
-    async waitForModalClaimIsShown () {
-        return this.waitForElementIsShown(SELECTORS.MODAL_CLAIM);
-    }
-
     get modalClaim () {
         return $(SELECTORS.MODAL_CLAIM);
     }

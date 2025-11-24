@@ -1,10 +1,4 @@
-const { join } = require('path');
 const { config } = require('./wdio.conf');
-const apks = require('./apks');
-
-function getAppPath (fileName) {
-    return join(process.cwd(), './apps/' + fileName);
-}
 
 // ============
 // Specs

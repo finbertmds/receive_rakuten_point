@@ -1,3 +1,4 @@
+import { driver } from '@wdio/globals';
 import config from "../../config";
 import Gestures from "../helpers/Gestures";
 import cFirststartScreen from "../screenobjects/chrome/c.firststart.screen";

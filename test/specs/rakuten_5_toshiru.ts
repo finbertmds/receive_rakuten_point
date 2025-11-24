@@ -1,3 +1,4 @@
+import { driver } from '@wdio/globals';
 import config from '../../config';
 import Gestures from '../helpers/Gestures';
 import cFirststartScreen from '../screenobjects/chrome/c.firststart.screen';
@@ -127,6 +128,7 @@ describe('rakuten_toshiru', async () => {
         if (modalClaimIsDisplayed) {
             await tFirststartScreen.pointLogoClaimButton.click();
             await tHomeScreen.waitForGetPointDoneLabelIsShown();
+            await driver.pause(5000);
             await driver.back();
             return true;
         }

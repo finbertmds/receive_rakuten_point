@@ -19,5 +19,4 @@ export default {
     RAKUTEN_POINT_CLUB_WEBVIEW_CONTEXT: 'WEBVIEW_jp.co.rakuten.pointclub.android',
     RAKUTEN_SUPER_POINT_SCREEN_APP_ID: 'jp.co.rakuten.slide',
     RAKUTEN_TOSHIRU_APP_ID: 'jp.co.rakutensec.toshiru',
-    RAKUTEN_WEBSEARCH_APP_ID: 'jp.co.rakuten.toolbar.raws',
 }
