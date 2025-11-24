@@ -14,9 +14,7 @@
       "@wdio/mocha-framework",
       "expect-webdriverio",
       "@wdio/appium-service"
-    ],
+    ]
   },
-  "include": [
-    "./test/**/*.ts"
-  ]
+  "include": ["./test/**/*.ts"]
 }

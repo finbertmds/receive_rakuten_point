@@ -1,6 +1,6 @@
 const { join } = require('path');
 const { config } = require('./wdio.shared.conf');
-const configConst = require('./config');
+const apks = require('./apks');
 
 function getAppPath (fileName) {
     return join(process.cwd(), './apps/' + fileName);
@@ -33,8 +33,7 @@ config.capabilities = [
         // https://github.com/appium/appium/releases/tag/v1.13.0
         'appium:automationName': 'UiAutomator2',
         // The path to the app
-        'appium:app': getAppPath(configConst.default.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME),
-        'appium:otherApps': `["${getAppPath(configConst.default.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME)}","${getAppPath(configConst.default.RAKUTEN_TOSHIRU_APK_NAME)}"]`,
+        'appium:app': getAppPath(apks.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME),
         // Read the reset strategies very well, they differ per platform, see
         // http://appium.io/docs/en/writing-running-appium/other/reset-strategies/
         'appium:noReset': true,

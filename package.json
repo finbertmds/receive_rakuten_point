@@ -5,10 +5,12 @@
   "license": "MIT",
   "scripts": {
     "clear": "./scripts/clear_data.sh && adb shell pm clear com.android.chrome",
-    "install:all": "yarn install:kuji && yarn install:pointclub && yarn install:recipe",
-    "install:kuji": "adb install-multiple apps/R_Kuji/config.mdpi.apk apps/R_Kuji/jp.co.rakuten.rakutenluckykuji.apk",
-    "install:pointclub": "adb install-multiple apps/R_PointClub/config.mdpi.apk apps/R_PointClub/jp.co.rakuten.pointclub.android.apk",
+    "install:all": "yarn install:kuji && yarn install:pointclub && yarn install:recipe && yarn install:toshiru && yarn install:superpointscreen",
+    "install:kuji": "adb install-multiple apps/R_Kuji/config.xxhdpi.apk apps/R_Kuji/jp.co.rakuten.rakutenluckykuji.apk",
+    "install:pointclub": "adb install-multiple apps/R_PointClub/config.xxhdpi.apk apps/R_PointClub/jp.co.rakuten.pointclub.android.apk",
     "install:recipe": "adb install-multiple apps/R_Recipe/config.mdpi.apk apps/R_Recipe/jp.co.rakuten.recipe.apk",
+    "install:toshiru": "adb install-multiple apps/R_Toshiru/config.mdpi.apk apps/R_Toshiru/jp.co.rakutensec.toshiru.apk",
+    "install:superpointscreen": "adb install apps/R_SuperPointScreen.apk",
     "test:kuji": "yarn install:kuji && npx wdio run wdio.apps.kuji.conf.js",
     "test:pointclub": "yarn install:pointclub && npx wdio run wdio.apps.pointclub.conf.js",
     "test:recipe": "yarn install:recipe && npx wdio run wdio.apps.recipe.conf.js",
@@ -19,14 +21,14 @@
     "test": "yarn install:kuji && yarn install:pointclub && yarn install:recipe && npx wdio run wdio.conf.js"
   },
   "dependencies": {
-    "@wdio/cli": "^7.25.2"
+    "@wdio/cli": "^9.20.1"
   },
   "devDependencies": {
-    "@wdio/appium-service": "^7.25.1",
-    "@wdio/mocha-framework": "^7.25.2",
-    "@wdio/local-runner": "^7.25.2",
-    "@wdio/spec-reporter": "^7.25.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.8.4"
+    "@wdio/appium-service": "^9.20.1",
+    "@wdio/local-runner": "^9.20.1",
+    "@wdio/mocha-framework": "^9.20.1",
+    "@wdio/spec-reporter": "^9.20.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

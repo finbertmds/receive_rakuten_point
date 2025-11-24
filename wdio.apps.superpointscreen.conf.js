@@ -1,6 +1,6 @@
 const { join } = require('path');
 const { config } = require('./wdio.conf');
-const configConst = require('./config');
+const apks = require('./apks');
 
 function getAppPath (fileName) {
     return join(process.cwd(), './apps/' + fileName);
@@ -16,7 +16,7 @@ config.specs = [
 let capabilities = [
     {
         ...config.capabilities[0],
-        'appium:app': getAppPath(configConst.default.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME),
+        'appium:app': getAppPath(apks.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME),
     }
 ];
 delete capabilities[0]['appium:otherApps'];
