@@ -10,10 +10,10 @@ import kLuckykujiScreen from "../screenobjects/kuji/k.luckykuji.screen";
 import kMessageboxScreen from "../screenobjects/kuji/k.messagebox.screen";
 
 describe('rakuten_kuji', async () => {
-    before(async () => {
-        await driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
-        await driver.pause(5000);
-    })
+    // before(async () => {
+    //     await driver.activateApp(config.RAKUTEN_KUJI_APP_ID);
+    //     await driver.pause(5000);
+    // })
 
     async function handleFirstTimeEnterApp() {
         await closeWarningLabel();
