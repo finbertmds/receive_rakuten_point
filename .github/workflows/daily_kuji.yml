@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  infoseek:
+  kuji:
     runs-on: macos-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: upload-screenshots-infoseek
+          name: upload-screenshots-kuji
           path: screenshots
       - name: remove-screenshots
         if: ${{ failure() }}
@@ -47,7 +47,7 @@ jobs:
     name: Restarts the scheduled run when it failed
     runs-on: macos-latest
     if: github.event_name == 'schedule' && failure()
-    needs: [infoseek]
+    needs: [kuji]
     steps:
       - name: Retry the workflow
         run: |
