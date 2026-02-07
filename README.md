@@ -48,3 +48,5 @@ Rakuten App: SuperPointScreen | Rakuten App: Kuji | Rakuten App: Point Club
 Rakuten Web Campain | Rakuten Web Card | Rakuten Web Kuji
 ---------|----------|---------
 ![Rakuten_Web_Campain](images/Rakuten_Web_Campain.gif)  | ![Rakuten_Web_Card](images/Rakuten_Web_Card.gif)  | ![Rakuten_Web_Kuji](images/Rakuten_Web_Kuji.gif)
+
+---
