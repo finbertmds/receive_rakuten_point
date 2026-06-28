@@ -7,7 +7,7 @@ class BankCampaignPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get cashGiftBtn() { return $$('table.marginleft15 tr td input[name*="FORM_CASH_GIFT_SERVICE:"]') }
+    get cashGiftBtn() { return $$('table.marginleft15 tr td input') }
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -25,13 +25,19 @@ class BankCampaignPage extends Page {
         let campaignListCount = await this.cashGiftBtn.length;
         for (let index = 0; index < campaignListCount; index++) {
             const campaign = this.cashGiftBtn[index];
-            if (await campaign.isDisplayed()) {
-                if (await campaign.isClickable()) {
-                    const currentWindows = await browser.getWindowHandle();
-                    await campaign.click();
-                    await browser.pause(5000);
-                    await browser.switchToWindow(currentWindows);
+            try {
+                if (await campaign.isDisplayed()) {
+                    if (await campaign.isClickable()) {
+                        await campaign.moveTo();
+                        const currentWindows = await browser.getWindowHandle();
+                        await campaign.click();
+                        await browser.pause(5000);
+                        await browser.switchToWindow(currentWindows);
+                    }
                 }
+            } catch (error) {
+                console.error(`Error scrolling to campaign at index ${index}:`, error);
+                continue; // Skip this iteration and move to the next one
             }
         }
     }

@@ -8,6 +8,7 @@ class CampaignPage extends Page {
     entryButtonList = [
         '.rcEntryButton-button',
         '.btn-entry-anim',
+        '.btn-entry-wrap'
     ]
 
     get noticeClose() { return $('.spu-popup-notice__footer-close') }
@@ -28,7 +29,9 @@ class CampaignPage extends Page {
 
     async clickBtnEntry(index: number): Promise<void> {
         await browser.pause(2000);
-        await (await $(this.entryButtonList[index])).moveTo();
+        // await (await $(this.entryButtonList[index])).moveTo();
+        let element = await $(this.entryButtonList[index]);
+        await element.scrollIntoView({ block: 'center' });
         await browser.pause(2000);
         if (await (await $(this.entryButtonList[index])).isExisting()) {
             if (await (await $(this.entryButtonList[index])).isDisplayed()) {

@@ -30,18 +30,22 @@ describe('Rakuten', () => {
         }
         await rakutencardPage.handleClickPointCountLink();
         console.log("labelclickPointCountTxt: ", labelclickPointCountTxt);
-        for (let index = labelclickPointCountTxt - 1; index >= 0; index--) {
-            // let clickPointListCount = await rakutencardPage.getClickPointListCount();
-            // console.log("getClickPointListCount: ", clickPointListCount);
-            let canClickNew = await rakutencardPage.canClickPointNewIndex(index);
-            console.log("canClickNew--- " + index + ": ", canClickNew);
-            if (canClickNew) {
-                const currentWindows = await browser.getWindowHandle();
-                await rakutencardPage.handleClickPointNewIndex(index);
-                await browser.pause(2000);
-                await browser.switchToWindow(currentWindows);
-            }
+        await browser.pause(5000);
+        const count = await browser.execute(() =>
+            document.querySelectorAll('.click-point-banner-image-wrap').length
+        );
+        console.log("clickPointCount: ", count);
+
+        for (let i = 0; i < count; i++) {
+            // Click trong browser
+            await browser.execute((idx) => {
+                document
+                    .querySelectorAll('.click-point-banner-image-wrap')[idx]
+                    .click();
+            }, i);
+            await browser.pause(2000);
         }
+        await browser.pause(15000);
     });
 });
 
