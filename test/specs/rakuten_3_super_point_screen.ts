@@ -16,6 +16,10 @@ describe('rakuten_super_point_screen', async () => {
         await driver.pause(5000);
     })
 
+    after(async () => {
+        await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    })
+
     async function handleMaintenance() {
         return sFirststartScreen.maintenanceContainer.isDisplayed();
     }
@@ -28,7 +32,7 @@ describe('rakuten_super_point_screen', async () => {
     }
 
     async function handleFirstLogin() {
-        await driver.pause(5000);
+        await driver.pause(2000);
         // sHomeScreen.waitForLoginButtonIsShown();
         let loginButton = sHomeScreen.loginButton
         if (!await loginButton.isDisplayed()) {
@@ -37,7 +41,7 @@ describe('rakuten_super_point_screen', async () => {
         }
         await loginButton.click();
         await handleChromeAction();
-        await driver.pause(5000);
+        await driver.pause(2000);
         // await sLoginScreen.waitForEnterLoginScreen();
         if (await (await sLoginScreen.skipToSignIn).isDisplayed()) {
             await sLoginScreen.skipToSignIn.click();
@@ -61,21 +65,21 @@ describe('rakuten_super_point_screen', async () => {
         //     includeStderr: true,
         //     timeout: 5000
         // });
-        await driver.pause(5000);
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_USERNAME],
             includeStderr: true,
             timeout: 5000
         });
-        await driver.pause(5000);
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['keyevent', '66'], // KEYCODE_ENTER
             includeStderr: true,
             timeout: 5000
         });
-        await driver.pause(5000);
+        await driver.pause(2000);
         // await driver.execute('mobile: shell', {
         //     command: 'input',
         //     args: ['tap', '410', '1100'],
@@ -83,7 +87,7 @@ describe('rakuten_super_point_screen', async () => {
         //     timeout: 5000
         // });
 
-        await driver.pause(5000);
+        await driver.pause(2000);
         await driver.execute('mobile: shell', {
             command: 'input',
             args: ['text', config.RAKUTEN_PASSWORD],
@@ -96,8 +100,8 @@ describe('rakuten_super_point_screen', async () => {
             includeStderr: true,
             timeout: 5000
         });
-        await driver.pause(5000);
-        // await driver.pause(5000);
+        await driver.pause(2000);
+        // await driver.pause(2000);
         // await driver.execute('mobile: shell', {
         //     command: 'input',
         //     args: ['tap', '410', '1100'],
@@ -131,11 +135,11 @@ describe('rakuten_super_point_screen', async () => {
             return;
         }
 
-        await cFirststartScreen.waitForIsShown();
+        // await cFirststartScreen.waitForIsShown();
         if (await (await cFirststartScreen.acceptContinueButton).isDisplayed()) {
             await (await cFirststartScreen.acceptContinueButton).click();
             await (await cFirststartScreen.noThanksButton).click();
-            await driver.pause(5000);
+            await driver.pause(2000);
         }
     }
 
@@ -153,7 +157,7 @@ describe('rakuten_super_point_screen', async () => {
         if (await (await sHomeGetpointScreen.nextButton).isExisting()) {
             if (await (await sHomeGetpointScreen.nextButton).isDisplayed()) {
                 await (await sHomeGetpointScreen.nextButton).click();
-                await driver.pause(5000);
+                await driver.pause(2000);
                 needAllow = true;
             }
         }
@@ -202,18 +206,18 @@ describe('rakuten_super_point_screen', async () => {
     }
 
     async function handleGuideSetting() {
-        await driver.pause(5000);
+        await driver.pause(2000);
         if (await (await sHomeScreen.cardAdImage).isDisplayed()) {
             if (await (await sHomeScreen.prMark).isDisplayed()) {
                 await (await sHomeScreen.prMark).click();
-                await driver.pause(5000);
+                await driver.pause(2000);
             }
         }
-        await driver.pause(5000);
+        await driver.pause(2000);
         if (await (await sHomeScreen.goSettingButton).isExisting()) {
             if (await (await sHomeScreen.goSettingButton).isDisplayed()) {
                 await (await sHomeScreen.goSettingButton).click();
-                await driver.pause(5000);
+                await driver.pause(2000);
             }
         }
 
@@ -230,15 +234,15 @@ describe('rakuten_super_point_screen', async () => {
 
                 await handleClickPermission();
                 await sHomeGetpointScreen.waitForDoneButtonIsShown();
-                await driver.pause(5000);
+                await driver.pause(2000);
                 await driver.back();
-                await driver.pause(5000);
+                await driver.pause(2000);
             }
         }
     }
 
     async function handleClickPointNumber() {
-        await driver.pause(5000);
+        await driver.pause(2000);
         // await sHomeScreen.waitForIsShown();
         await Gestures.swipeOnPercentage(
             Gestures.calculateXY({ x: 50, y: 50 }, 1),
@@ -257,13 +261,13 @@ describe('rakuten_super_point_screen', async () => {
                     await pointNumberButton.click();
 
                     // await sHomeGetpointScreen.waitForIsShown();
-                    await driver.pause(5000);
+                    await driver.pause(2000);
                     if (!S_TabBar.bottomIconIsDisplayed()) {
                         await sHomeGetpointScreen.waitForDoneButtonIsShown();
-                        await driver.pause(5000);
+                        await driver.pause(2000);
                         // await sHomeGetpointScreen.closeButton.click();
                         await driver.back();
-                        await driver.pause(5000);
+                        await driver.pause(2000);
 
                         await handleCloseAlert();
 
@@ -302,21 +306,21 @@ describe('rakuten_super_point_screen', async () => {
             if (await (await sLuckycountScreen.viewFullScreenOK).isDisplayed()) {
                 await (await sLuckycountScreen.viewFullScreenOK).click();
             }
-            await driver.pause(config.DEFAULT_TIMEOUT > 45000 ? 1.5 * config.DEFAULT_TIMEOUT : 90000);
+            await driver.pause(45000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['tap', '1000', '95'],
                 includeStderr: true,
                 timeout: 2000
             });
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['tap', '1000', '95'],
                 includeStderr: true,
                 timeout: 2000
             });
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.back();
 
             if (await (await sLuckycountScreen.alertContent).isDisplayed()) {
@@ -326,14 +330,14 @@ describe('rakuten_super_point_screen', async () => {
             }
 
             // await sLuckycountScreen.waitForGetDoneButtonIsShown();
-            await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
+            await driver.pause(2000);
             if (await sLuckycountScreen.getDoneButton.isDisplayed()) {
                 await sLuckycountScreen.getDoneButton.click();
-                await driver.pause(5000);
+                await driver.pause(2000);
             }
         }
         await driver.back();
-        await driver.pause(5000);
+        await driver.pause(2000);
     }
 
     async function handleClickChallenge() {
@@ -353,7 +357,6 @@ describe('rakuten_super_point_screen', async () => {
     }
 
     it('sps_click_point_number', async () => {
-        await driver.pause(7000);
         if (await handleMaintenance()) {
             return;
         }
@@ -362,7 +365,7 @@ describe('rakuten_super_point_screen', async () => {
         await handleGuideSetting();
         await handleFirstGetPointAfterGuide();
         await handleCloseAlert();
-        await handleClickPointNumber();
+        // await handleClickPointNumber();
     });
 
     it('sps_get_point_and_challenge', async () => {

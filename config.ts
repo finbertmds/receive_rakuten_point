@@ -1,6 +1,6 @@
 export default {
     IS_LOCAL: false,
-    DEFAULT_TIMEOUT: 15000,
+    DEFAULT_TIMEOUT: 5000,
     RAKUTEN_USERNAME: process.env.RAKUTEN_USERNAME || '',
     RAKUTEN_PASSWORD: process.env.RAKUTEN_PASSWORD || '',
     CHROME_APP_ID: 'com.android.chrome',

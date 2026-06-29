@@ -9,7 +9,10 @@ import tLoginScreen from '../screenobjects/toshiru/t.login.screen';
 describe('rakuten_toshiru', async () => {
     before(async () => {
         await driver.activateApp(config.RAKUTEN_TOSHIRU_APP_ID);
-        await driver.pause(5000);
+    })
+
+    after(async () => {
+        await driver.terminateApp(config.RAKUTEN_TOSHIRU_APP_ID);
     })
 
     async function handleFirstTimeLogin() {
@@ -17,19 +20,19 @@ describe('rakuten_toshiru', async () => {
         await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
             await tFirststartScreen.enterLoginButton.click();
-            await driver.pause(5000);
+            await driver.pause(2000);
             await handleChromeAction();
-            await driver.pause(5000);
+            await driver.pause(2000);
 
             // if (await (await tFirststartScreen.warningOkButton).isDisplayed()) {
             //     await tFirststartScreen.warningOkButton.click();
-            //     await driver.pause(5000);
+            //     await driver.pause(2000);
             // }
             // let isEnterLoginButtonDisplay = true;
             // while (isEnterLoginButtonDisplay) {
             //     if (await (await tFirststartScreen.enterLoginButton).isDisplayed()) {
             //         await tFirststartScreen.enterLoginButton.click();
-            //         await driver.pause(5000);
+            //         await driver.pause(2000);
             //         isEnterLoginButtonDisplay = await (await tFirststartScreen.enterLoginButton).isDisplayed();
             //     }
             // }
@@ -57,21 +60,21 @@ describe('rakuten_toshiru', async () => {
             //     includeStderr: true,
             //     timeout: 5000
             // });
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['text', config.RAKUTEN_USERNAME],
                 includeStderr: true,
                 timeout: 5000
             });
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['keyevent', '66'], // KEYCODE_ENTER
                 includeStderr: true,
                 timeout: 5000
             });
-            await driver.pause(5000);
+            await driver.pause(2000);
             // await driver.execute('mobile: shell', {
             //     command: 'input',
             //     args: ['tap', '410', '1100'],
@@ -79,7 +82,7 @@ describe('rakuten_toshiru', async () => {
             //     timeout: 5000
             // });
     
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['text', config.RAKUTEN_PASSWORD],
@@ -92,7 +95,7 @@ describe('rakuten_toshiru', async () => {
                 includeStderr: true,
                 timeout: 5000
             });
-            await driver.pause(5000);
+            await driver.pause(2000);
             // await driver.pause(5000);
             // await driver.execute('mobile: shell', {
             //     command: 'input',
@@ -142,7 +145,7 @@ describe('rakuten_toshiru', async () => {
         if (modalClaimIsDisplayed) {
             await tFirststartScreen.pointLogoClaimButton.click();
             await tHomeScreen.waitForGetPointDoneLabelIsShown();
-            await driver.pause(5000);
+            await driver.pause(2000);
             await driver.back();
             return true;
         }
@@ -170,7 +173,7 @@ describe('rakuten_toshiru', async () => {
             await (await tFirststartScreen.startButton).click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await driver.pause(5000);
+        await driver.pause(2000);
         if (await (await tFirststartScreen.parentPanel).isDisplayed()) {
             await (await tFirststartScreen.noButton).click();
         }
@@ -178,6 +181,8 @@ describe('rakuten_toshiru', async () => {
     }
 
     async function checkIsLoggedIn() {
+        await handleChromeAction();
+
         if (await (await tHomeScreen.headerMenuButton).isDisplayed()) {
             await (await tHomeScreen.headerMenuButton).click();
             // await tHomeScreen.waitForRakutenRewardLabelIsShown();
@@ -267,9 +272,9 @@ describe('rakuten_toshiru', async () => {
             let articleTitle = await (await tHomeScreen.articleTitle(articleImage)).getText();
             console.log('articleTitle: ' + articleTitle);
             articleTitleReadList.push(articleTitle);
-            await driver.pause(2000);
+            await driver.pause(1000);
             await articleImage.click();
-            await driver.pause(2000);
+            await driver.pause(1000);
             await tHomeScreen.waitForContentsIsShown();
 
             for (let j = 0; j < config.RAKUTEN_TOSHIRU_SCROLL_ARTICLE_COUNT; j++) {
