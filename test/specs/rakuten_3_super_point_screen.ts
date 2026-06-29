@@ -365,7 +365,7 @@ describe('rakuten_super_point_screen', async () => {
         await handleGuideSetting();
         await handleFirstGetPointAfterGuide();
         await handleCloseAlert();
-        // await handleClickPointNumber();
+        await handleClickPointNumber();
     });
 
     it('sps_get_point_and_challenge', async () => {

@@ -145,7 +145,7 @@ describe('rakuten_toshiru', async () => {
         if (modalClaimIsDisplayed) {
             await tFirststartScreen.pointLogoClaimButton.click();
             await tHomeScreen.waitForGetPointDoneLabelIsShown();
-            await driver.pause(2000);
+            await driver.pause(5000);
             await driver.back();
             return true;
         }
@@ -173,7 +173,7 @@ describe('rakuten_toshiru', async () => {
             await (await tFirststartScreen.startButton).click();
             await driver.pause(parseInt(String(config.DEFAULT_TIMEOUT / 3)));
         }
-        await driver.pause(2000);
+        await driver.pause(5000);
         if (await (await tFirststartScreen.parentPanel).isDisplayed()) {
             await (await tFirststartScreen.noButton).click();
         }
@@ -272,9 +272,9 @@ describe('rakuten_toshiru', async () => {
             let articleTitle = await (await tHomeScreen.articleTitle(articleImage)).getText();
             console.log('articleTitle: ' + articleTitle);
             articleTitleReadList.push(articleTitle);
-            await driver.pause(1000);
+            await driver.pause(2000);
             await articleImage.click();
-            await driver.pause(1000);
+            await driver.pause(2000);
             await tHomeScreen.waitForContentsIsShown();
 
             for (let j = 0; j < config.RAKUTEN_TOSHIRU_SCROLL_ARTICLE_COUNT; j++) {
