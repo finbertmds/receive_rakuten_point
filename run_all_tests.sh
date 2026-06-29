@@ -15,6 +15,8 @@ echo "========================================" | tee -a "$LOG_FILE"
 
 cd "$PROJECT_DIR" || exit 1
 
+yarn install >> "$LOG_FILE" 2>&1
+
 SPECS=(
   "./test/specs/bank.point.e2e.ts"
   "./test/specs/campaign.point.e2e.ts"
