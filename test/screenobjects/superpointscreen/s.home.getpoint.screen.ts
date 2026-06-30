@@ -10,6 +10,7 @@ const SELECTORS = {
     CLOSE_BUTTON: "~close",
     NEXT_BUTTON: getByText("Next"),
     AD_CARD_OPEN_TEXT: getByResouceId("jp.co.rakuten.slide:id/ad_card_open_text"),
+    TOTAL_POINT_LABEL: getByText("Total Points"),
 };
 
 class S_HomeGetPointScreen extends AppScreen {
@@ -19,6 +20,10 @@ class S_HomeGetPointScreen extends AppScreen {
 
     get doneButton () {
         return $(SELECTORS.DONE_BUTTON);
+    }
+
+    get totalPointLabel () {
+        return $(SELECTORS.TOTAL_POINT_LABEL);
     }
 
     async waitForDoneButtonIsShown () {

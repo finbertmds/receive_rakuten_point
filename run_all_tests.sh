@@ -15,6 +15,8 @@ echo "========================================" | tee -a "$LOG_FILE"
 
 cd "$PROJECT_DIR" || exit 1
 
+yarn install >> "$LOG_FILE" 2>&1
+
 # Start the Android emulator
 bash "$PROJECT_DIR/startEmulator.sh" >> "$LOG_FILE" 2>&1
 

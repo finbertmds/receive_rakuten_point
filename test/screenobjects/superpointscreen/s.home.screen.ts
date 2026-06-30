@@ -40,7 +40,7 @@ class S_HomeScreen extends AppScreen {
                 let poinMark = element.parent.$(getByClassname("android.widget.ImageView", 0));
                 if (await poinMark.isExisting()) {
                     if (await poinMark.isDisplayed()) {
-                        pointNumberButtonRes.push(element);
+                        pointNumberButtonRes.push(poinMark);
                         break;
                     }
                 }

@@ -248,6 +248,7 @@ describe('rakuten_super_point_screen', async () => {
             Gestures.calculateXY({ x: 50, y: 50 }, 1),
             Gestures.calculateXY({ x: 50, y: 85 }, 1)
         );
+        await driver.pause(5000);
         let pointNumberClickedIndex = 0;
         let swipeCount = config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SWIPE_COUNT;
         for (let index = 0; index < swipeCount; index++) {
@@ -262,7 +263,8 @@ describe('rakuten_super_point_screen', async () => {
 
                     // await sHomeGetpointScreen.waitForIsShown();
                     await driver.pause(2000);
-                    if (!S_TabBar.bottomIconIsDisplayed()) {
+                    if (! await sHomeGetpointScreen.totalPointLabel.isDisplayed()) {
+                        console.log("totalPointLabel is not displayed");
                         await sHomeGetpointScreen.waitForDoneButtonIsShown();
                         await driver.pause(2000);
                         // await sHomeGetpointScreen.closeButton.click();
@@ -273,13 +275,15 @@ describe('rakuten_super_point_screen', async () => {
 
                         pointNumberClickedIndex++;
                         console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
+                    } else {
+                        console.log("totalPointLabel is displayed");
                     }
                 }
             }
             console.log("swipeUp: ", index);
             await Gestures.swipeOnPercentage(
                 Gestures.calculateXY({ x: 50, y: 85 }, 1),
-                Gestures.calculateXY({ x: 50, y: 50 }, 1),
+                Gestures.calculateXY({ x: 50, y: 40 }, 1),
             );
             await driver.pause(3000);
         }
