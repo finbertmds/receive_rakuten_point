@@ -4,7 +4,7 @@
 
 PROJECT_DIR="/Users/finbertmds/Documents/1code/receive_rakuten_point"
 LOG_DIR="$PROJECT_DIR/logs"
-LOG_FILE="$LOG_DIR/run_$(date '+%Y%m%d_%H%M%S').log"
+LOG_FILE="$LOG_DIR/run_rakuten_apps_$(date '+%Y%m%d_%H%M%S').log"
 MAX_ATTEMPTS=3
 
 mkdir -p "$LOG_DIR"
