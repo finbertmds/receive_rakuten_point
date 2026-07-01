@@ -10,7 +10,7 @@ MAX_ATTEMPTS=3
 mkdir -p "$LOG_DIR"
 
 echo "========================================" | tee -a "$LOG_FILE"
-echo "Rakuten Point Run: $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "$LOG_FILE"
+echo "Rakuten Apps Run: $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
 
 cd "$PROJECT_DIR" || exit 1
@@ -48,17 +48,17 @@ for COMMAND in "${COMMANDS[@]}"; do
 
     # Run COMMAND in a subshell to capture its exit status
     if $COMMAND >> "$LOG_FILE" 2>&1; then
-      echo "✅ PASSED: $NAME (attempt $ATTEMPT)" | tee -a "$LOG_FILE"
+      echo "✅ PASSED: $NAME (attempt $ATTEMPT) ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
       SUCCESS=true
       ((PASS++))
       break
     else
-      echo "  ❌ Failed attempt $ATTEMPT/$MAX_ATTEMPTS: $NAME" | tee -a "$LOG_FILE"
+      echo "  ❌ Failed attempt $ATTEMPT/$MAX_ATTEMPTS: $NAME ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
     fi
   done
 
   if [ "$SUCCESS" = false ]; then
-    echo "❌ FAILED: $NAME (all $MAX_ATTEMPTS attempts exhausted)" | tee -a "$LOG_FILE"
+    echo "❌ FAILED: $NAME (all $MAX_ATTEMPTS attempts exhausted) ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
     ((FAIL++))
   fi
 done
