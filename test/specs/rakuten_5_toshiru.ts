@@ -8,7 +8,11 @@ import tLoginScreen from '../screenobjects/toshiru/t.login.screen';
 
 describe('rakuten_toshiru', async () => {
     before(async () => {
+        await driver.terminateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+
         await driver.activateApp(config.RAKUTEN_TOSHIRU_APP_ID);
+        await driver.pause(5000);
     })
 
     after(async () => {

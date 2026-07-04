@@ -12,6 +12,9 @@ import S_TabBar from '../screenobjects/superpointscreen/s.tab.bar';
 
 describe('rakuten_super_point_screen', async () => {
     before(async () => {
+        await driver.terminateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.terminateApp(config.RAKUTEN_TOSHIRU_APP_ID);
+
         await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
         await driver.pause(5000);
     })

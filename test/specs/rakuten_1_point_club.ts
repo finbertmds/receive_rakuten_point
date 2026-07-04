@@ -9,7 +9,11 @@ import pcRewardScreen from '../screenobjects/pointclub/pc.reward.screen';
 
 describe('rakuten_point_club', async () => {
     before(async () => {
+        await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        await driver.terminateApp(config.RAKUTEN_TOSHIRU_APP_ID);
+
         await driver.activateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
+        await driver.pause(5000);
     })
 
     after(async () => {
