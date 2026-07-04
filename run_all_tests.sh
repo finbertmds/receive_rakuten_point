@@ -35,7 +35,7 @@ write_summary_log() {
     RUN_STATUS="FAILED"
   fi
 
-  echo "$(date '+%Y-%m-%d %H:%M:%S') | run_id=$RUN_ID | start=$RUN_START_TIME | end=$end_time | duration_sec=$duration_sec | status=$RUN_STATUS | passed=$PASS | failed=$FAIL | detail_log=$LOG_FILE" >> "$RUN_SUMMARY_LOG"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') | run_id=$RUN_ID | developer | start=$RUN_START_TIME | end=$end_time | duration_sec=$duration_sec | status=$RUN_STATUS | passed=$PASS | failed=$FAIL | detail_log=$LOG_FILE" >> "$RUN_SUMMARY_LOG"
 }
 
 trap write_summary_log EXIT
@@ -80,6 +80,11 @@ for SPEC in "${SPECS[@]}"; do
       break
     else
       echo "  ❌ Failed attempt $ATTEMPT/$MAX_ATTEMPTS: $NAME ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
+      # sleep 5 minites before retrying
+      if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
+        echo "  ⏳ Waiting 5 minutes before retrying..." | tee -a "$LOG_FILE"
+        sleep 300
+      fi
     fi
   done
 
