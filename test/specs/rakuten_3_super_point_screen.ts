@@ -255,6 +255,10 @@ describe('rakuten_super_point_screen', async () => {
         let pointNumberClickedIndex = 0;
         let swipeCount = config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SWIPE_COUNT;
         for (let index = 0; index < swipeCount; index++) {
+            if (! await S_TabBar.bottomIconIsDisplayed()) {
+                console.log("bottomIcon is not displayed, break");
+                break;
+            }
             let pointNumberButtonList = await sHomeScreen.pointNumberButtonList();
             if (pointNumberButtonList.length > 0) {
                 console.log("pointNumberButtonListCount: ", pointNumberButtonList?.length);
@@ -375,7 +379,7 @@ describe('rakuten_super_point_screen', async () => {
         await handleClickPointNumber();
     });
 
-    it('sps_get_point_and_challenge', async () => {
+    it('sps_get_point', async () => {
         if (await handleMaintenance()) {
             return;
         }
@@ -383,11 +387,21 @@ describe('rakuten_super_point_screen', async () => {
         if (!S_TabBar.bottomIconIsDisplayed()) { } {
             await S_TabBar.openLuckyCoint();
             await handleClickGetPoint();
-            await handleClickChallenge();
             await handleClickPlay();
         }
     });
 
+    it('sps_challenge', async () => {
+        if (await handleMaintenance()) {
+            return;
+        }
+        await handleCloseAlert();
+        if (!S_TabBar.bottomIconIsDisplayed()) { } {
+            await S_TabBar.openLuckyCoint();
+            await handleClickChallenge();
+            await handleClickPlay();
+        }
+    });
 });
 
 

@@ -17,9 +17,11 @@ export default class S_TabBar {
     }
 
     static async openLuckyCoint () {
-        let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 6));
-        if (await (await luckyCoinTabbar).isDisplayed()) {
-            await (await luckyCoinTabbar).click();
+        if (await this.bottomIconIsDisplayed()) {
+            let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 6));
+            if (await (await luckyCoinTabbar).isDisplayed()) {
+                await (await luckyCoinTabbar).click();
+            }
         }
     }
 

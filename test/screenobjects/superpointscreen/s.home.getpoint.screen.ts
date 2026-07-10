@@ -28,6 +28,7 @@ class S_HomeGetPointScreen extends AppScreen {
 
     async waitForDoneButtonIsShown () {
         let clickedAfterTime = new Date();
+        let maxTimeout = 45000;
         await driver.waitUntil(async () => {
             try {
                 let now = new Date();
@@ -37,7 +38,7 @@ class S_HomeGetPointScreen extends AppScreen {
                     console.log(`done is displayed`);
                     return true;
                 }
-                if (diffMs >= 2 * config.DEFAULT_TIMEOUT - 5000) {
+                if (diffMs >= maxTimeout - 5000) {
                     console.log(`diffMs greater than timeout`);
                     return true;
                 }
@@ -48,12 +49,12 @@ class S_HomeGetPointScreen extends AppScreen {
             }
         },
             {
-                timeout: config.DEFAULT_TIMEOUT * 2,
+                timeout: maxTimeout,
                 timeoutMsg: 'expected done is displayed',
                 interval: 5000
             })
         // return this.doneButton.waitForDisplayed({
-        //     timeout: 2 * config.DEFAULT_TIMEOUT,
+        //     timeout: maxTimeout,
         //     reverse: false,
         // });
     }
