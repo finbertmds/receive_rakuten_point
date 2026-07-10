@@ -275,6 +275,7 @@ describe('rakuten_super_point_screen', async () => {
                         await sHomeGetpointScreen.waitForDoneButtonIsShown();
                         await driver.pause(2000);
                         // await sHomeGetpointScreen.closeButton.click();
+                        await backToSuperPointApp();
                         await driver.back();
                         await driver.pause(2000);
 
@@ -332,6 +333,7 @@ describe('rakuten_super_point_screen', async () => {
                 timeout: 2000
             });
             await driver.pause(2000);
+            await backToSuperPointApp();
             await driver.back();
 
             if (await (await sLuckycountScreen.alertContent).isDisplayed()) {
@@ -347,8 +349,19 @@ describe('rakuten_super_point_screen', async () => {
                 await driver.pause(2000);
             }
         }
+        await backToSuperPointApp();
         await driver.back();
         await driver.pause(2000);
+    }
+
+    async function backToSuperPointApp() {
+        // check current package, if not rakuten super point screen, then back to rakuten super point screen
+        let currentPackage = await driver.getCurrentPackage();
+        console.log("currentPackage: " + currentPackage);
+        if (currentPackage !== config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID) {
+            await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+            await driver.pause(2000);
+        }
     }
 
     async function handleClickChallenge() {
