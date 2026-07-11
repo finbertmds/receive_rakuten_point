@@ -31,9 +31,9 @@ write_summary_log() {
   if [ "$FAIL" -eq 0 ] && [ "$PASS" -gt 0 ]; then
     RUN_STATUS="SUCCESS"
   elif [ "$FAIL" -eq 0 ] && [ "$PASS" -eq 0 ]; then
-    RUN_STATUS="NO_TESTS"
+    RUN_STATUS="NO_TEST"
   else
-    RUN_STATUS="FAILED"
+    RUN_STATUS="FAILED "
   fi
 
   echo "$type | start=$RUN_START_TIME | end=$end_time | duration_sec=$duration_sec | status=$RUN_STATUS | passed=$PASS | failed=$FAIL | detail_log=$LOG_FILE" >> "$RUN_SUMMARY_LOG"
