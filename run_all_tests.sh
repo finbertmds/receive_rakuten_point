@@ -17,10 +17,11 @@ RUN_STATUS="FAILED"
 mkdir -p "$LOG_DIR"
 
 if [ ! -s "$RUN_SUMMARY_LOG" ]; then
-  echo "# timestamp | run_id | start | end | duration_sec | status | passed | failed | detail_log" >> "$RUN_SUMMARY_LOG"
+  echo "# type | start | end | duration_sec | status | passed | failed | detail_log" >> "$RUN_SUMMARY_LOG"
 fi
 
 write_summary_log() {
+  local type="  developer "
   local end_time
   local duration_sec
 
@@ -35,7 +36,7 @@ write_summary_log() {
     RUN_STATUS="FAILED"
   fi
 
-  echo "$(date '+%Y-%m-%d %H:%M:%S') | run_id=$RUN_ID | developer | start=$RUN_START_TIME | end=$end_time | duration_sec=$duration_sec | status=$RUN_STATUS | passed=$PASS | failed=$FAIL | detail_log=$LOG_FILE" >> "$RUN_SUMMARY_LOG"
+  echo "$type | start=$RUN_START_TIME | end=$end_time | duration_sec=$duration_sec | status=$RUN_STATUS | passed=$PASS | failed=$FAIL | detail_log=$LOG_FILE" >> "$RUN_SUMMARY_LOG"
 }
 
 trap write_summary_log EXIT
