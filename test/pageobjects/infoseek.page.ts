@@ -410,9 +410,13 @@ class InfoseekPage extends Page {
     let oldRandomValue: number[] = [];
     for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
       try {
-        await browser.url(rankingPage);
-        let rankingListTextLink = this.rankingListTextLink();
-        let link = rankingListTextLink[index];
+        const opened = await this.openPage(rankingPage);
+        if (!opened) {
+          return;
+        }
+        // await browser.url(rankingPage);
+        const rankingListTextLink = this.rankingListTextLink();
+        const link = rankingListTextLink[index];
         console.log("readArticleAtRankingPage: random index: " + index);
         if (await link.isDisplayed()) {
           // await link.scrollIntoView({block:'center'});
@@ -420,7 +424,7 @@ class InfoseekPage extends Page {
             await link.scrollIntoView();
             await link.click();
             // await (await this.footerContainer).scrollIntoView();
-            let iineClicked = await this.handleReactionIine();
+            const iineClicked = await this.handleReactionIine();
             await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
             if (iineClicked) {
               oldRandomValue.push(index);
@@ -430,6 +434,13 @@ class InfoseekPage extends Page {
         }
       } catch (error) {
         console.log("readArticleAtRankingPage: error: " + error);
+        try {
+          await browser.execute(() => {
+            window.stop();
+          });
+        } catch {}
+        await browser.pause(1000);
+        continue;
       }
     }
   }
