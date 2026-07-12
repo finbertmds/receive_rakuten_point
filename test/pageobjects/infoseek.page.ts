@@ -165,23 +165,31 @@ class InfoseekPage extends Page {
 
   async closeNotificationModal() {
     await browser.pause(5000);
-    if (await (await this.notificationModal).isExisting()) {
-      if (await (await this.notificationModal).isDisplayed()) {
-        if (await (await this.notificationCloseButton).isClickable()) {
-          await (await this.notificationCloseButton).click();
+    try {
+      if (await (await this.notificationModal).isExisting()) {
+        if (await (await this.notificationModal).isDisplayed()) {
+          if (await (await this.notificationCloseButton).isClickable()) {
+            await (await this.notificationCloseButton).click();
+          }
         }
       }
+    } catch (error) {
+      console.log("closeNotificationModal: error: " + error);
     }
   }
 
   async closeModalContents() {
     await browser.pause(5000);
-    if (await (await this.modalContents).isExisting()) {
-      if (await (await this.modalContents).isDisplayed()) {
-        if (await (await this.modalContentsCloseButton).isClickable()) {
-          await (await this.modalContentsCloseButton).click();
+    try {
+      if (await (await this.modalContents).isExisting()) {
+        if (await (await this.modalContents).isDisplayed()) {
+          if (await (await this.modalContentsCloseButton).isClickable()) {
+            await (await this.modalContentsCloseButton).click();
+          }
         }
       }
+    } catch (error) {
+      console.log("closeModalContents: error: " + error);
     }
   }
 
@@ -261,84 +269,101 @@ class InfoseekPage extends Page {
     if (!(await this.canClickJoinMission())) {
       return;
     }
-    let missionList = await this.btnMissionJoinList;
-    console.log("missionList.length: " + (await missionList.length));
-    for (let index = 0; index < (await missionList.length); index++) {
-      try {
-        const mission = missionList[index];
-        await mission.scrollIntoView({ block: "center" });
-        if (await mission.isClickable()) {
-          await mission.click();
-          console.log("joinMission: click mission index: " + index);
-        } else {
-          console.log(
-            "joinMission: mission index: " + index + " is not clickable",
-          );
-        }
-        await browser.pause(5000);
-        if (await (await this.btnMissionAgree).isDisplayed()) {
-          console.log("joinMission: click btnMissionAgree");
-          await this.btnMissionAgree.scrollIntoView({ block: "center" });
-          await (await this.btnMissionAgree).click();
+    try {
+      let missionList = await this.btnMissionJoinList;
+      console.log("missionList.length: " + (await missionList.length));
+      for (let index = 0; index < (await missionList.length); index++) {
+        try {
+          const mission = missionList[index];
+          await mission.scrollIntoView({ block: "center" });
+          if (await mission.isClickable()) {
+            await mission.click();
+            console.log("joinMission: click mission index: " + index);
+          } else {
+            console.log(
+              "joinMission: mission index: " + index + " is not clickable",
+            );
+          }
           await browser.pause(5000);
-        } else {
-          console.log("joinMission: btnMissionAgree is not displayed");
+          if (await (await this.btnMissionAgree).isDisplayed()) {
+            console.log("joinMission: click btnMissionAgree");
+            await this.btnMissionAgree.scrollIntoView({ block: "center" });
+            await (await this.btnMissionAgree).click();
+            await browser.pause(5000);
+          } else {
+            console.log("joinMission: btnMissionAgree is not displayed");
+          }
+        } catch (error) {
+          console.log("joinMission: error: " + error);
         }
-      } catch (error) {
-        console.log("joinMission: error: " + error);
-      }
 
-      await super.open(config.INFO_SEEK_MISSION_PAGE);
+        await super.open(config.INFO_SEEK_MISSION_PAGE);
+      }
+    } catch (error) {
+      console.log("joinMission: error: " + error);
     }
   }
 
   async handleOpenHomePageAndClickTab(tabName?: string) {
-    await super.open(config.INFO_SEEK_PAGE);
-    await (await this.sectionBox).moveTo();
+    try {
+      await super.open(config.INFO_SEEK_PAGE);
+      await (await this.sectionBox).scrollIntoView();
 
-    if (tabName) {
-      let tabNameElement = await $("." + tabName);
-      if (await tabNameElement.isDisplayed()) {
-        await tabNameElement.click();
-        await browser.pause(2000);
+      if (tabName) {
+        let tabNameElement = await $("." + tabName);
+        if (await tabNameElement.isDisplayed()) {
+          await tabNameElement.click();
+          await browser.pause(2000);
 
-        let tabNameContentsId = tabName.replace("genre-tab__", "ranking-");
-        let tabNameContentsElement = await $("#" + tabNameContentsId);
-        if (await tabNameContentsElement.isDisplayed()) {
-          await tabNameContentsElement.moveTo();
+          let tabNameContentsId = tabName.replace("genre-tab__", "ranking-");
+          let tabNameContentsElement = await $("#" + tabNameContentsId);
+          if (await tabNameContentsElement.isDisplayed()) {
+            await tabNameContentsElement.scrollIntoView();
+          }
         }
       }
+    } catch (error) {
+      console.log("handleOpenHomePageAndClickTab: error: " + error);
     }
   }
 
   async handleReactionIine() {
-    let reaction = await this.reactionIconIine;
-    if (await reaction.isDisplayed()) {
-      // await reaction.scrollIntoView({block:'center'});
-      if (await reaction.isClickable()) {
-        await reaction.moveTo();
-        console.log("handleReactionIine: click iine");
-        await reaction.click();
-        await browser.pause(2000);
-        return true;
+    try {
+      let reaction = await this.reactionIconIine;
+      if (await reaction.isDisplayed()) {
+        // await reaction.scrollIntoView({block:'center'});
+        if (await reaction.isClickable()) {
+          await reaction.scrollIntoView();
+          console.log("handleReactionIine: click iine");
+          await reaction.click();
+          await browser.pause(2000);
+          return true;
+        }
       }
+      return false;
+    } catch (error) {
+      console.log("handleReactionIine: error: " + error);
+      return false;
     }
-    return false;
   }
 
   async handleFcDialogIsShow() {
     await browser.pause(2000);
     let isFcDialogIsShow = false;
-    let dialog = await this.fcDialogContent;
-    if (await dialog.isDisplayed()) {
-      if (
-        (await (await this.fcRewardedAdButton).isDisplayed()) &&
-        (await (await this.fcRewardedAdButton).isClickable())
-      ) {
-        await (await this.fcRewardedAdButton).click();
-        await browser.pause(40000);
-        isFcDialogIsShow = true;
+    try {
+      let dialog = await this.fcDialogContent;
+      if (await dialog.isDisplayed()) {
+        if (
+          (await (await this.fcRewardedAdButton).isDisplayed()) &&
+          (await (await this.fcRewardedAdButton).isClickable())
+        ) {
+          await (await this.fcRewardedAdButton).click();
+          await browser.pause(40000);
+          isFcDialogIsShow = true;
+        }
       }
+    } catch (error) {
+      console.log("handleFcDialogIsShow: error: " + error);
     }
     // if (!isFcDialogIsShow) {
     //     return isFcDialogIsShow;
@@ -363,14 +388,14 @@ class InfoseekPage extends Page {
   //         console.log("readArticle: random indexPage: " + indexPage);
   //         const link = rankingListTextLink[indexPage];
   //         if (await link.isDisplayed()) {
-  //             await link.moveTo();
+  //             await link.scrollIntoView();
   //             await link.click();
   //             await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
   //             let url = await browser.getUrl()
   //             urlClickedList.push(url);
   //             let title = await browser.getTitle()
   //             titleClickedList.push(title);
-  //             // await (await this.footerContainer).moveTo();
+  //             // await (await this.footerContainer).scrollIntoView();
   //             await this.handleReactionIine();
   //         }
 
@@ -381,38 +406,32 @@ class InfoseekPage extends Page {
   //     console.log("readArticle: titleClickedList: " + titleClickedList);
   // }
 
-  async handleOpenRankingPage(rankingPage: string) {
-    await super.open(rankingPage);
-    // await (await this.sectionBox).moveTo();
-  }
-
   async readArticleAtRankingPage(rankingPage: string) {
     let oldRandomValue: number[] = [];
     for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
-      await browser.url(rankingPage);
-      let rankingListTextLink = this.rankingListTextLink();
-      let link = rankingListTextLink[index];
-      console.log("readArticleAtRankingPage: random index: " + index);
-      if (await link.isDisplayed()) {
-        // await link.scrollIntoView({block:'center'});
-        if (await link.isClickable()) {
-          await link.moveTo();
-          await link.click();
-          // await (await this.footerContainer).moveTo();
-          let iineClicked = await this.handleReactionIine();
-          await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
-          if (iineClicked) {
-            oldRandomValue.push(index);
+      try {
+        await browser.url(rankingPage);
+        let rankingListTextLink = this.rankingListTextLink();
+        let link = rankingListTextLink[index];
+        console.log("readArticleAtRankingPage: random index: " + index);
+        if (await link.isDisplayed()) {
+          // await link.scrollIntoView({block:'center'});
+          if (await link.isClickable()) {
+            await link.scrollIntoView();
+            await link.click();
+            // await (await this.footerContainer).scrollIntoView();
+            let iineClicked = await this.handleReactionIine();
+            await browser.pause(config.DEFAULT_READ_ARTICLE_TIME);
+            if (iineClicked) {
+              oldRandomValue.push(index);
+            }
+            console.log("handleReactionIine: iineClicked = " + iineClicked);
           }
-          console.log("handleReactionIine: iineClicked = " + iineClicked);
         }
+      } catch (error) {
+        console.log("readArticleAtRankingPage: error: " + error);
       }
     }
-  }
-
-  async visitMissionPage() {
-    await super.open(config.INFO_SEEK_MISSION_VISIT_PAGE);
-    await browser.pause(2000);
   }
 
   async canClickGetPoint(): Promise<boolean> {
@@ -424,45 +443,57 @@ class InfoseekPage extends Page {
     if (!(await this.canClickGetPoint())) {
       return;
     }
-    let getPointList = await this.btnGetPointList;
-    for (let index = 0; index < (await getPointList.length); index++) {
-      const getPoint = await this.btnGetPoint;
-      await getPoint.moveTo();
-      await getPoint.click();
-      await browser.pause(5000);
-      await (await this.pointGet).waitForDisplayed();
+    try {
+      let getPointList = await this.btnGetPointList;
+      for (let index = 0; index < (await getPointList.length); index++) {
+        const getPoint = await this.btnGetPoint;
+        await getPoint.scrollIntoView();
+        await getPoint.click();
+        await browser.pause(5000);
+        await (await this.pointGet).waitForDisplayed();
 
-      await super.open(config.INFO_SEEK_MISSION_PAGE);
+        await super.open(config.INFO_SEEK_MISSION_PAGE);
+      }
+    } catch (error) {
+      console.log("handleClickGetPoint: error: " + error);
     }
   }
 
   async handleCloseDialogContainer() {
     let needCloseAd = false;
-    if (await (await this.dialogContainer).isDisplayed()) {
-      if (await (await this.dialogAdButton).isClickable()) {
-        await (await this.dialogAdButton).click();
-        needCloseAd = true;
-        await browser.pause(config.DEFAULT_TIMEOUT);
-      }
-    }
-    if (needCloseAd) {
-      if (await (await this.adButtonAfter).isDisplayed()) {
-        if (await (await this.adButtonAfter).isClickable()) {
-          await (await this.adButtonAfter).click();
+    try {
+      if (await (await this.dialogContainer).isDisplayed()) {
+        if (await (await this.dialogAdButton).isClickable()) {
+          await (await this.dialogAdButton).click();
+          needCloseAd = true;
           await browser.pause(config.DEFAULT_TIMEOUT);
         }
-      } else {
-        await browser.refresh();
       }
+      if (needCloseAd) {
+        if (await (await this.adButtonAfter).isDisplayed()) {
+          if (await (await this.adButtonAfter).isClickable()) {
+            await (await this.adButtonAfter).click();
+            await browser.pause(config.DEFAULT_TIMEOUT);
+          }
+        } else {
+          await browser.refresh();
+        }
+      }
+    } catch (error) {
+      console.log("handleCloseDialogContainer: error: " + error);
     }
   }
 
   async handleCloseInterstitialModal() {
-    if (await this.getInterstitialModalIsVisible()) {
-      let visibleEle = await this.getInterstitialModalCloseButtonIsVisible();
-      if (visibleEle) {
-        await visibleEle.click();
+    try {
+      if (await this.getInterstitialModalIsVisible()) {
+        let visibleEle = await this.getInterstitialModalCloseButtonIsVisible();
+        if (visibleEle) {
+          await visibleEle.click();
+        }
       }
+    } catch (error) {
+      console.log("handleCloseInterstitialModal: error: " + error);
     }
   }
 
