@@ -276,8 +276,10 @@ describe('rakuten_super_point_screen', async () => {
                         await driver.pause(2000);
                         // await sHomeGetpointScreen.closeButton.click();
                         await backToSuperPointApp();
-                        await driver.back();
-                        await driver.pause(2000);
+                        if (! await S_TabBar.bottomIconIsDisplayed()) {
+                            await driver.back();
+                            await driver.pause(2000);
+                        }
 
                         await handleCloseAlert();
 
@@ -285,12 +287,17 @@ describe('rakuten_super_point_screen', async () => {
                         console.log("pointNumberClickedIndex: ", pointNumberClickedIndex);
                     } else {
                         console.log("totalPointLabel is displayed");
+                        await backToSuperPointApp();
+                        if (! await S_TabBar.bottomIconIsDisplayed()) {
+                            await driver.back();
+                            await driver.pause(2000);
+                        }
                     }
                 }
             }
             console.log("swipeUp: ", index);
             await Gestures.swipeOnPercentage(
-                Gestures.calculateXY({ x: 50, y: 85 }, 1),
+                Gestures.calculateXY({ x: 50, y: 80 }, 1),
                 Gestures.calculateXY({ x: 50, y: 40 }, 1),
             );
             await driver.pause(3000);
@@ -318,7 +325,7 @@ describe('rakuten_super_point_screen', async () => {
             if (await (await sLuckycountScreen.viewFullScreenOK).isDisplayed()) {
                 await (await sLuckycountScreen.viewFullScreenOK).click();
             }
-            await driver.pause(45000);
+            await driver.pause(60000);
             await driver.execute('mobile: shell', {
                 command: 'input',
                 args: ['tap', '1000', '95'],
@@ -334,7 +341,10 @@ describe('rakuten_super_point_screen', async () => {
             });
             await driver.pause(2000);
             await backToSuperPointApp();
-            await driver.back();
+            if (! await S_TabBar.bottomIconIsDisplayed()) {
+                await driver.back();
+                await driver.pause(2000);
+            }
 
             if (await (await sLuckycountScreen.alertContent).isDisplayed()) {
                 if (await sLuckycountScreen.alertCloseButton.isDisplayed()) {
@@ -350,8 +360,10 @@ describe('rakuten_super_point_screen', async () => {
             }
         }
         await backToSuperPointApp();
-        await driver.back();
-        await driver.pause(2000);
+        if (! await S_TabBar.bottomIconIsDisplayed()) {
+            await driver.back();
+            await driver.pause(2000);
+        }
     }
 
     async function backToSuperPointApp() {
@@ -380,18 +392,6 @@ describe('rakuten_super_point_screen', async () => {
         }
     }
 
-    it('sps_click_point_number', async () => {
-        if (await handleMaintenance()) {
-            return;
-        }
-        await handleSkipButton();
-        await handleFirstLogin();
-        await handleGuideSetting();
-        await handleFirstGetPointAfterGuide();
-        await handleCloseAlert();
-        await handleClickPointNumber();
-    });
-
     it('sps_get_point', async () => {
         if (await handleMaintenance()) {
             return;
@@ -404,7 +404,24 @@ describe('rakuten_super_point_screen', async () => {
         }
     });
 
+    it('sps_click_point_number', async () => {
+        await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        if (await handleMaintenance()) {
+            return;
+        }
+        await handleSkipButton();
+        await handleFirstLogin();
+        await handleGuideSetting();
+        await handleFirstGetPointAfterGuide();
+        await handleCloseAlert();
+        await handleClickPointNumber();
+    });
+
     it('sps_challenge', async () => {
+        await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+        await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+
         if (await handleMaintenance()) {
             return;
         }
