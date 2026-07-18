@@ -35,9 +35,10 @@ describe('Rakuten', () => {
         await kujiPage.open();
         let kujiCount = await kujiPage.getKujiCount();
         let isAM = timeHelper.checkIsAM();
-        if (kujiCount > 0) {
-            let kujiCountHalf = (Math.round(kujiCount / 2));
-            for (let index = (isAM ? 0 : kujiCountHalf); index < (isAM ? kujiCountHalf : kujiCount); index++) {
+        // if (kujiCount > 0) {
+            // let kujiCountHalf = (Math.round(kujiCount / 2));
+            // for (let index = (isAM ? 0 : kujiCountHalf); index < (isAM ? kujiCountHalf : kujiCount); index++) {
+            for (let index = 0; index < kujiCount; index++) {
                 await kujiPage.open();
                 console.log("open kuji at " + index);
                 let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
@@ -45,7 +46,7 @@ describe('Rakuten', () => {
                     await kujiPage.handleProcessAfterClickKuji(index, false);
                 }
             }
-        }
+        // }
         await browser.pause(2000)
     });
 });
