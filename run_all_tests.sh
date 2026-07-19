@@ -81,10 +81,10 @@ for SPEC in "${SPECS[@]}"; do
       break
     else
       echo "  ❌ Failed attempt $ATTEMPT/$MAX_ATTEMPTS: $NAME ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
-      # sleep 5 minites before retrying
+      # sleep 1 minute before retrying
       if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
-        echo "  ⏳ Waiting 5 minutes before retrying..." | tee -a "$LOG_FILE"
-        sleep 300
+        echo "  ⏳ Waiting 1 minute before retrying..." | tee -a "$LOG_FILE"
+        sleep 60
       fi
     fi
   done
