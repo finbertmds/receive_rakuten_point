@@ -405,7 +405,7 @@ describe('rakuten_point_club', async () => {
     }
 
     it('pc_first_login', async () => {
-        // await pcHomeScreen.waitForIsShown();
+        await pcHomeScreen.waitForIsShown();
         await driver.pause(2000);
 
         let isLoggedIn = await checkIsLoggedIn();
