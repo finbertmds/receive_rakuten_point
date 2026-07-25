@@ -35,6 +35,19 @@ describe("Infoseek", () => {
     }
   });
 
+  it("infoseek__get_point", async () => {
+    try {
+      await credentials();
+      await browser.pause(2000);
+
+      await infoseekPage.handleCloseInterstitialModal();
+      await infoseekPage.closeModalContents();
+      await infoseekPage.handleClickGetPoint();
+    } catch (error) {
+      console.error("Error in infoseek__get_point test: ", error);
+    }
+  });
+
   it("infoseek__read_articles", async () => {
     await credentials();
     await browser.pause(2000);
@@ -70,17 +83,4 @@ describe("Infoseek", () => {
   //     await infoseekPage.closeModalContents();
   //     await infoseekPage.visitMissionPage();
   // });
-
-  it("infoseek__get_point", async () => {
-    try {
-      await credentials();
-      await browser.pause(2000);
-
-      await infoseekPage.handleCloseInterstitialModal();
-      await infoseekPage.closeModalContents();
-      await infoseekPage.handleClickGetPoint();
-    } catch (error) {
-      console.error("Error in infoseek__get_point test: ", error);
-    }
-  });
 });
