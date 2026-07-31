@@ -102,4 +102,4 @@ echo "Finished: $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
 
 # remove logs older than 7 days
-find "$LOG_DIR" -type f -name "kintaiplus_*.log" -mtime +7 -exec rm {} \;
+find "$LOG_DIR" -type f -name "run_rakuten_*.log" -mtime +7 -exec rm {} \;
