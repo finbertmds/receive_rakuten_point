@@ -54,8 +54,8 @@ SPECS=(
   "./test/specs/bank.point.e2e.ts"
   "./test/specs/campaign.point.e2e.ts"
   "./test/specs/card.point.e2e.ts"
-  "./test/specs/infoseek.point.e2e.ts"
   "./test/specs/kuji.point.e2e.ts"
+  "./test/specs/infoseek.point.e2e.ts"
 )
 
 for SPEC in "${SPECS[@]}"; do
