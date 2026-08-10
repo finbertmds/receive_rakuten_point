@@ -9,7 +9,7 @@ const SELECTORS = {
     PLAY_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_play"),
     PLAY_ICON: getByResouceId("jp.co.rakuten.slide:id/play_icon"),
     CLOSE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/close"),
-    CLOSE_AD_BUTTON: getByClassname("android.widget.ImageButton"),
+    CLOSE_AD_BUTTON: getByResouceId("dismiss-button"),
 
     CHALLENGE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_challenge"),
     CHALLENGE_PLAY_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_play"),
@@ -47,6 +47,10 @@ class R_LuckyCointScreen extends AppScreen {
 
     get closeButton () {
         return $(SELECTORS.CLOSE_BUTTON)
+    }
+
+    get closeAdButton () {
+        return $(SELECTORS.CLOSE_AD_BUTTON)
     }
 
     async waitForPlayIconIsShown () {
