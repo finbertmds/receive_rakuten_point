@@ -21,9 +21,22 @@ describe('Rakuten', () => {
         }
     }
 
-    it('kuji__default_get_point', async () => {
+    it('kuji__default_get_point_1', async () => {
         await credentials();
-        for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
+        // for index in range 0 to config.KUJI_DEFAULT_LINK.length/2
+        for (let index = 0; index < config.KUJI_DEFAULT_LINK.length / 2; index++) {
+            await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
+            await kujiPage.handleProcessAfterClickKuji(index, true);
+        }
+        await browser.pause(2000)
+    });
+
+    it('kuji__default_get_point_2', async () => {
+        await credentials();
+
+        // for index in range config.KUJI_DEFAULT_LINK.length/2 to config.KUJI_DEFAULT_LINK.length
+        const halfLength = Math.floor(config.KUJI_DEFAULT_LINK.length / 2);
+        for (let index = halfLength; index < config.KUJI_DEFAULT_LINK.length; index++) {
             await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
             await kujiPage.handleProcessAfterClickKuji(index, true);
         }
