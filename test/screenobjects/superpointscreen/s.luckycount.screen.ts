@@ -1,5 +1,5 @@
 import config from '../../../config';
-import { getByClassname, getByResouceId } from '../../helpers/UiSelectorHelper';
+import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
@@ -10,6 +10,7 @@ const SELECTORS = {
     PLAY_ICON: getByResouceId("jp.co.rakuten.slide:id/play_icon"),
     CLOSE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/close"),
     CLOSE_AD_BUTTON: getByResouceId("dismiss-button"),
+    REWARD_GRANTED_TEXT: getByText("Reward granted"),
 
     CHALLENGE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_challenge"),
     CHALLENGE_PLAY_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_play"),
@@ -74,6 +75,18 @@ class R_LuckyCointScreen extends AppScreen {
 
     get alertCloseButton () {
         return $(SELECTORS.ALERT_CLOSE_BUTTON)
+    }
+
+    get rewardGrantedText () {
+        return $(SELECTORS.REWARD_GRANTED_TEXT)
+    }
+
+    async waitForRewardGrantedTextIsShown () {
+        try {
+            await this.rewardGrantedText.waitForDisplayed({ timeout: 90000 });
+        } catch (error) {
+            console.log("Reward granted text not found");
+        }
     }
 
     async waitForChallengePlayButtonIsShown () {
