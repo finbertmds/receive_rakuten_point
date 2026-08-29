@@ -406,7 +406,7 @@ class InfoseekPage extends Page {
   //     console.log("readArticle: titleClickedList: " + titleClickedList);
   // }
 
-  async readArticleAtRankingPage(rankingPage: string) {
+  async readArticleAtRankingPage(rankingPage: string, callback?: any) {
     let oldRandomValue: number[] = [];
     for (let index = 0; index < config.READ_ARTICLE_MAX_COUNT; index++) {
       try {
@@ -439,6 +439,8 @@ class InfoseekPage extends Page {
             window.stop();
           });
         } catch {}
+        await browser.reloadSession();
+        await callback();
         await browser.pause(1000);
         continue;
       }

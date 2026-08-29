@@ -4,6 +4,7 @@ import infoseekPage from "../pageobjects/infoseek.page";
 
 describe("Infoseek", () => {
   beforeEach(async function () {
+    await browser.reloadSession();
     const windows = await browser.getWindowHandles();
     await browser.switchToWindow(windows[0]);
   });
@@ -61,7 +62,7 @@ describe("Infoseek", () => {
       console.log("random index: " + index);
       const rankingPage = config.INFO_SEEK_RANKING_PAGE[index];
       console.log("rankingPage: " + rankingPage);
-      await infoseekPage.readArticleAtRankingPage(rankingPage);
+      await infoseekPage.readArticleAtRankingPage(rankingPage, credentials);
       await browser.pause(2000);
       let rankingPage2;
       if (index < config.INFO_SEEK_RANKING_PAGE.length - 1) {
@@ -70,7 +71,7 @@ describe("Infoseek", () => {
         rankingPage2 = config.INFO_SEEK_RANKING_PAGE[0];
       }
       console.log("rankingPage2: " + rankingPage2);
-      await infoseekPage.readArticleAtRankingPage(rankingPage2);
+      await infoseekPage.readArticleAtRankingPage(rankingPage2, credentials);
     } catch (error) {
       console.error("Error in infoseek__read_articles test: ", error);
     }

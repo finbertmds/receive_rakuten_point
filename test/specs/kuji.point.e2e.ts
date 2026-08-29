@@ -1,67 +1,91 @@
-import config from '../../config';
-import timeHelper from '../helpers/timeHelper';
-import kujiPage from '../pageobjects/kuji.page';
-import loginPage from '../pageobjects/login.page';
-import rakutencardPage from '../pageobjects/rakutencard.page';
+import config from "../../config";
+import timeHelper from "../helpers/timeHelper";
+import kujiPage from "../pageobjects/kuji.page";
+import loginPage from "../pageobjects/login.page";
+import rakutencardPage from "../pageobjects/rakutencard.page";
 
-describe('Rakuten', () => {
-    beforeEach(async function () {
-        const windows = await browser.getWindowHandles();
-        await browser.switchToWindow(windows[0]);
-    })
+describe("Rakuten", () => {
+  beforeEach(async function () {
+    await browser.reloadSession();
+    const windows = await browser.getWindowHandles();
+    await browser.switchToWindow(windows[0]);
+  });
 
-    async function credentials() {
-        await loginPage.open();
-        await loginPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
+  async function credentials() {
+    await loginPage.open();
+    await loginPage.login(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD);
 
-        await rakutencardPage.open();
-        await browser.pause(5000);
-        if (await rakutencardPage.isNeedLogin()) {
-            await rakutencardPage.loginV2(config.RAKUTEN_USERNAME, config.RAKUTEN_PASSWORD)
-        }
+    await rakutencardPage.open();
+    await browser.pause(5000);
+    if (await rakutencardPage.isNeedLogin()) {
+      await rakutencardPage.loginV2(
+        config.RAKUTEN_USERNAME,
+        config.RAKUTEN_PASSWORD,
+      );
     }
+  }
 
-    it('kuji__default_get_point_1', async () => {
+  it("kuji__default_get_point_1", async () => {
+    await credentials();
+    for (let index = 0; index < config.KUJI_DEFAULT_LINK.length / 2; index++) {
+      try {
+        await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
+        await kujiPage.handleProcessAfterClickKuji(index, true);
+      } catch (error) {
+        console.log("kuji__default_get_point_1 error: " + error);
+        await browser.reloadSession();
         await credentials();
-        // for index in range 0 to config.KUJI_DEFAULT_LINK.length/2
-        for (let index = 0; index < config.KUJI_DEFAULT_LINK.length / 2; index++) {
-            await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
-            await kujiPage.handleProcessAfterClickKuji(index, true);
-        }
-        await browser.pause(2000)
-    });
+      }
+    }
+    await browser.pause(2000);
+  });
 
-    it('kuji__default_get_point_2', async () => {
+  it("kuji__default_get_point_2", async () => {
+    await credentials();
+
+    const halfLength = Math.floor(config.KUJI_DEFAULT_LINK.length / 2);
+    for (
+      let index = halfLength;
+      index < config.KUJI_DEFAULT_LINK.length;
+      index++
+    ) {
+      try {
+        await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
+        await kujiPage.handleProcessAfterClickKuji(index, true);
+      } catch (error) {
+        console.log("kuji__default_get_point_2 error: " + error);
+        await browser.reloadSession();
         await credentials();
+      }
+    }
+    await browser.pause(2000);
+  });
 
-        // for index in range config.KUJI_DEFAULT_LINK.length/2 to config.KUJI_DEFAULT_LINK.length
-        const halfLength = Math.floor(config.KUJI_DEFAULT_LINK.length / 2);
-        for (let index = halfLength; index < config.KUJI_DEFAULT_LINK.length; index++) {
-            await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
-            await kujiPage.handleProcessAfterClickKuji(index, true);
-        }
-        await browser.pause(2000)
-    });
-
-    it('kuji__get_point', async () => {
-        await credentials();
+  it("kuji__get_point", async () => {
+    await credentials();
+    await kujiPage.open();
+    let kujiCount = await kujiPage.getKujiCount();
+    // let isAM = timeHelper.checkIsAM();
+    // if (kujiCount > 0) {
+    // let kujiCountHalf = (Math.round(kujiCount / 2));
+    // for (let index = (isAM ? 0 : kujiCountHalf); index < (isAM ? kujiCountHalf : kujiCount); index++) {
+    for (let index = 0; index < kujiCount; index++) {
+      try {
         await kujiPage.open();
-        let kujiCount = await kujiPage.getKujiCount();
-        let isAM = timeHelper.checkIsAM();
-        // if (kujiCount > 0) {
-            // let kujiCountHalf = (Math.round(kujiCount / 2));
-            // for (let index = (isAM ? 0 : kujiCountHalf); index < (isAM ? kujiCountHalf : kujiCount); index++) {
-            for (let index = 0; index < kujiCount; index++) {
-                await kujiPage.open();
-                console.log("open kuji at " + index);
-                let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
-                if (clickedKuji) {
-                    await kujiPage.handleProcessAfterClickKuji(index, false);
-                }
-            }
-        // }
-        await browser.pause(2000)
-    });
+        console.log("open kuji at " + index);
+        let clickedKuji = await kujiPage.handleClickKujiElementIndex(index);
+        if (clickedKuji) {
+          await kujiPage.handleProcessAfterClickKuji(index, false);
+        }
+      } catch (error) {
+        console.log(
+          "open kuji at " + index + " kuji__get_point error: " + error,
+        );
+        await browser.reloadSession();
+        await credentials();
+      }
+    }
+    // }
+    await browser.pause(2000);
+  });
 });
-
-
