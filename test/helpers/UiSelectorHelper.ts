@@ -76,9 +76,21 @@ export function getByFromParent (uiselector: string): string {
 
 /**
  * Get uiselector by resourceId in scrollable
+ * @param {string} containerResouceId
  * @param {string} resourceId
  * @returns {string}
  */
 export function getByResouceIdInScrollable (containerResouceId: string, resourceId: string): string {
   return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().resourceId("${resourceId}"))`);
+}
+
+/**
+ * Get uiselector by resourceId in scrollable
+ * @param {string} containerResouceId
+ * @param {string} resourceId
+ * @param {number} index
+ * @returns {string}
+ */
+export function getByResouceIdAndIndexInScrollable (containerResouceId: string, resourceId: string, index: number): string {
+  return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().resourceId("${resourceId}").instance(${index}))`);
 }

@@ -16,6 +16,24 @@ export default class S_TabBar {
         return false;
     }
 
+    static async openSearch () {
+        if (await this.bottomIconIsDisplayed()) {
+            let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 4));
+            if (await (await luckyCoinTabbar).isDisplayed()) {
+                await (await luckyCoinTabbar).click();
+            }
+        }
+    }
+
+    static async openChirashi () {
+        if (await this.bottomIconIsDisplayed()) {
+            let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 5));
+            if (await (await luckyCoinTabbar).isDisplayed()) {
+                await (await luckyCoinTabbar).click();
+            }
+        }
+    }
+
     static async openLuckyCoint () {
         if (await this.bottomIconIsDisplayed()) {
             let luckyCoinTabbar = (await $(SELECTORS.BOTTOM_ICON)).$(getByClassname("android.view.View", 6));

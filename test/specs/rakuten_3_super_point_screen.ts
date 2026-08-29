@@ -9,6 +9,10 @@ import sHomeScreen from "../screenobjects/superpointscreen/s.home.screen";
 import sLoginScreen from "../screenobjects/superpointscreen/s.login.screen";
 import sLuckycountScreen from "../screenobjects/superpointscreen/s.luckycount.screen";
 import S_TabBar from "../screenobjects/superpointscreen/s.tab.bar";
+import sChirashiScreen from "../screenobjects/superpointscreen/s.chirashi.screen";
+import sHeaderGetpointScreen from "../screenobjects/superpointscreen/s.header.getpoint.screen";
+import sSearchScreen from "../screenobjects/superpointscreen/s.search.screen";
+import { generateRakutenSearchKeyword } from "../helpers/rakutenSearchKeyword";
 
 describe("rakuten_super_point_screen", async () => {
   before(async () => {
@@ -425,6 +429,117 @@ describe("rakuten_super_point_screen", async () => {
     }
   }
 
+  async function handleChirashiNewFlyerSwipe() {
+    await driver.pause(2000);
+    try {
+      let isAdSpotDisplayed = await (
+        await sChirashiScreen.adSpot
+      ).isDisplayed();
+      console.log("isAdSpotDisplayed: ", isAdSpotDisplayed);
+      if (isAdSpotDisplayed) {
+        const isFirstCloseButtonDisplayed = await (
+          await sChirashiScreen.firstCloseButton
+        ).isDisplayed();
+        if (isFirstCloseButtonDisplayed) {
+          console.log("firstCloseButton is displayed");
+          await (await sChirashiScreen.firstCloseButton).click();
+        }
+      }
+
+      let isNewFlyersDisplayed = await (
+        await sChirashiScreen.newFlyers
+      ).isDisplayed();
+      console.log("isNewFlyersDisplayed: ", isNewFlyersDisplayed);
+      if (isNewFlyersDisplayed) {
+        await driver.execute("mobile: shell", {
+          command: "input",
+          args: ["tap", "700", "1600"],
+          includeStderr: true,
+          timeout: 2000,
+        });
+        await driver.pause(2000);
+        if (await (await sChirashiScreen.okButton).isDisplayed()) {
+          await (await sChirashiScreen.okButton).click();
+          await driver.pause(1000);
+        }
+        for (
+          let index = 0;
+          index < config.RAKUTEN_SUPER_POINT_SCREEN_MAX_CHIRASHI_SWIPE_COUNT;
+          index++
+        ) {
+          await Gestures.swipeLeft(0.7);
+          await driver.pause(1000);
+        }
+        await (await sChirashiScreen.goBackButton).click();
+        await driver.pause(1000);
+        await driver.back();
+        await driver.pause(1000);
+      }
+    } catch (error) {}
+  }
+
+  async function handleSearchInput() {
+    await driver.pause(2000);
+    const keyword = generateRakutenSearchKeyword();
+    let previousSearchKeyword = "";
+    try {
+      for (
+        let index = 0;
+        index < config.RAKUTEN_SUPER_POINT_SCREEN_MAX_SEARCH_COUNT;
+        index++
+      ) {
+        let searchInput = await sSearchScreen.searchInput(
+          index === 0 ? "" : previousSearchKeyword,
+        );
+        let isSearchInputDisplayed = await searchInput.isDisplayed();
+        console.log("isSearchInputDisplayed: ", isSearchInputDisplayed);
+        if (isSearchInputDisplayed) {
+          await searchInput.click();
+          await sSearchScreen.clearButton.click();
+          await driver.pause(1000);
+          const tempKeywordToSearch = `${keyword} ${index + 1}`;
+          console.log("tempKeywordToSearch: ", tempKeywordToSearch);
+          await sSearchScreen.enterSearchKeyword(tempKeywordToSearch);
+          let searchButton = await sSearchScreen.searchButton;
+          if (await searchButton.isDisplayed()) {
+            await searchButton.click();
+            previousSearchKeyword = tempKeywordToSearch;
+            await driver.pause(1000);
+          }
+        }
+      }
+      await driver.back();
+      await driver.pause(1000);
+    } catch (error) {}
+  }
+
+  async function handleSearchNews(keyword: string) {
+    await driver.pause(2000);
+    const newsLabel = await sSearchScreen.getNewsLabel(keyword);
+    if (await newsLabel.isDisplayed()) {
+      console.log("newsLabel is displayed: ", keyword);
+      await newsLabel.click();
+      await driver.pause(1000);
+      for (
+        let index = 0;
+        index <
+        config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS_CLICK_COUNT;
+        index++
+      ) {
+        const newsLabelInScrollable =
+          await sSearchScreen.getNewsLabelInScrollable(2 * index);
+        if (await newsLabelInScrollable.isDisplayed()) {
+          console.log(
+            `newsLabelInScrollable is displayed: ${keyword} in index: ${index}`,
+          );
+          await newsLabelInScrollable.click();
+          await driver.pause(2000);
+          await driver.back();
+        }
+      }
+    }
+  }
+
   it("sps_prepare", async () => {
     if (await handleMaintenance()) {
       return;
@@ -445,6 +560,95 @@ describe("rakuten_super_point_screen", async () => {
       await S_TabBar.openLuckyCoint();
       await handleClickGetPoint();
       await handleClickPlay();
+    }
+  });
+
+  it("sps_chirashi", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      for (let index = 0; index < config.RAKUTEN_SUPER_POINT_SCREEN_MAX_CHIRASHI_NEW_FLYER_COUNT; index++) {
+        await S_TabBar.openChirashi();
+        await handleChirashiNewFlyerSwipe();
+      }
+    }
+  });
+
+  it("sps_search_input", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      await S_TabBar.openSearch();
+      await handleSearchInput();
+    }
+  });
+
+  it("sps_search_news", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      await S_TabBar.openSearch();
+      for (
+        let index = 0;
+        index < config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS.length;
+        index++
+      ) {
+        const news =
+          config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS[index];
+        console.log("news: ", news);
+        await handleSearchNews(news);
+      }
+    }
+  });
+
+  it("sps_header_get_point", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      let getPointButton = await sHeaderGetpointScreen.getPointButton();
+      if (await getPointButton.isDisplayed()) {
+        await getPointButton.click();
+        await driver.pause(1000);
+        if (await sHeaderGetpointScreen.unclaimedPointLabel.isDisplayed()) {
+          console.log("unclaimedPointLabel is displayed");
+          await sHeaderGetpointScreen.unclaimedPointLabel.click();
+          await driver.pause(1000);
+          const claimButton = await sHeaderGetpointScreen.claimButton;
+          if (await claimButton.isDisplayed()) {
+            console.log("claimButton is displayed");
+            await claimButton.click();
+            await sHeaderGetpointScreen.waitForEarnedPointsLabel();
+            await driver.back();
+            await driver.pause(5000);
+            const closePortalButton = await sHeaderGetpointScreen.closePortalButton;
+            if (await closePortalButton.isDisplayed()) {
+              console.log("closePortalButton is displayed");
+              await closePortalButton.click();
+              await driver.pause(1000);
+            }
+          }
+        }
+      }
     }
   });
 
