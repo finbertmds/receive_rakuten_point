@@ -4,3 +4,4 @@ screenshots/
 logs/
 *.log
 .env
+data/*.json
