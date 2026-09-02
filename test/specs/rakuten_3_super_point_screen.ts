@@ -523,28 +523,37 @@ describe("rakuten_super_point_screen", async () => {
 
   async function handleSearchNews(keyword: string) {
     await driver.pause(2000);
-    const newsLabel = await sSearchScreen.getNewsLabel(keyword);
-    if (await newsLabel.isDisplayed()) {
-      console.log("newsLabel is displayed: ", keyword);
-      await newsLabel.click();
-      await driver.pause(1000);
-      for (
-        let index = 0;
-        index <
-        config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS_CLICK_COUNT;
-        index++
-      ) {
-        const newsLabelInScrollable =
-          await sSearchScreen.getNewsLabelInScrollable(2 * index);
-        if (await newsLabelInScrollable.isDisplayed()) {
-          console.log(
-            `newsLabelInScrollable is displayed: ${keyword} in index: ${index}`,
-          );
-          await newsLabelInScrollable.click();
-          await driver.pause(2000);
-          await driver.back();
+    try {
+      let newsLabel = await sSearchScreen.getNewsLabel(keyword);
+      if (await newsLabel.isDisplayed()) {
+        console.log("newsLabel is displayed: ", keyword);
+        await newsLabel.click();
+        await driver.pause(2000);
+        const newsCount = await sSearchScreen.getNewsRowCount();
+        console.log("newsCount: ", newsCount);
+        for (let index = 0; index < newsCount; index++) {
+          // const newsLabelInScrollable =
+          //   await sSearchScreen.getNewsLabelInScrollable(2 * index);
+          const newsRowIndex = await sSearchScreen.getNewsRowIndex(index);
+          if (await newsRowIndex.isDisplayed()) {
+            console.log(
+              `newsRowIndex is displayed: ${keyword} in index: ${index}`,
+            );
+            await newsRowIndex.click();
+            await driver.pause(2000);
+            await driver.back();
+            await driver.pause(2000);
+          }
+
+          newsLabel = await sSearchScreen.getNewsLabel(keyword);
+          if (await newsLabel.isDisplayed()) {
+            await newsLabel.click();
+            await driver.pause(2000);
+          }
         }
       }
+    } catch (error) {
+      console.error("Error occurred while handling search news:", error);
     }
   }
 

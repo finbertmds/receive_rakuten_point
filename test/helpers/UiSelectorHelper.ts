@@ -94,3 +94,24 @@ export function getByResouceIdInScrollable (containerResouceId: string, resource
 export function getByResouceIdAndIndexInScrollable (containerResouceId: string, resourceId: string, index: number): string {
   return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().resourceId("${resourceId}").instance(${index}))`);
 }
+
+/**
+ * Get uiselector by class name in scrollable
+ * @param {string} containerResouceId
+ * @param {string} className
+ * @returns {string}
+ */
+export function getByClassnameInScrollable (containerResouceId: string, className: string): string {
+  return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().className("${className}"))`);
+}
+
+/**
+ * Get uiselector by class name in scrollable and index
+ * @param {string} containerResouceId
+ * @param {string} className
+ * @param {number} index
+ * @returns {string}
+ */
+export function getByClassnameAndIndexInScrollable (containerResouceId: string, className: string, index: number): string {
+  return addPrefixAndroid(`new UiScrollable(new UiSelector().resourceId("${containerResouceId}").scrollable(true).instance(0)).scrollIntoView(new UiSelector().className("${className}").instance(${index}))`);
+}

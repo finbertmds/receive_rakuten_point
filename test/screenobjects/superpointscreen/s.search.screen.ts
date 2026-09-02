@@ -16,12 +16,13 @@ const SELECTORS = {
   INPUT: getByClassname("android.widget.EditText", 0),
 
   // Clear text
-  CLEAR_BUTTON: '~Clear text',
+  CLEAR_BUTTON: "~Clear text",
 
   // Search
   SEARCH_BUTTON: getByText("Search"),
 
-
+  // news-articles
+  NEWS_LABEL: getByResouceId("news-articles"),
 };
 
 class S_SearchScreen extends AppScreen {
@@ -56,6 +57,16 @@ class S_SearchScreen extends AppScreen {
 
   async getNewsLabelInScrollable(index: number = 0) {
     return $(getByResouceIdAndIndexInScrollable("news-articles", "b", index));
+  }
+
+  async getNewsRowCount() {
+    let parent = $(SELECTORS.NEWS_LABEL);
+    return parent.$$(getByClassname("android.widget.TextView")).length;
+  }
+
+  async getNewsRowIndex(index: number = 0) {
+    let parent = $(SELECTORS.NEWS_LABEL);
+    return parent.$(getByClassname("android.widget.TextView", index));
   }
 }
 
