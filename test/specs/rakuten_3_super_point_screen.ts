@@ -383,6 +383,7 @@ describe("rakuten_super_point_screen", async () => {
           }
           await driver.pause(2000);
           await backToSuperPointApp();
+          await driver.pause(45000);
         }
 
         if (!(await S_TabBar.bottomIconIsDisplayed())) {
