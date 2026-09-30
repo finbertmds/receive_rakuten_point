@@ -363,14 +363,14 @@ describe("rakuten_super_point_screen", async () => {
       } else {
         await driver.execute("mobile: shell", {
           command: "input",
-          args: ["tap", "95", "95"],
+          args: ["tap", "95", "150"],
           includeStderr: true,
           timeout: 2000,
         });
         await driver.pause(1000);
         await driver.execute("mobile: shell", {
           command: "input",
-          args: ["tap", "1000", "95"],
+          args: ["tap", "95", "150"],
           includeStderr: true,
           timeout: 2000,
         });
@@ -379,7 +379,7 @@ describe("rakuten_super_point_screen", async () => {
           await driver.pause(2000);
           await driver.back();
         }
-        await driver.pause(5000);
+        await driver.pause(10000);
 
         await driver.execute("mobile: shell", {
           command: "input",
