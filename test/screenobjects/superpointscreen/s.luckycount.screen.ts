@@ -11,6 +11,9 @@ const SELECTORS = {
     CLOSE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/close"),
     CLOSE_AD_BUTTON: getByResouceId("dismiss-button"),
     REWARD_GRANTED_TEXT: getByText("Reward granted"),
+    GOOGLE_PLAY_TEXT: getByText("Google Play"),
+
+    END_CARD: getByResouceId("endcard"),
 
     CHALLENGE_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_challenge"),
     CHALLENGE_PLAY_BUTTON: getByResouceId("jp.co.rakuten.slide:id/btn_play"),
@@ -81,11 +84,29 @@ class R_LuckyCointScreen extends AppScreen {
         return $(SELECTORS.REWARD_GRANTED_TEXT)
     }
 
+    get googlePlayText () {
+        return $(SELECTORS.GOOGLE_PLAY_TEXT)
+    }
+
+    get endCard () {
+        return $(SELECTORS.END_CARD)
+    }
+    
+    async getEndCardCloseButton() {
+        let parent = await $(SELECTORS.END_CARD).parent;
+        let getEndCardCloseButton = await parent.$(
+            getByClassname("android.view.View", 1),
+        ).$(getByClassname("android.view.View", 0))
+        .$(getByClassname("android.widget.Image", 0));
+        return getEndCardCloseButton;
+    }
+
     async waitForRewardGrantedTextIsShown () {
         try {
-            await this.rewardGrantedText.waitForDisplayed({ timeout: 65000 });
+            // await this.rewardGrantedText.waitForDisplayed({ timeout: 65000 });
+            await this.googlePlayText.waitForDisplayed({ timeout: 65000 });
         } catch (error) {
-            console.log("Reward granted text not found");
+            console.log("Google Play text not found");
         }
     }
 

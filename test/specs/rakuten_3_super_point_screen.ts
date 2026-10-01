@@ -346,6 +346,9 @@ describe("rakuten_super_point_screen", async () => {
       }
       // await driver.pause(60000);
       await sLuckycountScreen.waitForRewardGrantedTextIsShown();
+      let isGooglePlayTextDisplayed = await (
+        await sLuckycountScreen.googlePlayText
+      ).isDisplayed();
       let isRewardGrantedTextDisplayed = await (
         await sLuckycountScreen.rewardGrantedText
       ).isDisplayed();
@@ -353,7 +356,13 @@ describe("rakuten_super_point_screen", async () => {
         await sLuckycountScreen.closeAdButton
       ).isDisplayed();
 
-      if (isRewardGrantedTextDisplayed) {
+      let handleClickPlayCount = false;
+
+      if (isGooglePlayTextDisplayed) {
+        console.log("Google Play text is displayed");
+        await (await sLuckycountScreen.googlePlayText).click();
+        handleClickPlayCount = true;
+      } else if (isRewardGrantedTextDisplayed) {
         console.log("rewardGrantedText is displayed");
         await (await sLuckycountScreen.rewardGrantedText).click();
       } else if (isCloseAdButtonDisplayed) {
@@ -363,31 +372,38 @@ describe("rakuten_super_point_screen", async () => {
       } else {
         await driver.execute("mobile: shell", {
           command: "input",
-          args: ["tap", "95", "150"],
+          args: ["tap", "192", "63"],
           includeStderr: true,
           timeout: 2000,
         });
         await driver.pause(1000);
         await driver.execute("mobile: shell", {
           command: "input",
-          args: ["tap", "95", "150"],
+          args: ["tap", "192", "63"],
           includeStderr: true,
           timeout: 2000,
         });
+        handleClickPlayCount = true;
+      }
+
+      if (handleClickPlayCount) {
         // await backToSuperPointApp();
         for (let index = 0; index < 2; index++) {
           await driver.pause(2000);
           await driver.back();
         }
-        await driver.pause(10000);
-
-        await driver.execute("mobile: shell", {
-          command: "input",
-          args: ["tap", "1000", "95"],
-          includeStderr: true,
-          timeout: 2000,
-        });
         await driver.pause(5000);
+
+        // await driver.execute("mobile: shell", {
+        //   command: "input",
+        //   args: ["tap", "1000", "95"],
+        //   includeStderr: true,
+        //   timeout: 2000,
+        // });
+        if (sLuckycountScreen.endCard.isDisplayed()) {
+          await (await sLuckycountScreen.getEndCardCloseButton()).click();
+          await driver.pause(5000);
+        }
 
         if (!(await S_TabBar.bottomIconIsDisplayed())) {
           await driver.back();
