@@ -394,14 +394,17 @@ describe("rakuten_super_point_screen", async () => {
         }
         await driver.pause(5000);
 
-        // await driver.execute("mobile: shell", {
-        //   command: "input",
-        //   args: ["tap", "1000", "95"],
-        //   includeStderr: true,
-        //   timeout: 2000,
-        // });
         if (sLuckycountScreen.endCard.isDisplayed()) {
           await (await sLuckycountScreen.getEndCardCloseButton()).click();
+          await driver.pause(5000);
+        }
+        if (sLuckycountScreen.endCard.isDisplayed()) {
+          await driver.execute("mobile: shell", {
+            command: "input",
+            args: ["tap", "1000", "95"],
+            includeStderr: true,
+            timeout: 2000,
+          });
           await driver.pause(5000);
         }
 
