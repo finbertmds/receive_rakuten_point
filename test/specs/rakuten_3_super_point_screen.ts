@@ -388,7 +388,10 @@ describe("rakuten_super_point_screen", async () => {
 
       if (handleClickPlayCount) {
         // await backToSuperPointApp();
-        for (let index = 0; index < 2; index++) {
+        for (let index = 0; index < 10; index++) {
+          if (await sLuckycountScreen.endCard.isDisplayed()) {
+            break;
+          }
           await driver.pause(2000);
           await driver.back();
         }
