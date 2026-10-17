@@ -93,8 +93,8 @@ for COMMAND in "${COMMANDS[@]}"; do
   fi
 done
 
-# Stop the Android emulator after all tests are finished
-bash "$PROJECT_DIR/stopEmulator.sh" >> "$LOG_FILE" 2>&1
+# # Stop the Android emulator after all tests are finished
+# bash "$PROJECT_DIR/stopEmulator.sh" >> "$LOG_FILE" 2>&1
 
 echo "" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
