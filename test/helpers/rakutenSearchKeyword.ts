@@ -61,12 +61,9 @@ function createCandidates(): string[] {
 export function generateRakutenSearchKeyword(): string {
     const history = loadHistory();
 
-    const used = new Set(
-        history.map(x => x.keyword)
-    );
-
+    // create candidates and filter used contains keyword count less than 50
     const candidates = createCandidates()
-        .filter(keyword => !used.has(keyword));
+        .filter(keyword => history.filter(x => x.keyword === keyword).length < config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS_COUNT);
 
     if (candidates.length === 0) {
         throw new Error(
