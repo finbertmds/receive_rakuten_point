@@ -25,35 +25,14 @@ describe("Rakuten", () => {
     }
   }
 
-  it("kuji__default_get_point_1", async () => {
+  it("kuji__default_get_point", async () => {
     await credentials();
-    for (let index = 0; index < config.KUJI_DEFAULT_LINK.length / 2; index++) {
+    for (let index = 0; index < config.KUJI_DEFAULT_LINK.length; index++) {
       try {
         await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
         await kujiPage.handleProcessAfterClickKuji(index, true);
       } catch (error) {
-        console.log("kuji__default_get_point_1 error: " + error);
-        await browser.reloadSession();
-        await credentials();
-      }
-    }
-    await browser.pause(2000);
-  });
-
-  it("kuji__default_get_point_2", async () => {
-    await credentials();
-
-    const halfLength = Math.floor(config.KUJI_DEFAULT_LINK.length / 2);
-    for (
-      let index = halfLength;
-      index < config.KUJI_DEFAULT_LINK.length;
-      index++
-    ) {
-      try {
-        await kujiPage.open(config.KUJI_DEFAULT_LINK[index]);
-        await kujiPage.handleProcessAfterClickKuji(index, true);
-      } catch (error) {
-        console.log("kuji__default_get_point_2 error: " + error);
+        console.log("kuji__default_get_point error: " + error);
         await browser.reloadSession();
         await credentials();
       }

@@ -7,38 +7,25 @@ export default {
   WEBSEARCH_MAX_COUNT: 7,
   WEBSEARCH_PREFIX: "天ぷら",
   KUJI_HOME_PAGE: "https://kuji.rakuten.co.jp",
+  // https://bakkuappu.seesaa.net/
+  // $$('.entryBody毎日引けるくじ > a:nth-child(1)').map(a => a.href)
+  // $$('.entryBody一回だけ引けるくじ > a:nth-child(1)').map(a => a.href)
+  // $$('.entryBodyその他 > a').map(a => a.href)
+  // https://rakucoin.appspot.com/rakuten/kuji/
   KUJI_DEFAULT_LINK: [
-    // https://bakkuappu.seesaa.net/
-    // $$('.entryBody毎日引けるくじ > a:nth-child(1)').map(a => a.href)
-    // $$('.entryBody一回だけ引けるくじ > a:nth-child(1)').map(a => a.href)
-    // $$('.entryBodyその他 > a').map(a => a.href)
-    // https://rakucoin.appspot.com/rakuten/kuji/
-    "https://app.kuji.rakuten.co.jp/campaign/poikatu/kuji/kuji202606.html",
-    "https://rakucoin.appspot.com/rakuten/kuji/redirect/2b544902af",
     "https://rakucoin.appspot.com/rakuten/kuji/redirect/fc437af2c7",
     "https://kuji.rakuten.co.jp/e5741cf5af",
     "https://rakucoin.appspot.com/rakuten/kuji/redirect/e7a37ae390",
-    "https://pointmall.rakuten.co.jp/scratch",
     "https://kuji.rakuten.co.jp/137451f19b",
     "https://kuji.rakuten.co.jp/d594527fa8",
     "https://kuji.rakuten.co.jp/2b64526145",
     "https://kuji.rakuten.co.jp/df6450f8c7",
-    "https://kuji.rakuten.co.jp/69144b32de",
-    "https://kuji.rakuten.co.jp/56c4519469",
-    "https://kuji.rakuten.co.jp/244450dda0",
     "https://kuji.rakuten.co.jp/efa450c162",
-    "https://kuji.rakuten.co.jp/2b544902af",
-    "https://kuji.rakuten.co.jp/f71449eabf",
-    "https://kuji.rakuten.co.jp/d22446cdfc",
-    "https://kuji.rakuten.co.jp/15a44600fb",
     "https://kuji.rakuten.co.jp/58544080d9",
     "https://kuji.rakuten.co.jp/d19440766e",
-    "https://kuji.rakuten.co.jp/2e743a82e5",
     "https://kuji.rakuten.co.jp/1e842a2ecd",
     "https://kuji.rakuten.co.jp/a8c429047d",
-    "https://kuji.rakuten.co.jp/c713d723d3",
     "https://kuji.rakuten.co.jp/86c40aca5f",
-    "https://kuji.rakuten.co.jp/d6e3c174e6",
     "https://kuji.rakuten.co.jp/1243541a35",
     "https://kuji.rakuten.co.jp/4351057845",
     "https://kuji.rakuten.co.jp/ef23be45f7",
@@ -60,12 +47,6 @@ export default {
     "https://kuji.rakuten.co.jp/34e2cb79fa",
     "https://kuji.rakuten.co.jp/46211bf9dd",
     "https://kuji.rakuten.co.jp/18584163d",
-    "https://kuji.rakuten.co.jp/12044f7678",
-    "https://kuji.rakuten.co.jp/f3c44dfe88",
-    "https://kuji.rakuten.co.jp/daa44f3f92",
-    "https://kuji.rakuten.co.jp/7da44f9512",
-    "https://kuji.rakuten.co.jp/3f944da48c",
-    "https://kuji.rakuten.co.jp/a5044805fb",
   ],
   RAKUTENCARD_HOME_PAGE:
     "https://www.rakuten-card.co.jp/e-navi/members/index.xhtml",

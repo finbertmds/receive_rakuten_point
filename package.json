@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "npx wdio run ./wdio.conf.js",
-    "test:chrome": "npx wdio run ./wdio.chrome.conf.js",
-    "test:firefox": "npx wdio run ./wdio.firefox.conf.js"
+    "test": "npx wdio run ./wdio.conf.js --port 4445",
+    "test:chrome": "npx wdio run ./wdio.chrome.conf.js --port 4445",
+    "test:firefox": "npx wdio run ./wdio.firefox.conf.js --port 4445"
   },
   "dependencies": {
     "@wdio/cli": "^9.29.1"
