@@ -2,7 +2,9 @@
 # Script tự động chạy tất cả các test lấy Rakuten point apps hàng ngày
 # Nếu test failed, retry tối đa 3 lần (lần đầu + 2 lần retry)
 
-PROJECT_DIR="/Users/finbertmds/Documents/1code/receive_rakuten_point"
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Project directory: $PROJECT_DIR"
+cd "$PROJECT_DIR"
 LOG_DIR="$PROJECT_DIR/logs"
 LOG_FILE="$LOG_DIR/run_rakuten_apps_$(date '+%Y%m%d_%H%M%S').log"
 RUN_SUMMARY_LOG="$LOG_DIR/run_summary.log"
