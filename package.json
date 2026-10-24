@@ -1,27 +1,21 @@
 {
-  "name": "selenium_ide",
+  "name": "rakuten-point-playwright",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
   "scripts": {
-    "test": "npx wdio run ./wdio.conf.js --port 4445",
-    "test:chrome": "npx wdio run ./wdio.chrome.conf.js --port 4445",
-    "test:firefox": "npx wdio run ./wdio.firefox.conf.js --port 4445"
-  },
-  "dependencies": {
-    "@wdio/cli": "^9.29.1"
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:campaign": "playwright test campaign.point",
+    "test:card": "playwright test card.point",
+    "test:kuji": "playwright test kuji.point",
+    "test:infoseek": "playwright test infoseek.point",
+    "check": "tsc --noEmit",
+    "test:checks": "playwright test --config=playwright.checks.config.ts",
+    "report": "playwright show-report"
   },
   "devDependencies": {
-    "@wdio/firefox-profile-service": "^9.29.1",
-    "@wdio/local-runner": "^9.29.1",
-    "@wdio/mocha-framework": "^9.29.1",
-    "@wdio/spec-reporter": "^9.29.1",
-    "chromedriver": "^150.0.1",
-    "concurrently": "^10.0.3",
-    "geckodriver": "^6.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^6.0.3",
-    "wdio-chromedriver-service": "^8.1.1",
-    "wdio-geckodriver-service": "^5.0.2"
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.3"
   }
 }

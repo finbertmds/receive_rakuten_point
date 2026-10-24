@@ -1,0 +1,141 @@
+import { expect, type Page, type Locator, type Frame } from '@playwright/test';
+
+export async function goto(page: Page, url: string) {
+  // Only retry read-only navigation, never a point claim or mission submission.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if (response && response.status() >= 400) throw new Error(`HTTP ${response.status()} at ${url}`);
+      return;
+    } catch (error) {
+      if (attempt >= 1 || page.isClosed()) throw error;
+    }
+  }
+}
+
+export async function optional(locator: Locator, timeout = 2500) {
+  try { await locator.waitFor({ state: 'visible', timeout }); return true; }
+  catch (error) {
+    if (error instanceof Error && error.name === 'TimeoutError') return false;
+    throw error;
+  }
+}
+
+// Ads may remove or navigate their iframe between any two awaited operations.
+function transientFrameError(frame: Frame, error: unknown) {
+  return !frame.page().isClosed() && (frame.isDetached() ||
+    error instanceof Error && /Frame was detached|frame has been detached|Execution context was destroyed|Cannot find context with specified id/i.test(error.message));
+}
+
+async function boundedOverlayQuery(locator: Locator): Promise<Locator[]> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      locator.all(),
+      new Promise<Locator[]>(resolve => { timer = setTimeout(() => resolve([]), 300); }),
+    ]);
+  } finally { clearTimeout(timer); }
+}
+
+export async function installOverlays(page: Page) {
+  const selectors = [
+    '#interstitial_close_button', '.modalClick_close', '#notification_close_button',
+    '.gmoam_close_button', '.tbl-explore-more-close', '#gn_interstitial_close_icon', '#gn_ydn_interstitial_btn',
+    '#rdnwipe-close-ad-button', '[id="div-gpt-ad-1603846419813-close-btn"]',
+  ].map(selector => `${selector}:visible`).join(', ');
+  // Separate handlers can deadlock when one close button is under another ad.
+  // A single handler probes actionability without clicking, then closes the top layer.
+  await page.addLocatorHandler(page.locator('body'), async () => {
+    const handlerDeadline = Date.now() + 2500;
+    for (let layer = 0; layer < 12 && Date.now() < handlerDeadline; layer++) {
+      let closed = false;
+      const frames = [page.mainFrame()];
+      for (const element of await page.locator('iframe#gn_interstitial_iframe_content, iframe[title="GMOSSP iframe"]').elementHandles()) {
+        try {
+          const frame = await element.contentFrame();
+          if (frame) frames.push(frame);
+        } finally { await element.dispose(); }
+      }
+      for (const frame of frames) {
+        if (Date.now() >= handlerDeadline) break;
+        if (frame.isDetached()) continue;
+        try {
+          for (const close of await boundedOverlayQuery(frame.locator(selectors))) {
+            if (Date.now() >= handlerDeadline) break;
+            try {
+              await close.click({ trial: true, timeout: 250 });
+              await close.click({ timeout: 1000 });
+              closed = true;
+              break;
+            } catch (error) {
+              if (transientFrameError(frame, error)) break;
+              // Covered controls are retried on the next actionability check.
+              if (!(error instanceof Error && error.name === 'TimeoutError')) throw error;
+            }
+          }
+        } catch (error) {
+          // isDetached() above is only a snapshot, not a lock on the frame.
+          if (!transientFrameError(frame, error)) throw error;
+        }
+        if (closed) break; // Re-query frames and controls after each dismissal.
+      }
+      if (!closed) break;
+    }
+  }, { noWaitAfter: true });
+  page.on('dialog', dialog => { void dialog.dismiss(); });
+}
+
+// Subscribe before clicking so a fast target=_blank cannot be missed.
+export async function clickTarget(page: Page, locator: Locator): Promise<Page> {
+  const popup = page.waitForEvent('popup', { timeout: 3000 }).catch(() => null);
+  await locator.click();
+  const target = await popup;
+  if (target) await installOverlays(target);
+  const result = target ?? page;
+  await result.waitForLoadState('domcontentloaded');
+  return result;
+}
+
+export async function rewardedAd(page: Page, reload: boolean) {
+  const dialog = page.locator('.fc-dialog-content:visible, .fc-monetization-dialog-container:visible').first();
+  if (!(await optional(dialog))) return;
+  await dialog.locator('.fc-rewarded-ad-button').click();
+  // Ad duration varies: wait for the close control or for the dialog to disappear.
+  await expect(async () => {
+    for (const frame of page.frames()) {
+      try {
+        const close = frame.locator('#close_button_icon:visible, #dismiss-button-element:visible').first();
+        if (await close.isVisible()) await close.click();
+      } catch (error) {
+        if (!transientFrameError(frame, error)) throw error;
+      }
+    }
+    await expect(dialog).toBeHidden({ timeout: 1000 });
+  }).toPass({ timeout: 90_000, intervals: [1000] });
+  if (reload) await page.reload({ waitUntil: 'domcontentloaded' });
+}
+
+export async function loginForm(page: Page) {
+  const username = process.env.RAKUTEN_USERNAME;
+  const password = process.env.RAKUTEN_PASSWORD;
+  if (!username || !password) throw new Error('Set RAKUTEN_USERNAME and RAKUTEN_PASSWORD in playwright/.env');
+  const user = page.locator('#user_id:visible, [name="u"]:visible').first();
+  const pass = page.locator('#password_current:visible, [name="p"]:visible').first();
+  const confirm = page.locator('#prim_continue:visible');
+  await expect(user.or(pass).or(confirm).first()).toBeVisible();
+  if (await user.isVisible()) {
+    await user.fill(username);
+    // V2 requires Next even when the password field is already present.
+    // The legacy form submits username and password together.
+    if (await user.getAttribute('id') === 'user_id' || !(await pass.isVisible())) {
+      await page.locator('.h4k5-e2e-button__submit:visible, [name="submit"]:visible').first().click();
+    }
+  }
+  if (await optional(pass, 10_000)) {
+    await pass.fill(password);
+    await page.locator('.h4k5-e2e-button__submit:visible, [name="submit"]:visible').last().click();
+  }
+  if (await optional(confirm, 5000)) await confirm.click();
+  await expect(user).toBeHidden();
+  await expect(pass).toBeHidden();
+}

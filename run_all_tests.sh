@@ -50,14 +50,13 @@ echo "========================================" | tee -a "$LOG_FILE"
 
 cd "$PROJECT_DIR" || exit 1
 
-yarn install >> "$LOG_FILE" 2>&1
+npm install >> "$LOG_FILE" 2>&1
 
 SPECS=(
-  # "./test/specs/bank.point.e2e.ts"
-  "./test/specs/campaign.point.e2e.ts"
-  "./test/specs/card.point.e2e.ts"
-  "./test/specs/kuji.point.e2e.ts"
-  "./test/specs/infoseek.point.e2e.ts"
+  "campaign"
+  "card"
+  "kuji"
+  "infoseek"
 )
 
 for SPEC in "${SPECS[@]}"; do
@@ -76,7 +75,7 @@ for SPEC in "${SPECS[@]}"; do
       echo "  ▶ Attempt $ATTEMPT/$MAX_ATTEMPTS: $NAME ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
     fi
 
-    if yarn test --spec "$SPEC" >> "$LOG_FILE" 2>&1; then
+    if npm run "test:$NAME" >> "$LOG_FILE" 2>&1; then
       echo "✅ PASSED: $NAME (attempt $ATTEMPT) ($(date '+%H:%M:%S'))" | tee -a "$LOG_FILE"
       SUCCESS=true
       ((PASS++))

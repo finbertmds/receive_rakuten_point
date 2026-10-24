@@ -1,22 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "./.tsbuild/",
-    "sourceMap": false,
-    "target": "es2019",
-    "module": "commonjs",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true,
-    "types": [
-      "node",
-      "@wdio/globals/types",
-      "@wdio/mocha-framework",
-      "expect-webdriverio",
-      "@wdio/firefox-profile-service"
-    ],
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "strict": true, "resolveJsonModule": true, "esModuleInterop": true,
+    "types": ["node"], "skipLibCheck": true, "noEmit": true
   },
-  "include": [
-    "./test/**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }

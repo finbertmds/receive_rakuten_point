@@ -1,7 +1,6 @@
 node_modules/
-screenshots/
-.DS_Store
-logs/
-*.log
 .env
-data/*.json
+test-results/
+playwright-report/
+.auth/
+test-results-live/
