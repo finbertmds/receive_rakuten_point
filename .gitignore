@@ -4,3 +4,7 @@ test-results/
 playwright-report/
 .auth/
 test-results-live/
+.DS_Store
+logs/
+*.log
+data/*.json
