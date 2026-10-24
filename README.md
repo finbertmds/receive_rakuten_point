@@ -4,8 +4,7 @@
 - Branch: [master](https://github.com/FinbertMDS/receive_rakuten_point/tree/master)
   - Selenium IDE
 - Branch: [developer](https://github.com/FinbertMDS/receive_rakuten_point/tree/developer)
-  - WebdriverIO
-  - Mocha
+  - Playwright
 - Branch: [rakuten_apps](https://github.com/FinbertMDS/receive_rakuten_point/tree/rakuten_apps)
   - WebdriverIO
   - Jasmine
