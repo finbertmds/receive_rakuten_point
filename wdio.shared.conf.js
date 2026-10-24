@@ -83,12 +83,12 @@ exports.config = {
                 args: {
                     // Auto download ChromeDriver
                     relaxedSecurity: true,
-                    allowInsecure: 'adb_shell',
+                    allowInsecure: 'uiautomator2:adb_shell',
                     // chromedriverAutodownload: true,
                     // For more arguments see
                     // https://github.com/webdriverio/webdriverio/tree/master/packages/wdio-appium-service
                 },
-                command: 'appium',
+                command: join(__dirname, 'node_modules', '.bin', 'appium'),
             },
         ],
     ],

@@ -93,7 +93,7 @@ class R_LuckyCointScreen extends AppScreen {
     }
     
     async getEndCardCloseButton() {
-        let parent = await $(SELECTORS.END_CARD).parent;
+        let parent = await $(SELECTORS.END_CARD).parentElement();
         let getEndCardCloseButton = await parent.$(
             getByClassname("android.view.View", 1),
         ).$(getByClassname("android.view.View", 0))

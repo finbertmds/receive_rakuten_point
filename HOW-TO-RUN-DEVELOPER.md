@@ -9,8 +9,7 @@ To setup your local machine to use an Android emulator and an iOS simulator see 
 
 1. System Requirements
 - You’ll need [Node.js](http://nodejs.org/) installed
-  - Install at least v12.16.1 or higher as this is the oldest active LTS version
-  - Only releases that are or will become an LTS release are officially supported
+  - Use Node.js v26.12.1 (see `.nvmrc` and `package.json`)
 - [Npm](https://www.npmjs.com/) Or [Yarn](https://yarnpkg.com/getting-started/install)
 
 2. Run
@@ -18,9 +17,14 @@ To setup your local machine to use an Android emulator and an iOS simulator see 
 ```bash
 export RAKUTEN_USERNAME='xxx'
 export RAKUTEN_PASSWORD='xxx'
-yarn
+nvm use
+yarn install --frozen-lockfile
 yarn test
 ```
+
+Appium and UiAutomator2 are project dependencies; WebdriverIO starts the local Appium server. TypeScript runs through WebdriverIO's `tsx` loader, so `ts-node` is not needed.
+
+Run `yarn typecheck` to check test sources. `skipLibCheck` is enabled because the current Node, DOM and URLPattern polyfill declarations overlap; dependency declaration files are excluded from this check.
 
 3. Other command
 

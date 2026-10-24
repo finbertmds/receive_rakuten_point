@@ -26,8 +26,8 @@ class S_HomeAlertScreen extends AppScreen {
     }
 
     async waitForMessageIsChanged (preMessage: string) {
-        return this.alertContainerMessage.waitUntil(function () {
-            return this.getText() !== preMessage;
+        return browser.waitUntil(async () => {
+            return await this.alertContainerMessage.getText() !== preMessage;
         }, {
             timeout: config.DEFAULT_TIMEOUT,
             timeoutMsg: 'expected text to change after 5s'

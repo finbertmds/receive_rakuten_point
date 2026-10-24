@@ -33,7 +33,7 @@ class S_HeaderGetPointScreen extends AppScreen {
   }
 
   async getPointButton() {
-    let parent = await $(SELECTORS.TOTAL_POINT_LABEL).parent;
+    let parent = await $(SELECTORS.TOTAL_POINT_LABEL).parentElement();
     let getPointButton = await parent.$(
       getByClassname("android.widget.Button", 0),
     );

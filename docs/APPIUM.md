@@ -5,7 +5,7 @@ This is just one of the many ;-)
 
 To setup the local test environment the following needs to be installed:
 
-- [Appium](https://github.com/appium/appium) with `npm install appium -g`
+- [Appium](https://github.com/appium/appium) and the UiAutomator2 driver are installed locally by `yarn install --frozen-lockfile`.
 - [appium-inspector](https://github.com/appium/appium-inspector). This one needs to be downloaded from [here](https://github.com/appium/appium-inspector/releases) and pick the latest stable releases
 
 ## Setup a local machine
@@ -13,8 +13,9 @@ To setup the local test environment the following needs to be installed:
 ### Appium
 
 ```bash
-npm i -g appium
-appium
+nvm use
+yarn install --frozen-lockfile
+yarn appium driver list --installed
 ```
 
 When appium-doctor can, it will fix the problems for you, otherwise fix them manually. If you have some ENV issues make sure you have set them like this
@@ -28,11 +29,11 @@ export emulator=/Users/wswebcreation/Library/Android/sdk/emulator
 ```
 
 ### Appium
-If the npm install was successful you should be able to run this command `appium -v` and see a version like below.
+Check the local Appium version with `yarn appium --version`. WebdriverIO starts this local server automatically when running tests.
 
 ```bash
-➜  appium -v
-1.9.0
+➜  yarn appium --version
+3.8.0
 ➜ 
 ```
 
