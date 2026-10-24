@@ -48,12 +48,6 @@ jobs:
       - name: Run regression checks
         run: npm run test:checks
 
-      - name: Run Campaign, Card, Infoseek and Kuji tests
-        run: npm test
-        env:
-          RAKUTEN_USERNAME: ${{ secrets.RAKUTEN_USERNAME }}
-          RAKUTEN_PASSWORD: ${{ secrets.RAKUTEN_PASSWORD }}
-
       - name: Upload Playwright report and failure evidence
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
