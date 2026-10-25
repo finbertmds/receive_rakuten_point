@@ -93,12 +93,10 @@ class R_LuckyCointScreen extends AppScreen {
     }
     
     async getEndCardCloseButton() {
-        let parent = await $(SELECTORS.END_CARD).$('..');
-        let getEndCardCloseButton = await parent.$(
-            getByClassname("android.view.View", 1),
-        ).$(getByClassname("android.view.View", 0))
-        .$(getByClassname("android.widget.Image", 0));
-        return getEndCardCloseButton;
+        // The close image is under two nested Views inside the second sibling View.
+        return $(SELECTORS.END_CARD).$(
+            '../android.view.View[2]/android.view.View[1]/android.view.View[1]/android.widget.Image[1]',
+        );
     }
 
     async waitForRewardGrantedTextIsShown () {
