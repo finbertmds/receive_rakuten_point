@@ -147,8 +147,7 @@ class T_HomeScreen extends AppScreen {
     }
 
     async articleTitle (articleImage: WebdriverIO.Element) {
-        let parent = articleImage.parent;
-        return parent.$(getByResouceId("jp.co.rakutensec.toshiru:id/articleTitle"));
+        return articleImage.$('../descendant::*[@resource-id="jp.co.rakutensec.toshiru:id/articleTitle"]');
     }
     
     async waitForContentsIsShown () {

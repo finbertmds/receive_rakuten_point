@@ -32,6 +32,8 @@ config.capabilities = [
         // `automationName` will be mandatory, see
         // https://github.com/appium/appium/releases/tag/v1.13.0
         'appium:automationName': 'UiAutomator2',
+        // Native XPath parent/sibling queries need the complete UI hierarchy.
+        'appium:settings[limitXPathContextScope]': false,
         // The path to the app
         'appium:app': getAppPath(apks.RAKUTEN_SUPER_POINT_SCREEN_APK_NAME),
         // Read the reset strategies very well, they differ per platform, see

@@ -1,4 +1,4 @@
-import { getByClassname, getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
+import { getByResouceId, getByText } from '../../helpers/UiSelectorHelper';
 import AppScreen from '../AppScreen';
 
 const SELECTORS = {
@@ -37,7 +37,8 @@ class S_HomeScreen extends AppScreen {
         if (pointNumberButtonTmp.length > 0) {
             for (let index = 0; index < pointNumberButtonTmp.length; index++) {
                 const element = pointNumberButtonTmp[index];
-                let poinMark = element.parent.$(getByClassname("android.widget.ImageView", 0));
+                const parent = await element.$("..");
+                const poinMark = parent.$("(.//android.widget.ImageView)[1]");
                 if (await poinMark.isExisting()) {
                     if (await poinMark.isDisplayed()) {
                         pointNumberButtonRes.push(poinMark);

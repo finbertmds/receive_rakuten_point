@@ -1,6 +1,5 @@
 import config from "../../../config";
 import {
-  getByClassname,
   getByResouceId,
   getByText,
 } from "../../helpers/UiSelectorHelper";
@@ -33,10 +32,9 @@ class S_HeaderGetPointScreen extends AppScreen {
   }
 
   async getPointButton() {
-    let parent = await $(SELECTORS.TOTAL_POINT_LABEL).parentElement();
-    let getPointButton = await parent.$(
-      getByClassname("android.widget.Button", 0),
-    );
+    let parent = await $(SELECTORS.TOTAL_POINT_LABEL).$('..');
+    // The first header button opens Rewards; the second opens Rakuten Pay.
+    let getPointButton = await parent.$("(.//android.widget.Button)[1]");
     return getPointButton;
   }
 

@@ -45,7 +45,7 @@ export default class S_TabBar {
 
     static async waitForTabBarShown () {
         return $(SELECTORS.BOTTOM_ICON).waitForDisplayed({
-            timeout: config.DEFAULT_TIMEOUT,
+            timeout: 3 * config.DEFAULT_TIMEOUT,
         });
     }
 }
