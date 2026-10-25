@@ -623,112 +623,112 @@ describe("rakuten_super_point_screen", async () => {
     }
   });
 
-  // it("sps_chirashi", async () => {
-  //   await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.pause(2000);
-  //   await S_TabBar.waitForTabBarShown();
-  //   if (await handleMaintenance()) {
-  //     return;
-  //   }
-  //   if (await S_TabBar.bottomIconIsDisplayed()) {
-  //     for (
-  //       let index = 0;
-  //       index < config.RAKUTEN_SUPER_POINT_SCREEN_MAX_CHIRASHI_NEW_FLYER_COUNT;
-  //       index++
-  //     ) {
-  //       await S_TabBar.openChirashi();
-  //       await handleChirashiNewFlyerSwipe();
-  //     }
-  //   }
-  // });
+  it("sps_chirashi", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      for (
+        let index = 0;
+        index < config.RAKUTEN_SUPER_POINT_SCREEN_MAX_CHIRASHI_NEW_FLYER_COUNT;
+        index++
+      ) {
+        await S_TabBar.openChirashi();
+        await handleChirashiNewFlyerSwipe();
+      }
+    }
+  });
 
-  // it("sps_search_input", async () => {
-  //   await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.pause(2000);
-  //   await S_TabBar.waitForTabBarShown();
-  //   if (await handleMaintenance()) {
-  //     return;
-  //   }
-  //   if (await S_TabBar.bottomIconIsDisplayed()) {
-  //     await S_TabBar.openSearch();
-  //     await handleSearchInput();
-  //   }
-  // });
+  it("sps_search_input", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      await S_TabBar.openSearch();
+      await handleSearchInput();
+    }
+  });
 
-  // it("sps_search_news", async () => {
-  //   await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.pause(2000);
-  //   await S_TabBar.waitForTabBarShown();
-  //   if (await handleMaintenance()) {
-  //     return;
-  //   }
-  //   if (await S_TabBar.bottomIconIsDisplayed()) {
-  //     await S_TabBar.openSearch();
-  //     for (
-  //       let index = 0;
-  //       index < config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS.length;
-  //       index++
-  //     ) {
-  //       const news =
-  //         config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS[index];
-  //       console.log("news: ", news);
-  //       await handleSearchNews(news);
-  //     }
-  //   }
-  // });
+  it("sps_search_news", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      await S_TabBar.openSearch();
+      for (
+        let index = 0;
+        index < config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS.length;
+        index++
+      ) {
+        const news =
+          config.RAKUTEN_SUPER_POINT_SCREEN_SEARCH_NEWS_LABELS[index];
+        console.log("news: ", news);
+        await handleSearchNews(news);
+      }
+    }
+  });
 
-  // it("sps_header_get_point", async () => {
-  //   await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.pause(2000);
-  //   await S_TabBar.waitForTabBarShown();
-  //   if (await handleMaintenance()) {
-  //     return;
-  //   }
-  //   if (await S_TabBar.bottomIconIsDisplayed()) {
-  //     let getPointButton = await sHeaderGetpointScreen.getPointButton();
-  //     if (await getPointButton.isDisplayed()) {
-  //       await getPointButton.click();
-  //       await driver.pause(1000);
-  //       if (await sHeaderGetpointScreen.unclaimedPointLabel.isDisplayed()) {
-  //         console.log("unclaimedPointLabel is displayed");
-  //         await sHeaderGetpointScreen.unclaimedPointLabel.click();
-  //         await driver.pause(1000);
-  //         const claimButton = await sHeaderGetpointScreen.claimButton;
-  //         if (await claimButton.isDisplayed()) {
-  //           console.log("claimButton is displayed");
-  //           await claimButton.click();
-  //           await sHeaderGetpointScreen.waitForEarnedPointsLabel();
-  //           await driver.back();
-  //           await driver.pause(5000);
-  //           const closePortalButton =
-  //             await sHeaderGetpointScreen.closePortalButton;
-  //           if (await closePortalButton.isDisplayed()) {
-  //             console.log("closePortalButton is displayed");
-  //             await closePortalButton.click();
-  //             await driver.pause(1000);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
+  it("sps_header_get_point", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      let getPointButton = await sHeaderGetpointScreen.getPointButton();
+      if (await getPointButton.isDisplayed()) {
+        await getPointButton.click();
+        await driver.pause(1000);
+        if (await sHeaderGetpointScreen.unclaimedPointLabel.isDisplayed()) {
+          console.log("unclaimedPointLabel is displayed");
+          await sHeaderGetpointScreen.unclaimedPointLabel.click();
+          await driver.pause(1000);
+          const claimButton = await sHeaderGetpointScreen.claimButton;
+          if (await claimButton.isDisplayed()) {
+            console.log("claimButton is displayed");
+            await claimButton.click();
+            await sHeaderGetpointScreen.waitForEarnedPointsLabel();
+            await driver.back();
+            await driver.pause(5000);
+            const closePortalButton =
+              await sHeaderGetpointScreen.closePortalButton;
+            if (await closePortalButton.isDisplayed()) {
+              console.log("closePortalButton is displayed");
+              await closePortalButton.click();
+              await driver.pause(1000);
+            }
+          }
+        }
+      }
+    }
+  });
 
-  // it("sps_click_point_number", async () => {
-  //   await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
-  //   await driver.pause(2000);
-  //   await S_TabBar.waitForTabBarShown();
-  //   if (await handleMaintenance()) {
-  //     return;
-  //   }
-  //   if (await S_TabBar.bottomIconIsDisplayed()) {
-  //     await handleClickPointNumber();
-  //   }
-  // });
+  it("sps_click_point_number", async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.activateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
+    await driver.pause(2000);
+    await S_TabBar.waitForTabBarShown();
+    if (await handleMaintenance()) {
+      return;
+    }
+    if (await S_TabBar.bottomIconIsDisplayed()) {
+      await handleClickPointNumber();
+    }
+  });
 
   it("sps_challenge", async () => {
     await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
