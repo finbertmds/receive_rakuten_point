@@ -16,6 +16,7 @@ import { generateRakutenSearchKeyword } from "../helpers/rakutenSearchKeyword";
 
 describe("rakuten_super_point_screen", async () => {
   before(async () => {
+    await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
     await driver.terminateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
     await driver.terminateApp(config.RAKUTEN_TOSHIRU_APP_ID);
 
@@ -263,6 +264,7 @@ describe("rakuten_super_point_screen", async () => {
         console.log("bottomIcon is not displayed, break");
         break;
       }
+
       let pointNumberButtonList = await sHomeScreen.pointNumberButtonList();
       if (pointNumberButtonList.length > 0) {
         console.log(
@@ -306,12 +308,22 @@ describe("rakuten_super_point_screen", async () => {
           }
         }
       }
+      const composeViewTexts = await sHomeScreen.getAllTextsFromComposeView();
+      const textsBeforeScroll = composeViewTexts;
       console.log("swipeUp: ", index);
       await Gestures.swipeOnPercentage(
         Gestures.calculateXY({ x: 50, y: 80 }, 1),
         Gestures.calculateXY({ x: 50, y: 40 }, 1),
       );
       await driver.pause(3000);
+      const textsAfterScroll = await sHomeScreen.getAllTextsFromComposeView();
+      if (
+        textsBeforeScroll.length === textsAfterScroll.length &&
+        textsBeforeScroll.every((text, index) => text === textsAfterScroll[index])
+      ) {
+        console.log("All compose_view texts are unchanged, break");
+        break;
+      }
     }
   }
 

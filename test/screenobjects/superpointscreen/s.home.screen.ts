@@ -12,6 +12,8 @@ const SELECTORS = {
     GO_SETTING: getByText("Go Setting"),
     OK_UNDERSTOOD_BUTTON: getByText("Ok, Understood"),
     OK_BUTTON: getByText("OK"),
+
+    COMPOSE_VIEW: getByResouceId("jp.co.rakuten.slide:id/compose_view"),
 };
 
 class S_HomeScreen extends AppScreen {
@@ -48,6 +50,26 @@ class S_HomeScreen extends AppScreen {
             }
         }
         return pointNumberButtonRes;
+    }
+
+    async getAllTextsFromComposeView () {
+        let textList = [];
+        let composeView = await $(SELECTORS.COMPOSE_VIEW);
+        if (await composeView.isExisting()) {
+            let textElements = await composeView.$$("android.widget.TextView");
+            for (let index = 0; index < textElements.length; index++) {
+                const element = textElements[index];
+                if (await element.isExisting()) {
+                    if (await element.isDisplayed()) {
+                        let textValue = await element.getText();
+                        if (textValue) {
+                            textList.push(textValue);
+                        }
+                    }
+                }
+            }
+        }
+        return textList;
     }
 
     get cardAdImage () {

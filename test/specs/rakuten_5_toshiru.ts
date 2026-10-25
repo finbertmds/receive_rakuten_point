@@ -8,6 +8,7 @@ import tLoginScreen from '../screenobjects/toshiru/t.login.screen';
 
 describe('rakuten_toshiru', async () => {
     before(async () => {
+        await driver.terminateApp(config.RAKUTEN_TOSHIRU_APP_ID);
         await driver.terminateApp(config.RAKUTEN_POINT_CLUB_APP_ID);
         await driver.terminateApp(config.RAKUTEN_SUPER_POINT_SCREEN_APP_ID);
 
@@ -282,6 +283,10 @@ describe('rakuten_toshiru', async () => {
             await tHomeScreen.waitForContentsIsShown();
 
             for (let j = 0; j < config.RAKUTEN_TOSHIRU_SCROLL_ARTICLE_COUNT; j++) {
+                // if footerDisclaimer is displayed, then break
+                if (await (await tHomeScreen.footerDisclaimer).isDisplayed()) {
+                    break;
+                }
                 console.log('read article ' + i + ' -- scroll article ' + j);
                 await Gestures.swipeUp();
                 let isClaim = await handleClaimPoint();
