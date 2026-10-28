@@ -6,6 +6,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Project directory: $PROJECT_DIR"
 cd "$PROJECT_DIR"
 LOG_DIR="$PROJECT_DIR/logs"
+IMAGES_DIR="$PROJECT_DIR/screenshots"
 LOG_FILE="$LOG_DIR/run_rakuten_apps_$(date '+%Y%m%d_%H%M%S').log"
 RUN_SUMMARY_LOG="$LOG_DIR/run_summary.log"
 RUN_ID="$(date '+%Y%m%d_%H%M%S')"
@@ -103,3 +104,8 @@ echo "========================================" | tee -a "$LOG_FILE"
 echo "SUMMARY: $PASS passed, $FAIL failed" | tee -a "$LOG_FILE"
 echo "Finished: $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "$LOG_FILE"
 echo "========================================" | tee -a "$LOG_FILE"
+
+# remove logs older than 5 days
+echo "Cleaning up old log and image files older than 5 days..." | tee -a "$LOG_FILE"
+find "$LOG_DIR" -type f -name "run_rakuten_*.log" -mtime +5 -exec rm {} \;
+find "$IMAGES_DIR" -type f -name "run_rakuten_*.png" -mtime +5 -exec rm {} \;
