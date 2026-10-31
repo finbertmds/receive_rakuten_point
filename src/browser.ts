@@ -35,6 +35,7 @@ export async function installOverlays(page: Page) {
   ].map(selector => `${selector}:visible`).join(', ');
   // Separate handlers can deadlock when one close button is under another ad.
   // A single handler probes actionability without clicking, then closes the top layer.
+  const emptyGunosySince = new WeakMap<Frame, number>();
   await page.addLocatorHandler(page.locator('body'), async () => {
     const handlerDeadline = Date.now() + 2500;
     for (let layer = 0; layer < 12 && Date.now() < handlerDeadline; layer++) {
@@ -59,16 +60,35 @@ export async function installOverlays(page: Page) {
         if (frame.isDetached()) continue;
         try {
           if (frame !== page.mainFrame()) {
-            // Gunosy sometimes hides its ad but leaves a fullscreen iframe receiving clicks.
-            // Only retire that known iframe after its own ad area is explicitly display:none.
-            const dismissed = await frame.locator('#gn_interstitial_area').evaluateAll(nodes =>
-              nodes.length > 0 && nodes.every(node => getComputedStyle(node).display === 'none'));
-            if (dismissed) {
+            // A failed creative can leave an empty fullscreen ad with its close icon hidden.
+            const state = await frame.locator('#gn_interstitial_area').evaluateAll(nodes => {
+              const dismissed = nodes.length > 0 && nodes.every(node => getComputedStyle(node).display === 'none');
+              const empty = nodes.length === 1 && (() => {
+                const inner = nodes[0].querySelector('#gn_interstitial_inner_area');
+                if (!inner || Array.from(inner.childNodes).some(node =>
+                  node.nodeType === Node.TEXT_NODE && node.textContent?.trim())) return false;
+                const close = inner.querySelector('#gn_interstitial_close_icon, #gn_ydn_interstitial_btn');
+                if (close && getComputedStyle(close).visibility !== 'hidden'
+                  && getComputedStyle(close).display !== 'none' && close.getClientRects().length > 0) return false;
+                return Array.from(inner.children).every(child => child.matches(
+                  '#gn_interstitial_close_icon, #gn_ydn_interstitial_btn, link, style, script'));
+              })();
+              return { dismissed, empty };
+            });
+            if (state.empty) {
+              if (!emptyGunosySince.has(frame)) emptyGunosySince.set(frame, Date.now());
+            } else emptyGunosySince.delete(frame);
+            const stalled = state.empty && Date.now() - emptyGunosySince.get(frame)! >= 5000;
+            if (state.dismissed || stalled) {
               const owner = await frame.frameElement();
               try {
-                await owner.evaluate(node => {
-                  if (node instanceof HTMLElement && node.id === 'gn_interstitial_iframe_content') node.style.display = 'none';
+                const retired = await owner.evaluate(node => {
+                  if (!(node instanceof HTMLElement) || node.id !== 'gn_interstitial_iframe_content'
+                    || node.style.display === 'none') return false;
+                  node.style.display = 'none';
+                  return true;
                 });
+                if (retired && stalled) console.warn('[Overlay] Dismissed empty Gunosy iframe after 5s without a usable close control');
               } finally { await owner.dispose(); }
               continue;
             }
