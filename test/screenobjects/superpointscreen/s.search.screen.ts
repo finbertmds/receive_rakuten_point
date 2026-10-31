@@ -21,8 +21,12 @@ const SELECTORS = {
   // Search
   SEARCH_BUTTON: getByText("Search"),
 
-  // news-articles
-  NEWS_LABEL: getByResouceId("news-articles"),
+  // Clickable article rows; headings and article titles are not clickable.
+  NEWS_ROWS:
+    '//*[@resource-id="news-articles"]//android.view.View[@clickable="true"]',
+
+  // 主要ニュース
+  NEWS_GROUPS: getByText("主要ニュース"),
 };
 
 class S_SearchScreen extends AppScreen {
@@ -55,18 +59,21 @@ class S_SearchScreen extends AppScreen {
     return $(getByText(keyword));
   }
 
+  async waitForNewsGroups() {
+    return this.waitForElementIsShown(SELECTORS.NEWS_GROUPS);
+  }
+
   async getNewsLabelInScrollable(index: number = 0) {
     return $(getByResouceIdAndIndexInScrollable("news-articles", "b", index));
   }
 
   async getNewsRowCount() {
-    let parent = $(SELECTORS.NEWS_LABEL);
-    return parent.$$(getByClassname("android.widget.TextView")).length;
+    const rows = await $$(SELECTORS.NEWS_ROWS);
+    return rows.length;
   }
 
   async getNewsRowIndex(index: number = 0) {
-    let parent = $(SELECTORS.NEWS_LABEL);
-    return parent.$(getByClassname("android.widget.TextView", index));
+    return $(`(${SELECTORS.NEWS_ROWS})[${index + 1}]`);
   }
 }
 

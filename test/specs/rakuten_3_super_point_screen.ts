@@ -570,7 +570,7 @@ describe("rakuten_super_point_screen", async () => {
       if (await newsLabel.isDisplayed()) {
         console.log("newsLabel is displayed: ", keyword);
         await newsLabel.click();
-        await driver.pause(2000);
+        await sSearchScreen.waitForNewsGroups();
         const newsCount = await sSearchScreen.getNewsRowCount();
         console.log("newsCount: ", newsCount);
         for (let index = 0; index < newsCount; index++) {
@@ -590,7 +590,7 @@ describe("rakuten_super_point_screen", async () => {
           newsLabel = await sSearchScreen.getNewsLabel(keyword);
           if (await newsLabel.isDisplayed()) {
             await newsLabel.click();
-            await driver.pause(2000);
+            await sSearchScreen.waitForNewsGroups();
           }
         }
       }
