@@ -31,7 +31,7 @@ for (const claim of [false, true]) {
       const url = new URL(route.request().url());
       if (url.pathname === '/mission/list/') {
         const selector = claim ? 'list-acquired' : 'list-challenge';
-        await route.fulfill({ contentType: 'text/html; charset=utf-8', body: `<h1>ミッション</h1><div class="${selector}">${[...remaining].map(id => `<a class="btn" href="/mission/${id}">${id}</a>`).join('')}</div>` });
+        await route.fulfill({ contentType: 'text/html; charset=utf-8', body: `<h1>ミッション</h1><div class="${selector}">${[...remaining].map(id => `<a class="btn" href="/mission/${id}">${claim ? id : 'チャレンジ'}</a>`).join('')}</div>` });
       } else {
         const id = url.pathname.split('/').pop()!;
         remaining.delete(id);
@@ -62,18 +62,18 @@ test('V2 clicks Next even when password is already visible', async ({ page }) =>
   }
 });
 
-test('join clicks agreement link containing additional text', async ({ page }) => {
+test('challenge visits destination without requiring agreement submission', async ({ page }) => {
   let joined = false;
   await page.route('https://www.infoseek.co.jp/**', async route => {
     const pathname = new URL(route.request().url()).pathname;
     if (pathname === '/mission/agree') joined = true;
     const body = pathname === '/mission/list/'
-      ? `<h1>ミッション</h1><div class="list-challenge">${joined ? '' : '<a class="btn" href="/mission/start">Join</a>'}</div>`
+      ? `<h1>ミッション</h1><div class="list-challenge">${joined ? '' : '<a class="btn" href="/mission/start">チャレンジ</a>'}</div>`
       : pathname === '/mission/start' ? '<a href="/mission/agree">規約に同意する</a>' : '<h1>Joined</h1>';
     await route.fulfill({ contentType: 'text/html; charset=utf-8', body });
   });
   await missions(page, false);
-  expect(joined).toBe(true);
+  expect(joined).toBe(false);
 });
 
 for (const delayed of [false, true]) {
@@ -120,7 +120,7 @@ for (const delayed of [false, true]) {
 }
 
 
-test('mission already participating is skipped with real wrapper markup', async ({ page }) => {
+test('challenge visits already participating mission with real wrapper markup', async ({ page }) => {
   let clicks = 0;
   await page.route('https://www.infoseek.co.jp/**', route => {
     if (!route.request().url().includes('/mission/list/')) clicks++;
@@ -129,7 +129,7 @@ test('mission already participating is skipped with real wrapper markup', async 
       <div class="btn"><a href="/">チャレンジ</a></div></li>` });
   });
   await missions(page, false);
-  expect(clicks).toBe(0);
+  expect(clicks).toBe(1);
 });
 
 test('joining wrapper link may remain in challenge list with participating status', async ({ page }) => {

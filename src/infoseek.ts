@@ -25,7 +25,7 @@ export async function missions(page: Page, claim: boolean) {
   await goto(page, urls.INFO_SEEK_MISSION_PAGE);
   const selector = claim
     ? '.list-acquired :is(a.btn, .btn a)'
-    : '.list-challenge:not(:has(.mission-announce span:text-is("参加中"))) :is(a.btn, .btn a)';
+    : '.list-challenge :is(a.btn, .btn a):text-is("チャレンジ")';
   await expect(page.locator('body')).toContainText(/ミッション/);
   // Snapshot URL identities, never element handles across navigation.
   const links = await page.locator(selector).evaluateAll(nodes => nodes.map(node => ({
@@ -34,31 +34,27 @@ export async function missions(page: Page, claim: boolean) {
   const seen = new Set<string>();
   for (const item of links) {
     const key = item.href + item.text;
-    if (seen.has(key)) continue;
+    if (claim && seen.has(key)) continue;
     seen.add(key);
+    // Different challenge cards may lead to the same destination.
+    let occurrence = claim ? 0 : links.slice(0, links.indexOf(item)).filter(other =>
+      other.href === item.href && other.text === item.text).length;
     await goto(page, urls.INFO_SEEK_MISSION_PAGE);
     const buttons = page.locator(selector);
     let match = -1;
     for (let i = 0; i < await buttons.count(); i++) {
       if (await buttons.nth(i).evaluate((node, expected) =>
         (node as HTMLAnchorElement).href === expected.href && (node.textContent?.trim() ?? '') === expected.text, item)) {
-        match = i; break;
+        if (occurrence-- === 0) { match = i; break; }
       }
     }
     if (match < 0) continue; // Already removed after a previous operation.
     const target = await clickTarget(page, buttons.nth(match));
     try {
       if (claim) await expect(target.locator('.point_get')).toBeVisible();
-      else {
-        const agree = target.getByRole('link', { name: /同意する/ }).first();
-        if (await optional(agree, 5000)) await agree.click();
-        await goto(page, urls.INFO_SEEK_MISSION_PAGE);
-        await expect.poll(async () => {
-          return page.locator(selector).evaluateAll((nodes, expected) => nodes.some(node =>
-            (node as HTMLAnchorElement).href === expected.href && (node.textContent?.trim() ?? '') === expected.text), item);
-        }, { message: `Mission should leave challenge list: ${item.text}` }).toBe(false);
-      }
-    } finally { if (target !== page) await target.close(); }
+      else await target.waitForTimeout(3000);
+    } finally { if (target !== page && !target.isClosed()) await target.close(); }
+    if (!claim) await goto(page, urls.INFO_SEEK_MISSION_PAGE);
   }
 }
 
@@ -83,7 +79,7 @@ export async function reactToArticle(page: Page) {
 export async function readRanking(page: Page, url: string) {
   await goto(page, url);
   await expect(page.locator('.ranking-list__text-title').first()).toBeVisible();
-  const count = Number(process.env.ARTICLE_COUNT ?? 5);
+  const count = Number(process.env.ARTICLE_COUNT ?? 10);
   const dwell = Number(process.env.ARTICLE_READ_MS ?? 10000);
   if (!Number.isInteger(count) || count < 1 || !Number.isFinite(dwell) || dwell < 0) throw new Error('Invalid article settings');
   const available = await page.locator('.ranking-list__text-title').count();

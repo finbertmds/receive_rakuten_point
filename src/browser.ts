@@ -58,6 +58,21 @@ export async function installOverlays(page: Page) {
         if (Date.now() >= handlerDeadline) break;
         if (frame.isDetached()) continue;
         try {
+          if (frame !== page.mainFrame()) {
+            // Gunosy sometimes hides its ad but leaves a fullscreen iframe receiving clicks.
+            // Only retire that known iframe after its own ad area is explicitly display:none.
+            const dismissed = await frame.locator('#gn_interstitial_area').evaluateAll(nodes =>
+              nodes.length > 0 && nodes.every(node => getComputedStyle(node).display === 'none'));
+            if (dismissed) {
+              const owner = await frame.frameElement();
+              try {
+                await owner.evaluate(node => {
+                  if (node instanceof HTMLElement && node.id === 'gn_interstitial_iframe_content') node.style.display = 'none';
+                });
+              } finally { await owner.dispose(); }
+              continue;
+            }
+          }
           for (const close of await frame.locator(selectors).all()) {
             if (Date.now() >= handlerDeadline) break;
             try {

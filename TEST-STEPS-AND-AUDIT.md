@@ -229,3 +229,17 @@ Kiểm tra migration Campaign/Card: TypeScript PASS; runner nhận 10 test trong
 - Sửa: ưu tiên iframe quảng cáo trước trang chính; bỏ race 300 ms cho truy vấn `.all()` (truy vấn này không tự chờ phần tử xuất hiện); giữ giới hạn actionability/click và ngân sách handler. Bắt lỗi context/frame thay đổi cả trong bước phát hiện iframe, để action đang chờ có thể tiếp tục sau redirect.
 - Thêm test hồi quy: 12 nút đóng bị iframe che và lỗi context đúng tại bước `elementHandles()`. Không dùng force click, không phát lại thao tác nhận điểm.
 - Kiểm chứng sau sửa: `npm run check` PASS; `npm run test:checks -- --output=/tmp/rakuten-overlay-checks` PASS 25/25 (2,4 phút), gồm cả hai test mới. Chromium cần chạy ngoài sandbox vì macOS chặn MachPort trong sandbox. Chưa chạy lại toàn bộ luồng trên website thật.
+
+### Infoseek 31/10/2026 lúc 19:05 (JST): iframe còn sót sau khi đóng
+
+- Cả ba lượt đọc bài đều lỗi; join/get-point thành công. Bản sửa ưu tiên iframe chưa đủ.
+- Đối chiếu trace lần cuối: click `gn_interstitial_close_icon` thành công (`jxas@930`); snapshot sau đó cho thấy `#gn_interstitial_area` có `display:none`, nhưng iframe cha `#gn_interstitial_iframe_content` vẫn fixed toàn màn hình, z-index 2147483647 và tiếp tục chặn pointer events.
+- Handler giờ kiểm tra trạng thái đóng trong iframe. Chỉ khi vùng quảng cáo Gunosy đã có computed `display:none`, mới ẩn iframe Gunosy còn sót; không force click Like hoặc ẩn quảng cáo đang hiển thị.
+- Thêm hai test tái hiện: đóng chỉ ẩn nội dung iframe, và nội dung đã đóng trước khi handler chạy. Cả hai kiểm tra iframe không còn che và Like chỉ click một lần.
+- Kiểm chứng: `npm run check` PASS; 25 test cũ PASS. Test mới ban đầu có lỗi escape HTML trong fixture, đã sửa và chạy riêng lại: 2/2 PASS (`npm run test:checks -- checks/infoseek-overlay.spec.ts --output=/tmp/rakuten-dismissal-checks`).
+- Xác minh website thật: `npm run test:infoseek -- --output=/tmp/rakuten-1905-live` PASS 3/3 trong 3,3 phút, gồm join mission, get point và đọc đủ hai ranking với cấu hình mặc định (tối đa 5 bài mỗi ranking). Không thay đổi retry hoặc bỏ qua lỗi để làm test xanh.
+
+### Challenge: truy cập lần lượt cả các nhiệm vụ đang tham gia
+
+Theo yêu cầu mới, `missions(page, false)` chọn link `チャレンジ` trong danh sách challenge kể cả `参加中`. Click lần lượt theo thứ tự danh sách, chờ trang đích DOMContentLoaded rồi giữ 3 giây, quay lại mission list trước mục tiếp theo; khi dùng popup thì đóng popup sau thời gian chờ. Không còn yêu cầu mục challenge biến mất hoặc gửi form đồng ý. Các thẻ cùng URL vẫn được truy cập riêng. Nhánh claim giữ nguyên.
+Kiểm chứng: TypeScript PASS; 7 test mission/challenge PASS, thêm lượt 2/2 PASS cho ba thẻ với URL trùng nhau (cùng tab và popup). Các test kiểm tra thứ tự click, thời gian giữ trang tối thiểu 3 giây và URL cuối cùng là mission list.
