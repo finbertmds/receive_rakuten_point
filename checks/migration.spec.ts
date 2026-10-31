@@ -206,3 +206,39 @@ test('already active reaction behind click wall is not clicked again', async ({ 
   expect(await reactToArticle(page)).toBe('already-reacted');
   await expect(page.locator('.reaction-icon')).toHaveText('Liked');
 });
+
+test('fullscreen ad closes before many covered document controls exhaust the handler budget', async ({ page }) => {
+  await installOverlays(page);
+  await page.setContent(`<button class="reaction-icon -iine" onclick="window.likes=(window.likes||0)+1">Like</button>
+    ${Array.from({ length: 12 }, () => '<button class="modalClick_close">Covered close</button>').join('')}
+    <iframe id="gn_interstitial_iframe_content" style="position:fixed;inset:0;width:100%;height:100%;z-index:100"
+      srcdoc="<button id='gn_interstitial_close_icon' onclick='window.frameElement.remove()'>Close</button>"></iframe>`);
+  expect(await reactToArticle(page)).toBe('clicked');
+  expect(await page.evaluate(() => (window as unknown as { likes: number }).likes)).toBe(1);
+  await expect(page.locator('iframe')).toHaveCount(0);
+});
+
+test('navigation during overlay iframe discovery does not abort the pending action', async ({ page }) => {
+  // Inject the precise protocol failure recorded in both runs, once during discovery.
+  const originalLocator = page.locator.bind(page);
+  let interrupted = false;
+  page.locator = ((selector: string, options?: Parameters<typeof page.locator>[1]) => {
+    const locator = originalLocator(selector, options);
+    if (selector.startsWith('iframe#gn_interstitial')) {
+      const originalHandles = locator.elementHandles.bind(locator);
+      locator.elementHandles = async () => {
+        if (!interrupted) {
+          interrupted = true;
+          throw new Error('locator.elementHandles: Execution context was destroyed, most likely because of a navigation');
+        }
+        return originalHandles();
+      };
+    }
+    return locator;
+  }) as typeof page.locator;
+  await installOverlays(page);
+  await page.setContent('<button onclick="this.textContent=\'Done\'">Continue</button>');
+  await page.getByRole('button').click();
+  expect(interrupted).toBe(true);
+  await expect(page.getByRole('button')).toHaveText('Done');
+});

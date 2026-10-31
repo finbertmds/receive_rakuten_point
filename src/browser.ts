@@ -27,16 +27,6 @@ function transientFrameError(frame: Frame, error: unknown) {
     error instanceof Error && /Frame was detached|frame has been detached|Execution context was destroyed|Cannot find context with specified id/i.test(error.message));
 }
 
-async function boundedOverlayQuery(locator: Locator): Promise<Locator[]> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  try {
-    return await Promise.race([
-      locator.all(),
-      new Promise<Locator[]>(resolve => { timer = setTimeout(() => resolve([]), 300); }),
-    ]);
-  } finally { clearTimeout(timer); }
-}
-
 export async function installOverlays(page: Page) {
   const selectors = [
     '#interstitial_close_button', '.modalClick_close', '#notification_close_button',
@@ -49,18 +39,26 @@ export async function installOverlays(page: Page) {
     const handlerDeadline = Date.now() + 2500;
     for (let layer = 0; layer < 12 && Date.now() < handlerDeadline; layer++) {
       let closed = false;
-      const frames = [page.mainFrame()];
-      for (const element of await page.locator('iframe#gn_interstitial_iframe_content, iframe[title="GMOSSP iframe"]').elementHandles()) {
-        try {
-          const frame = await element.contentFrame();
-          if (frame) frames.push(frame);
-        } finally { await element.dispose(); }
+      const frames: Frame[] = [];
+      try {
+        for (const element of await page.locator('iframe#gn_interstitial_iframe_content, iframe[title="GMOSSP iframe"]').elementHandles()) {
+          try {
+            const frame = await element.contentFrame();
+            if (frame) frames.push(frame);
+          } finally { await element.dispose(); }
+        }
+      } catch (error) {
+        // The main document can redirect while discovering ad frames too.
+        if (!transientFrameError(page.mainFrame(), error)) throw error;
+        return;
       }
+      // Fullscreen ad controls get a turn before covered controls in the document.
+      frames.push(page.mainFrame());
       for (const frame of frames) {
         if (Date.now() >= handlerDeadline) break;
         if (frame.isDetached()) continue;
         try {
-          for (const close of await boundedOverlayQuery(frame.locator(selectors))) {
+          for (const close of await frame.locator(selectors).all()) {
             if (Date.now() >= handlerDeadline) break;
             try {
               await close.click({ trial: true, timeout: 250 });

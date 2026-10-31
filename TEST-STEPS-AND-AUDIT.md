@@ -220,3 +220,12 @@ Cả hai spec mới dùng lại `kujiLogin` (alias `rakutenCardLogin`) vì luồ
 Hai spec mới không thay runner `run_all_tests.sh` và không thay WebdriverIO cũ. Thêm `npm run test:campaign -- --headed` và `npm run test:card -- --headed`. Chưa chạy hai spec mới trên tài khoản thật.
 
 Kiểm tra migration Campaign/Card: TypeScript PASS; runner nhận 10 test trong 4 spec; 4 URL Campaign khớp config cũ; toàn bộ **23/23 test hồi quy PASS (2,3 phút)**, gồm 5 test mới cho 3 selector Campaign, Campaign không có entry, và Card banner co lại + popup. Chưa xác minh hai spec mới trên website thật.
+
+### Hai lần chạy 31/10/2026 lúc 08:05 và 14:05 (JST)
+
+- 08:05: Infoseek lỗi cả ba lượt; iframe `gn_interstitial_iframe_content` chặn Like, một lượt còn lỗi execution context khi tìm iframe.
+- 14:05: Infoseek tiếp tục lỗi tương tự; Kuji lỗi cả ba lượt và Campaign lỗi lượt đầu tại `browser.ts` khi `elementHandles()` chạy trong lúc trang chuyển hướng. Campaign thành công khi retry.
+- Handler cũ kiểm tra trang chính trước iframe, dễ dùng hết ngân sách 2,5 giây với các nút bị che. `Promise.race` 300 ms còn có thể bỏ qua kết quả truy vấn nút đóng, nhất là khi ghi trace của trang nhiều iframe.
+- Sửa: ưu tiên iframe quảng cáo trước trang chính; bỏ race 300 ms cho truy vấn `.all()` (truy vấn này không tự chờ phần tử xuất hiện); giữ giới hạn actionability/click và ngân sách handler. Bắt lỗi context/frame thay đổi cả trong bước phát hiện iframe, để action đang chờ có thể tiếp tục sau redirect.
+- Thêm test hồi quy: 12 nút đóng bị iframe che và lỗi context đúng tại bước `elementHandles()`. Không dùng force click, không phát lại thao tác nhận điểm.
+- Kiểm chứng sau sửa: `npm run check` PASS; `npm run test:checks -- --output=/tmp/rakuten-overlay-checks` PASS 25/25 (2,4 phút), gồm cả hai test mới. Chromium cần chạy ngoài sandbox vì macOS chặn MachPort trong sandbox. Chưa chạy lại toàn bộ luồng trên website thật.
