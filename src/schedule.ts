@@ -18,9 +18,14 @@ export function third<T>(items: T[], part: number): T[] {
   return items.slice(Math.floor(items.length * part / 3), Math.floor(items.length * (part + 1) / 3));
 }
 
-export function rankingIndex(count: number, morning: boolean): number {
-  const max = count - 1;
-  const min = morning ? 0 : max - Math.floor(max / 2);
-  const end = morning ? Math.floor(max / 2) : max;
-  return min + Math.floor(Math.random() * (end - min + 1));
+export function rankingUrls<T>(items: T[], date = new Date()): T[] {
+  const hour = Number(new Intl.DateTimeFormat('en-GB', {
+    hour: '2-digit', hourCycle: 'h23', timeZone: 'Asia/Tokyo',
+  }).format(date));
+  const hours = [0, 8, 14, 19, 22];
+  const slot = hours.filter(start => hour >= start).length - 1;
+  // Split two complete passes across the five daily runs.
+  const start = Math.floor(items.length * 2 * slot / hours.length);
+  const end = Math.floor(items.length * 2 * (slot + 1) / hours.length);
+  return Array.from({ length: end - start }, (_, i) => items[(start + i) % items.length]);
 }
