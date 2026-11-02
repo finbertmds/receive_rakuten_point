@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import urls from './urls.json';
 import { goto, loginForm, optional, clickTarget, rewardedAd } from './browser';
 
@@ -86,14 +86,38 @@ export async function readRanking(page: Page, url: string) {
   for (let i = 0; i < Math.min(count, available); i++) {
     await goto(page, url);
     const rankingUrl = page.url();
-    const article = await clickTarget(page, page.locator('.ranking-list__text-title').nth(i));
+    let article = page;
+    let reaction: Awaited<ReturnType<typeof reactToArticle>> | 'not-attempted' = 'not-attempted';
+    let waited = false;
+    let result = 'error';
+    let error: string | undefined;
     try {
+      article = await clickTarget(page, page.locator('.ranking-list__text-title').nth(i));
       await expect.poll(() => article.url(), { message: 'Article link should leave the ranking page' }).not.toBe(rankingUrl);
       await expect.poll(() => article.url()).not.toBe('about:blank');
       await rewardedAd(article, false);
-      const reaction = await reactToArticle(article);
+      reaction = await reactToArticle(article);
       // Previously liked articles can advance immediately.
-      if (reaction !== 'already-reacted') await article.waitForTimeout(dwell);
-    } finally { if (article !== page) await article.close(); }
+      if (reaction !== 'already-reacted') {
+        await article.waitForTimeout(dwell);
+        waited = true;
+      }
+      result = reaction === 'already-reacted' ? 'already-reacted' : 'read-completed';
+    } catch (cause) {
+      error = cause instanceof Error ? cause.message : String(cause);
+      throw cause;
+    } finally {
+      const record = {
+        source: url, articleIndex: i + 1,
+        page: article.isClosed() ? '(closed)' : article.url(),
+        result, reaction, waited, waitedMs: waited ? dwell : 0, error,
+      };
+      console.log(`[ReadRanking] ${JSON.stringify(record)}`);
+      try {
+        await test.info().attach('read-ranking-result', {
+          body: JSON.stringify(record), contentType: 'application/json',
+        });
+      } finally { if (article !== page && !article.isClosed()) await article.close(); }
+    }
   }
 }
